@@ -35,7 +35,7 @@ DEPENDPATH += $$PWD/../libcrypto/include
 
 unix:!macx: PRE_TARGETDEPS += $$PWD/../libcrypto/lib/libcryptopplnx.a
 
-#LINUX CRYPTOPP
+#WINDOWS CRYPTOPP
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../libcrypto/lib/release/ -lcryptopp
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../libcrypto/lib/debug/ -lcryptopp
 
