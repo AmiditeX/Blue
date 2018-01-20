@@ -25,9 +25,10 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
+#SPDLOG LINKAGE
 INCLUDEPATH += $$PWD/../spdlog-master/include
 
-#LINUX CRYPTOPP
+#LINUX CRYPTOPP LINKAGE
 unix:!macx: LIBS += -L$$PWD/../libcrypto/lib/ -lcryptopplnx
 
 INCLUDEPATH += $$PWD/../libcrypto/include
@@ -35,7 +36,7 @@ DEPENDPATH += $$PWD/../libcrypto/include
 
 unix:!macx: PRE_TARGETDEPS += $$PWD/../libcrypto/lib/libcryptopplnx.a
 
-#WINDOWS CRYPTOPP
+#WINDOWS CRYPTOPP LINKAGE
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../libcrypto/lib/release/ -lcryptopp
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../libcrypto/lib/debug/ -lcryptopp
 

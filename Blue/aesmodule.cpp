@@ -6,7 +6,7 @@
 #include <pwdbased.h>
 #include <eax.h>
 #include <aes.h>
-#include <hex.h>
+#include <base64.h>
 #include <osrng.h>
 #include <string>
 #include <iostream>
@@ -19,18 +19,18 @@ AESModule::AESModule()
 
 }
 
-//Encrypt data with given parameters, all paramaters must be hexadecimal encoded
+//Encrypt data with given parameters, all paramaters must be Base64 encoded
 QString AESModule::encryptData(const QString &privateData, const QString &addData, const QString &privateKey, const QString &initializationVector)
 {
     std::string pdata, adata, ciphertext; //Private Data, AAD, Encrypted Data
-    pdata = fromQStringHex(privateData); //Private data incoming is Hex
-    adata = fromQStringHex(addData); //Additional data incoming is Hex
+    pdata = fromQStringBase64(privateData); //Private data incoming is Base64
+    adata = fromQStringBase64(addData); //Additional data incoming is Base64
 
-    SecByteBlock key(AES::DEFAULT_KEYLENGTH); //QString (hex) to byte (unsigned char)
-    StringSource(privateKey.toStdString(), true, new HexDecoder(new ArraySink(key, key.size())));
+    SecByteBlock key(AES::DEFAULT_KEYLENGTH); //QString (Base64) to byte (unsigned char)
+    StringSource(privateKey.toStdString(), true, new Base64Decoder(new ArraySink(key, key.size())));
 
-    SecByteBlock iv(AES::BLOCKSIZE); //QString (hex) to byte (unsigned char)
-    StringSource(initializationVector.toStdString(), true, new HexDecoder(new ArraySink(iv, iv.size())));
+    SecByteBlock iv(AES::BLOCKSIZE); //QString (Base64) to byte (unsigned char)
+    StringSource(initializationVector.toStdString(), true, new Base64Decoder(new ArraySink(iv, iv.size())));
 
     EAX<AES>::Encryption encryptObject;
     encryptObject.SetKeyWithIV(key, key.size(), iv, iv.size());
@@ -42,21 +42,21 @@ QString AESModule::encryptData(const QString &privateData, const QString &addDat
     encryptFilter.ChannelPut(DEFAULT_CHANNEL, (const byte*)pdata.data(), pdata.size()); //Pass the Private Data inside the filter
     encryptFilter.ChannelMessageEnd(DEFAULT_CHANNEL);
 
-    return toQStringHex(ciphertext);
+    return toQStringBase64(ciphertext);
 }
 
-//Decrypt data with given parameters, all paramaters must be hexadecimal encoded
+//Decrypt data with given parameters, all paramaters must be Base64 encoded
 QString AESModule::decryptData(const QString &encryptedData, const QString &addData, const QString &privateKey, const QString &initializationVector)
 {
     std::string ciphertext, adata, decipheredText; //Encrypted Data, AAD, Decrypted Data
-    ciphertext = fromQStringHex(encryptedData); //Encrypted data incoming is Hex
-    adata = fromQStringHex(addData); //Additional data incoming is Hex
+    ciphertext = fromQStringase64(encryptedData); //Encrypted data incoming is Base64
+    adata = fromQStringBase64(addData); //Additional data incoming is Base64
 
-    SecByteBlock key(AES::DEFAULT_KEYLENGTH); //QString (hex) to byte (unsigned char)
-    StringSource(privateKey.toStdString(), true, new HexDecoder(new ArraySink(key, key.size())));
+    SecByteBlock key(AES::DEFAULT_KEYLENGTH); //QString (Base64) to byte (unsigned char)
+    StringSource(privateKey.toStdString(), true, new Base64Decoder(new ArraySink(key, key.size())));
 
-    SecByteBlock iv(AES::BLOCKSIZE); //QString (hex) to byte (unsigned char)
-    StringSource(initializationVector.toStdString(), true, new HexDecoder(new ArraySink(iv, sizeof(iv))));
+    SecByteBlock iv(AES::BLOCKSIZE); //QString (Base64) to byte (unsigned char)
+    StringSource(initializationVector.toStdString(), true, new Base64Decoder(new ArraySink(iv, sizeof(iv))));
 
     std::string data = ciphertext.substr(0, ciphertext.length() - TAG_SIZE); //Split encrypted data into real data + tag
     std::string tag = ciphertext.substr(ciphertext.length() - TAG_SIZE);
@@ -73,57 +73,69 @@ QString AESModule::decryptData(const QString &encryptedData, const QString &addD
     return QString::fromStdString(decipheredText);
 }
 
-//Derivates a key from a password given a number of iterations to process
-QString AESModule::generateKey(const QString &password, const unsigned int iterations)
+//Derivates a key from a password given a number of iterations to process or a length of time to process
+QString AESModule::generateKey(const QString &password, const QString &salt, const unsigned int iterations, const unsigned int time)
 {
-    SecByteBlock derived(16);
-    PKCS5_PBKDF2_HMAC<SHA256> kdf;
-    kdf.DeriveKey(derived.data(), derived.size(), 0, (byte*)password.data(), password.size(), nullptr, 0, iterations);
-    std::string keyhex;
-    StringSource(derived, sizeof(derived), true, new HexEncoder(new StringSink(keyhex)));
-    return QString::fromStdString(keyhex);
+    SecByteBlock derivedBlock(16);
+    PKCS5_PBKDF2_HMAC<SHA256> keyDerivator;
+    keyDerivator.DeriveKey(derivedBlock.data(), derivedBlock.size(), 0, (const byte*)password.data(), password.size(),
+                           (const byte*)salt.data(), salt.size(), iterations, time);
+    std::string keyBase64;
+    StringSource(derived, sizeof(derived), true, new Base64Encoder(new StringSink(keyhex)));
+    return QString::fromStdString(keyBase64);
 }
 
-//Generate a random hexadecimal encoded IV
+//Generate a random initialization vector
 QString AESModule::generateIV()
 {
-    AutoSeededRandomPool rng;
-    SecByteBlock iv(AES::BLOCKSIZE);
-    rng.GenerateBlock(iv, sizeof(iv));
-    std::string ivhex;
-    StringSource(iv, sizeof(iv), true, new HexEncoder(new StringSink(ivhex)));
-    return QString::fromStdString(ivhex);
+    AutoSeededRandomPool randomGenerator;
+    SecByteBlock initializationVector(AES::BLOCKSIZE);
+    randomGenerator.GenerateBlock(initializationVector, sizeof(initializationVector));
+    std::string ivBase64;
+    StringSource(ivBase64, sizeof(iv), true, new Base64Encoder(new StringSink(ivHex));
+    return QString::fromStdString(ivBase64);
 }
 
-//String to Hex QString
-QString AESModule::toQStringHex(const std::string &data)
+//Generate a random 64 bytes salt
+QString AESModule::generateSalt()
 {
-    std::string hex;
-    StringSource(data, true, new HexEncoder(new StringSink(hex)));
-    return QString::fromStdString(hex);
+    AutoSeededRandomPool randomGenerator;
+    SecByteBlock salt(64);
+    randomGenerator.GenerateBlock(salt, sizeof(salt));
+    std::string saltBase64;
+    StringSource(saltBase64, sizeof(salt), true, new Base64Encoder(new StringSink(saltBase64)));
+    return QString::fromStdString(saltBase64);
 }
 
-//QString to Hex String
-std::string AESModule::toStdHex(const QString &data)
+//String to Base64 QString
+QString AESModule::toQStringBase64(const std::string &data)
 {
-    std::string hex;
-    StringSource(data.toStdString(), true, new HexEncoder(new StringSink(hex)));
-    return hex;
+    std::string base64;
+    StringSource(data, true, new Base64Encoder(new StringSink(base64)));
+    return QString::fromStdString(base64);
 }
 
-//Hex String to QString
-QString AESModule::fromStdHex(const std::string &data)
+//QString to Base64 String
+std::string AESModule::toStdBase64(const QString &data)
+{
+    std::string base64;
+    StringSource(data.toStdString(), true, new Base64Encoder(new StringSink(base64));
+    return base64;
+}
+
+//Base64 String to QString
+QString AESModule::fromStdBase64(const std::string &data)
 {
     std::string ascii;
-    StringSource (data, true, new HexDecoder(new StringSink(ascii)));
+    StringSource (data, true, new Base64Decoder(new StringSink(ascii)));
     return QString::fromStdString(ascii);
 }
 
-//Hex QString to String
-std::string AESModule::fromQStringHex(const QString &data)
+//Base64 QString to String
+std::string AESModule::fromQStringBase64(const QString &data)
 {
     std::string ascii;
-    StringSource (data.toStdString(), true, new HexDecoder(new StringSink(ascii)));
+    StringSource (data.toStdString(), true, new Base64Decoder(new StringSink(ascii)));
     return ascii;
 }
 

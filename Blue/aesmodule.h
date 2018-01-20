@@ -12,17 +12,18 @@ public:
     //Cryptographic operations
     static QString encryptData(const QString &privateData, const QString &addData, const QString &privateKey, const QString &initializationVector);
     static QString decryptData(const QString &encryptedData, const QString &addData, const QString &privateKey, const QString &initializationVector);
-    static QString generateKey(const QString &password, const unsigned int iterations = 15000);
+    static QString generateKey(const QString &password, const QString &salt, const unsigned int iterations, const unsigned int time);
     static QString generateIV();
+    static QString generateSalt();
 
     //Integrity check
     static bool integrityCheck();
 
     //Hexadecimal encode/decode
-    static QString toQStringHex(const std::string &data);
-    static std::string toStdHex(const QString &data);
-    static QString fromStdHex(const std::string &data);
-    static std::string fromQStringHex(const QString &data);
+    static QString toQStringBase64(const std::string &data);
+    static std::string toStdBase64(const QString &data);
+    static QString fromStdBase64(const std::string &data);
+    static std::string fromQStringBase64(const QString &data);
 
 protected:
     //Return result of encryption/decryption of a test vector

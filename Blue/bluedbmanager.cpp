@@ -24,7 +24,7 @@ void BlueDBManager::createFile(const QString &path)
     writeFile("encrypted.txt", jdoc, "Password", 150000);
 }
 
-//Write the file containg the encrypted database and its metadata
+//Write the file containg the encrypted database and the metadata
 void BlueDBManager::writeFile(const QString &path, const QJsonDocument jsonDoc, const QString &compositeKey, const unsigned int iterations)
 {
     QString derivedKey = AESModule::generateKey(compositeKey, iterations); //Derivate final key from the composite key
