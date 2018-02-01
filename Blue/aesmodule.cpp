@@ -74,7 +74,7 @@ QString AESModule::decryptData(const QString &encryptedData, const QString &addD
 }
 
 //Derivates a key from a password given a number of iterations to process or a length of time to process
-QString AESModule::generateKey(const QString &password, const QString &salt, const unsigned int iterations, const unsigned int time)
+QString AESModule::derivateKey(const QString &password, const QString &salt, const unsigned int iterations, const unsigned int time)
 {
     SecByteBlock derivedBlock(16);
     PKCS5_PBKDF2_HMAC<SHA256> keyDerivator;

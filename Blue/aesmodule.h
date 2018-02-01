@@ -12,7 +12,7 @@ public:
     //Cryptographic operations
     static QString encryptData(const QString &privateData, const QString &addData, const QString &privateKey, const QString &initializationVector);
     static QString decryptData(const QString &encryptedData, const QString &addData, const QString &privateKey, const QString &initializationVector);
-    static QString generateKey(const QString &password, const QString &salt, const unsigned int iterations, const unsigned int time);
+    static QString derivateKey(const QString &password, const QString &salt, const unsigned int iterations, const unsigned int time);
     static QString generateIV();
     static QString generateSalt();
 

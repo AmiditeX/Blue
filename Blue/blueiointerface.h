@@ -3,6 +3,13 @@
 
 #include <QObject>
 
+struct DBParameters
+{
+    const QJsonDocument DBDecrypted;
+    const QString DBInitVector, DBKeySalt;
+    const unsigned int DBIterations = 0, DBStretchTime = 0;
+};
+
 class BlueIOInterface
 {
 
@@ -12,7 +19,12 @@ public:
 public slots:
     void writeFile(const QString &path, const QJsonDocument jsonDoc, const QString &compositeKey,
                    const unsigned int iterations, const unsigned int time);
-    QJsonDocument readFile(const QString &path, const QString &compositeKey);
+    void readFile(const QString &path, const QString &compositeKey);
+
+signals:
+    void errorSignal(QString errorString);
+    void readCompleted(DBParameters dbParam);
+
 };
 
 #endif // BLUEIOINTERFACE_H
