@@ -5,6 +5,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
+#include <QMutex>
 
 BlueIOInterface::BlueIOInterface()
 {
@@ -26,6 +27,9 @@ void BlueIOInterface::writeFile(const QString &path, const QJsonDocument jsonDoc
         QString aData = kdfSalt + initializationVector; //Compute authenticated data of IV and salt
         QString encryptedData = AESModule::encryptData(jsonDoc.toBinaryData(), aData, derivatedKey, initializationVector); //Encrypt database
 
+        if(kdfSalt.isEmpty() || derivatedKey.isEmpty() || initializationVector.isEmpty() || encryptedData.isEmpty())
+            throw std::runtime_error("Undefined database value on writing");
+
         QJsonObject finalObject; //Prepare the file with the database and its metadata
         finalObject.insert("DBField", encryptedData); //Add the encrypted database
         finalObject.insert("DBInitVector", initializationVector); //Add the initialization vector
@@ -34,17 +38,27 @@ void BlueIOInterface::writeFile(const QString &path, const QJsonDocument jsonDoc
         finalObject.insert("DBStretchTime", time); //Add KDF stretch time
         QJsonDocument finalDoc(finalObject);
 
+        QMutex fileMutex; //Lock mutex to avoid multiple thread overlapping
+        fileMutex.lock();
+
         QFile file(path); //Open the file and check for errors
         if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            fileMutex.unlock(); //Unlock mutex before throwing
             throw std::runtime_error("Failed to open writing device");
+        }
 
         //Write the encrypted database and metada as a compressed binary file
         file.write(qCompress(finalDoc.toBinaryData(), 9));
         file.close();
-    }
-    catch(...)
-    {
+        fileMutex.unlock();
 
+        //Emit complete signal
+        emit writeComplete();
+    }
+    catch(const std::exception &exception)
+    {
+        emit errorSignal(exception.what());
     }
 }
 
@@ -52,12 +66,19 @@ void BlueIOInterface::readFile(const QString &path, const QString &compositeKey)
 {
     try
     {
+        QMutex fileMutex; //Lock mutex to avoid multiple thread overlapping
+        fileMutex.lock();
+
         QFile file(path); //Open the file and check for errors
         if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            fileMutex.unlock(); //Unlock mutex before throwing
             throw std::runtime_error("Failed to open reading device");
+        }
 
-        QString wrappedData = qUncompress(file.readAll(), 9); //Uncompress data
+        QString wrappedData = qUncompress(file.readAll(), 9); //Retrieve uncompressed data
         file.close();
+        fileMutex.unlock();
 
         QJsonDocument doc = QJsonDocument::fromJson(wrappedData);
         QJsonObject jsonObject = doc.object(); //Recover JSON encapsulating object

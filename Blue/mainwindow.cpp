@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    AESModule::integrityCheck();
+    //AESModule::integrityCheck(); //TODO REACTIVATE HEXADECIMAL INTEGRITY CHECK
     BlueDBManager db;
 }
 

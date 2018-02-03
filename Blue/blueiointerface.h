@@ -22,8 +22,9 @@ public slots:
     void readFile(const QString &path, const QString &compositeKey);
 
 signals:
-    void errorSignal(QString errorString);
+    void writeComplete();
     void readCompleted(DBParameters dbParam);
+    void errorSignal(QString errorString);
 
 };
 
