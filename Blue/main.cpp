@@ -2,6 +2,8 @@
 #include "spdlog/spdlog.h"
 #include <QApplication>
 
+#include <QDebug>
+#include "aesmodule.h"
 #include <iostream>
 #include <cryptlib.h>
 
@@ -11,7 +13,6 @@ using namespace CryptoPP;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
     try
     {
         // Create basic file logger (not rotated)
@@ -24,11 +25,14 @@ int main(int argc, char *argv[])
         spdlog::get("LOGGER")->info("");
         spdlog::set_pattern("[%d/%m/%Y %H:%M:%S.%e] [%l] %v");
         spdlog::get("LOGGER")->flush();
+        qDebug() << "2";
     }
     catch (const spdlog::spdlog_ex &ex)
     {
         std::cerr << "Log initialization failed: " << ex.what() << std::endl;
     }
+
+    qsrand(time(NULL));
 
     MainWindow w;
     w.show();

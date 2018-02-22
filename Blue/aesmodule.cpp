@@ -1,36 +1,110 @@
 #include "aesmodule.h"
 
 #include <QVector>
+#include <string>
+#include <iostream>
 #include <spdlog/spdlog.h>
+#include <Tools/qiodevicesink.h>
+#include <Tools/qiodevicesource.h>
 #include <cryptlib.h>
 #include <pwdbased.h>
 #include <eax.h>
 #include <aes.h>
 #include <base64.h>
+#include <hex.h>
 #include <osrng.h>
-#include <string>
-#include <iostream>
+
+#include <QDebug>
 
 using namespace CryptoPP;
-
 
 AESModule::AESModule()
 {
 
 }
 
+QByteArray AESModule::encryptBinary(const QByteArray &binaryToEncrypt, const QByteArray &additionalData,
+                                    const QByteArray &privateKey, const QByteArray &initializationVector)
+{
+    //Pipe the private key to a secure container
+    SecByteBlock key(AES::DEFAULT_KEYLENGTH);
+    QByteArraySource(privateKey, true, new ArraySink(key, key.size()));
+
+    //Pipe the initialization vector to a secure container
+    SecByteBlock iv(AES::BLOCKSIZE);
+    QByteArraySource(initializationVector, true, new ArraySink(iv, iv.size()));
+
+    //Create the encryption object and set the parameters
+    EAX<AES>::Encryption encryptObject;
+    encryptObject.SetKeyWithIV(key, key.size(), iv, iv.size());
+
+    //Create a filter that returns the result as a string
+    QByteArray encryptedData;
+    AuthenticatedEncryptionFilter encryptFilter(encryptObject, new QByteArraySink(encryptedData), false, TAG_SIZE);
+
+    //Pass the Authenticated Additional Data inside the filter
+    encryptFilter.ChannelPut(AAD_CHANNEL, (const byte*)additionalData.toStdString().data(), additionalData.toStdString().size());
+    encryptFilter.ChannelMessageEnd(AAD_CHANNEL);
+
+    //Pass the Private Data inside the filter
+    encryptFilter.ChannelPut(DEFAULT_CHANNEL, (const byte*)binaryToEncrypt.toStdString().data(), binaryToEncrypt.toStdString().size());
+    encryptFilter.ChannelMessageEnd(DEFAULT_CHANNEL);
+
+    return encryptedData;
+}
+
+QByteArray AESModule::decryptBinary(const QByteArray &binaryToDecrypt, const QByteArray &additionalData,
+                                    const QByteArray &privateKey, const QByteArray &initializationVector)
+{
+
+    //Pipe the private key to a secure container
+    SecByteBlock key(AES::DEFAULT_KEYLENGTH);
+    QByteArraySource(privateKey, true, new ArraySink(key, key.size()));
+
+    //Pipe the initialization vector to a secure container
+    SecByteBlock iv(AES::BLOCKSIZE);
+    QByteArraySource(initializationVector, true, new ArraySink(iv, sizeof(iv)));
+
+    //Split encrypted data into real data + tag
+    std::string encryptedData;
+    QByteArraySource(binaryToDecrypt, true, new StringSink(encryptedData));
+    std::string data = encryptedData.substr(0, encryptedData.length() - TAG_SIZE);
+    std::string tag = encryptedData.substr(encryptedData.length() - TAG_SIZE);
+
+    //Create the decryption object and set parameters
+    EAX<AES>::Decryption decryptionObject;
+    decryptionObject.SetKeyWithIV(key, key.size(), iv, iv.size());
+
+    //Create a filter that returns the result as a string
+    QByteArray decryptedData;
+    AuthenticatedDecryptionFilter decryptionFilter(decryptionObject, new QByteArraySink(decryptedData), AuthenticatedDecryptionFilter::DEFAULT_FLAGS, TAG_SIZE);
+
+    //Pass the Authenticated Additional Data inside the filter
+    std::string addDataStr;
+    QByteArraySource(additionalData, true, new StringSink(addDataStr));
+    decryptionFilter.ChannelPut(AAD_CHANNEL, (const byte*)addDataStr.data(), addDataStr.size());
+    decryptionFilter.ChannelMessageEnd(AAD_CHANNEL);
+
+    //Pass the Private Data and the Tag inside the filter
+    decryptionFilter.ChannelPut(DEFAULT_CHANNEL, (const byte*)data.data(), data.size());
+    decryptionFilter.ChannelPut(DEFAULT_CHANNEL, (const byte*)tag.data(), tag.size());
+    decryptionFilter.ChannelMessageEnd(DEFAULT_CHANNEL);
+
+    return decryptedData;
+}
+
 //Encrypt data with given parameters, all paramaters must be Base64 encoded
 QString AESModule::encryptData(const QString &privateData, const QString &addData, const QString &privateKey, const QString &initializationVector)
 {
     std::string pdata, adata, ciphertext; //Private Data, AAD, Encrypted Data
-    pdata = fromQStringBase64(privateData); //Private data incoming is Base64
-    adata = fromQStringBase64(addData); //Additional data incoming is Base64
+    pdata = privateData.toStdString(); //Private data incoming is Base64
+    adata = addData.toStdString(); //Additional data incoming is Base64
 
     SecByteBlock key(AES::DEFAULT_KEYLENGTH); //QString (Base64) to byte (unsigned char)
-    StringSource(privateKey.toStdString(), true, new Base64Decoder(new ArraySink(key, key.size())));
+    StringSource(privateKey.toStdString(), true, new ArraySink(key, key.size()));
 
     SecByteBlock iv(AES::BLOCKSIZE); //QString (Base64) to byte (unsigned char)
-    StringSource(initializationVector.toStdString(), true, new Base64Decoder(new ArraySink(iv, iv.size())));
+    StringSource(initializationVector.toStdString(), true, new ArraySink(iv, iv.size()));
 
     EAX<AES>::Encryption encryptObject;
     encryptObject.SetKeyWithIV(key, key.size(), iv, iv.size());
@@ -42,14 +116,14 @@ QString AESModule::encryptData(const QString &privateData, const QString &addDat
     encryptFilter.ChannelPut(DEFAULT_CHANNEL, (const byte*)pdata.data(), pdata.size()); //Pass the Private Data inside the filter
     encryptFilter.ChannelMessageEnd(DEFAULT_CHANNEL);
 
-    return toQStringBase64(ciphertext);
+    return QString::fromStdString(ciphertext);
 }
 
 //Decrypt data with given parameters, all paramaters must be Base64 encoded
 QString AESModule::decryptData(const QString &encryptedData, const QString &addData, const QString &privateKey, const QString &initializationVector)
 {
     std::string ciphertext, adata, decipheredText; //Encrypted Data, AAD, Decrypted Data
-    ciphertext = fromQStringase64(encryptedData); //Encrypted data incoming is Base64
+    ciphertext = fromQStringBase64(encryptedData); //Encrypted data incoming is Base64
     adata = fromQStringBase64(addData); //Additional data incoming is Base64
 
     SecByteBlock key(AES::DEFAULT_KEYLENGTH); //QString (Base64) to byte (unsigned char)
@@ -74,37 +148,40 @@ QString AESModule::decryptData(const QString &encryptedData, const QString &addD
 }
 
 //Derivates a key from a password given a number of iterations to process or a length of time to process
-QString AESModule::derivateKey(const QString &password, const QString &salt, const unsigned int iterations, const unsigned int time)
+QByteArray AESModule::derivateKey(const QByteArray &password, const QByteArray &salt, const unsigned int iterations, const unsigned int time)
 {
-    SecByteBlock derivedBlock(16);
+    SecByteBlock derivatedBlock(32);
     PKCS5_PBKDF2_HMAC<SHA256> keyDerivator;
-    keyDerivator.DeriveKey(derivedBlock.data(), derivedBlock.size(), 0, (const byte*)password.data(), password.size(),
+    keyDerivator.DeriveKey(derivatedBlock.data(), derivatedBlock.size(), 0, (const byte*)password.data(), password.size(),
                            (const byte*)salt.data(), salt.size(), iterations, time);
-    std::string keyBase64;
-    StringSource(derived, sizeof(derived), true, new Base64Encoder(new StringSink(keyhex)));
-    return QString::fromStdString(keyBase64);
+
+    QByteArray key;
+    ArraySource(derivatedBlock, sizeof(derivatedBlock), true, new QByteArraySink(key));
+    return key;
 }
 
 //Generate a random initialization vector
-QString AESModule::generateIV()
+QByteArray AESModule::generateIV()
 {
-    AutoSeededRandomPool randomGenerator;
     SecByteBlock initializationVector(AES::BLOCKSIZE);
+    AutoSeededRandomPool randomGenerator;
     randomGenerator.GenerateBlock(initializationVector, sizeof(initializationVector));
-    std::string ivBase64;
-    StringSource(ivBase64, sizeof(iv), true, new Base64Encoder(new StringSink(ivHex));
-    return QString::fromStdString(ivBase64);
+
+    QByteArray iv;
+    ArraySource(initializationVector, sizeof(initializationVector), true, new QByteArraySink(iv));
+    return iv;
 }
 
 //Generate a random 64 bytes salt
-QString AESModule::generateSalt()
+QByteArray AESModule::generateSalt()
 {
-    AutoSeededRandomPool randomGenerator;
     SecByteBlock salt(64);
+    AutoSeededRandomPool randomGenerator;
     randomGenerator.GenerateBlock(salt, sizeof(salt));
-    std::string saltBase64;
-    StringSource(saltBase64, sizeof(salt), true, new Base64Encoder(new StringSink(saltBase64)));
-    return QString::fromStdString(saltBase64);
+
+    QByteArray s;
+    ArraySource(salt, sizeof(salt), true, new QByteArraySink(s));
+    return s;
 }
 
 //String to Base64 QString
@@ -119,7 +196,7 @@ QString AESModule::toQStringBase64(const std::string &data)
 std::string AESModule::toStdBase64(const QString &data)
 {
     std::string base64;
-    StringSource(data.toStdString(), true, new Base64Encoder(new StringSink(base64));
+    StringSource(data.toStdString(), true, new Base64Encoder(new StringSink(base64)));
     return base64;
 }
 
@@ -214,8 +291,13 @@ bool AESModule::integrityCheck()
                                     QStringLiteral("8395FCF1E95BEBD697BD010BC766AAC3"),
                                     QStringLiteral("22E7ADD93CFC6393C57EC0B3C17D6B44"),
                                     QStringLiteral("126735FCC320D25A"),
-                                    QStringLiteral("CB8920F87A6C75CFF39627B56E3ED197C552D295A7CFC46AFC253B4652B1AF3795B124AB6E"),
+                                    QStringLiteral("CB8920F87A6C75CFF39627B5695A7CFC46AFC253B4652B1AF3795B124AB6E"),
                                     loggingList)); //10
+
+    for(int i = 0; i < 10; i++)
+    {
+        qWarning() << AESModule::randomCheck();
+    }
 
     //If a test vector failed, send error to logger
     if(results.contains(false))
@@ -233,6 +315,21 @@ bool AESModule::integrityCheck()
     return true;
 }
 
+QString AESModule::fromHex(const QString &data)
+{
+    std::string base64;
+    StringSource(data.toStdString(), true, new HexDecoder(new StringSink(base64)));
+    return QString::fromStdString(base64);
+}
+
+
+QString AESModule::toHex(const QString &data)
+{
+    std::string base64;
+    StringSource(data.toStdString(), true, new HexEncoder(new StringSink(base64)));
+    return QString::fromStdString(base64);
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                         PROTECTED                                                                //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -241,35 +338,194 @@ bool AESModule::integrityCheck()
 bool AESModule::testVectorVerify(const QString &msg, const QString &key, const QString &nonce,
                                  const QString &header, const QString &cipher, QStringList &logs)
 {
-    QString logstr = QString(" Test Vector : K(%1) N(%2) H(%3) M(%4) C(%5) ").arg(key, nonce, header, msg, cipher); //Test vector logging
+    QString logstr = QString("Test Vector checked : K(%1) N(%2) H(%3) M(%4) C(%5)").arg(key, nonce, header, msg, cipher); //Test vector logging
+    logs.append(logstr);
 
     //Three outcome possible : No error, Error, Exception
     try
     {
         //Test encryption of the test vector
-        QString encryptResult = encryptData(msg, header, key, nonce);
+        QByteArray encryptedBinary = encryptBinary(QByteArray::fromHex(msg.toUtf8()),
+                                                   QByteArray::fromHex(header.toUtf8()),
+                                                   QByteArray::fromHex(key.toUtf8()),
+                                                   QByteArray::fromHex(nonce.toUtf8()));
+
+        //Convert encryption result to hexadecimal
+        QString encryptResult = encryptedBinary.toHex();
+        encryptResult = encryptResult.toUpper();
+
+        bool encryptTestPassed;
         if(encryptResult == cipher)
         {
-            logstr.prepend(QStringLiteral("Result(SUCCESS)"));
-            logstr.append(QStringLiteral("Error()"));
-            logs.append(logstr);
+            encryptTestPassed = true;
+        }
+        else
+        {
+            logs.append(QString("      ENCRYPTION RESULT(FAILURE) : Error(VECTOR ENCRYPTION MISMATCH : Expected \"%1\", got \"%2\")").arg(cipher, encryptResult));
+            encryptTestPassed = false;
+        }
+
+
+        //Test decryption of the encrypted test vector
+        QByteArray decryptedBinary = decryptBinary(QByteArray::fromHex(encryptResult.toUtf8()),
+                                                   QByteArray::fromHex(header.toUtf8()),
+                                                   QByteArray::fromHex(key.toUtf8()),
+                                                   QByteArray::fromHex(nonce.toUtf8()));
+
+        //Convert decryption result to hexadecimal
+        QString decryptResult = decryptedBinary.toHex();
+        decryptResult = decryptResult.toUpper();
+
+        bool decryptTestPassed;
+        if(decryptResult == msg)
+        {
+            decryptTestPassed = true;
+        }
+        else
+        {
+            logs.append(QString("      DECRYPTION RESULT(FAILURE) : Error(VECTOR DECRYPTION MISMATCH : Expected \"%1\", got \"%2\")").arg(msg, decryptResult));
+            decryptTestPassed = false;
+        }
+
+
+        //Send result of the test vector testing
+        if(encryptTestPassed && decryptTestPassed)
+        {
             return true;
         }
         else
         {
-            logstr.prepend(QStringLiteral("Result(FAILURE)"));
-            logstr.append(QStringLiteral("Error(VECTOR MISMATCH)"));
-            logs.append(logstr);
             return false;
         }
+
     }
     catch(CryptoPP::Exception &e)
     {
-        logstr.prepend(QStringLiteral("Result(FAILURE)"));
-        logstr.append("Error(" + QString::fromStdString(e.what()) + ")");
-        logs.append(logstr);
+        logs.append("      RESULT(FAILURE) : Error(EXCEPTION THROWN : " + QString::fromStdString(e.what()) + ")");
         return false;
     }
+}
+
+bool AESModule::randomCheck()
+{
+    const QString randomString = generateRandomString();
+    const QString randomPassword = generateRandomString();
+    QString authenticatedData = generateRandomString();
+    QByteArray initializationVector = generateIV();
+    QByteArray salt = generateSalt();
+    QByteArray privateKey = derivateKey(randomPassword.toUtf8(), salt, (qrand() % 10000) + 1, 0);
+    QByteArray encrypted, decrypted;
+    bool first = false , second = false, third = false, fourth = false;
+
+    try
+    {
+        encrypted = encryptBinary(randomString.toUtf8(), authenticatedData.toUtf8(), privateKey, initializationVector);
+    }
+    catch(std::exception &e)
+    {
+        qWarning() << "Encryption failed, fatal error, integrity test failed";
+        return false;
+    }
+
+    try
+    {
+        decrypted = decryptBinary(encrypted, authenticatedData.toUtf8(), privateKey, initializationVector);
+
+        //This test has to succeed
+        if(randomString == QString(decrypted))
+        {
+            qWarning() << " EQUAL ";
+            first = true;
+        }
+    }
+    catch(std::exception &e)
+    {
+        qWarning() << e.what();
+    }
+
+
+    //Second test : has to fail, key was tampered
+    try
+    {
+        QByteArray tamper("a");
+        QByteArray tamperedKey = privateKey;
+        tamperedKey.replace(1, 1, tamper);
+
+        decrypted = decryptBinary(encrypted, authenticatedData.toUtf8(), tamperedKey, initializationVector);
+    }
+    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e)
+    {
+        qWarning() << "exception " << e.what();
+        second = true;
+    }
+    catch(std::exception &e)
+    {
+        qWarning() << "Other exception" << e.what();
+    }
+
+    //Third test : has to fail, AAD was tampered
+    try
+    {
+        QString tamperedAAD = authenticatedData;
+        tamperedAAD.remove(0, 1);
+
+        decrypted = decryptBinary(encrypted, tamperedAAD.toUtf8(), privateKey, initializationVector);
+    }
+    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e)
+    {
+        qWarning() << "exception  vvv" << e.what();
+        third = true;
+    }
+    catch(std::exception &e)
+    {
+        qWarning() << "Other exception" << e.what();
+    }
+
+    //Fourth test : has to fail, IV was tampered
+    try
+    {
+        QByteArray tamper("a");
+        QByteArray tamperedIV = initializationVector;
+        tamperedIV.replace(1, 1, tamper);
+
+        decrypted = decryptBinary(encrypted, authenticatedData.toUtf8(), privateKey, tamperedIV);
+    }
+    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e)
+    {
+        qWarning() << "exception " << e.what();
+        fourth = true;
+    }
+    catch(std::exception &e)
+    {
+        qWarning() << "Other exception" << e.what();
+    }
+
+    if(first && second && third && fourth)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+    return false;
+}
+
+//Return a random string of random and maximum length of 32
+QString AESModule::generateRandomString()
+{
+    const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+    const int randomStringLength = (qrand() % 31) + 1; // assuming you want random strings of 12 characters
+
+    QString randomString;
+    for(int i = 0; i < randomStringLength; i++)
+    {
+        int index = qrand() % possibleCharacters.length();
+        QChar nextChar = possibleCharacters.at(index);
+        randomString.append(nextChar);
+    }
+    return randomString;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
