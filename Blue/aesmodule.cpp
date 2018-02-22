@@ -408,8 +408,9 @@ bool AESModule::testVectorVerify(const QString &msg, const QString &key, const Q
 
 bool AESModule::randomCheck()
 {
-    const QString randomString = generateRandomString();
-    const QString randomPassword = generateRandomString();
+    //Generate random parameters and key
+    QString randomString = generateRandomString();
+    QString randomPassword = generateRandomString();
     QString authenticatedData = generateRandomString();
     QByteArray initializationVector = generateIV();
     QByteArray salt = generateSalt();
@@ -417,32 +418,49 @@ bool AESModule::randomCheck()
     QByteArray encrypted, decrypted;
     bool first = false , second = false, third = false, fourth = false;
 
-    try
+    try //Encrypt data to pass all the following tests
     {
         encrypted = encryptBinary(randomString.toUtf8(), authenticatedData.toUtf8(), privateKey, initializationVector);
     }
-    catch(std::exception &e)
+    catch(std::exception &e) //Fatal exception, can't continue in the following tests, integrity check has failed
     {
         qWarning() << "Encryption failed, fatal error, integrity test failed";
         return false;
     }
 
-    try
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                                    FIRST TEST                                                   //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    try //First test : has to succeed, decrypt data and match it with plaintext
     {
         decrypted = decryptBinary(encrypted, authenticatedData.toUtf8(), privateKey, initializationVector);
 
-        //This test has to succeed
-        if(randomString == QString(decrypted))
+        if(randomString == QString(decrypted)) //Test that decrypted data matches the plaintext data that was encrypted
         {
             qWarning() << " EQUAL ";
             first = true;
         }
+        else
+        {
+            first = false;
+        }
     }
-    catch(std::exception &e)
+    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test failed
+    {
+        first = false;
+    }
+    catch(std::exception &e) //Decryption failed in an abnormal way, test failed
     {
         qWarning() << e.what();
+        first = false;
     }
 
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                                   SECOND TEST                                                   //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Second test : has to fail, key was tampered
     try
@@ -452,16 +470,22 @@ bool AESModule::randomCheck()
         tamperedKey.replace(1, 1, tamper);
 
         decrypted = decryptBinary(encrypted, authenticatedData.toUtf8(), tamperedKey, initializationVector);
+        second = false; //If decryptBinary didn't throw, decryption worked, test failed
     }
-    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e)
+    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test passed
     {
         qWarning() << "exception " << e.what();
         second = true;
     }
-    catch(std::exception &e)
+    catch(std::exception &e) //Decryption failed in an abnormal way, test failed
     {
         qWarning() << "Other exception" << e.what();
+        second = false;
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                                    THIRD TEST                                                   //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Third test : has to fail, AAD was tampered
     try
@@ -470,16 +494,22 @@ bool AESModule::randomCheck()
         tamperedAAD.remove(0, 1);
 
         decrypted = decryptBinary(encrypted, tamperedAAD.toUtf8(), privateKey, initializationVector);
+        third = false; //If decryptBinary didn't throw, decryption worked, test failed
     }
-    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e)
+    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test passed
     {
         qWarning() << "exception  vvv" << e.what();
         third = true;
     }
-    catch(std::exception &e)
+    catch(std::exception &e) //Decryption failed in an abnormal way, test has failed
     {
         qWarning() << "Other exception" << e.what();
+        third = false;
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                                   FOURTH TEST                                                   //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Fourth test : has to fail, IV was tampered
     try
@@ -489,24 +519,28 @@ bool AESModule::randomCheck()
         tamperedIV.replace(1, 1, tamper);
 
         decrypted = decryptBinary(encrypted, authenticatedData.toUtf8(), privateKey, tamperedIV);
+        fourth = false; //If decryptBinary didn't throw, decryption worked, test failed
     }
-    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e)
+    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test passed
     {
         qWarning() << "exception " << e.what();
         fourth = true;
     }
-    catch(std::exception &e)
+    catch(std::exception &e) //Decryption failed in an abnormal way, test failed
     {
         qWarning() << "Other exception" << e.what();
+        fourth = false;
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                                    FIFTH TEST                                                   //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //todo add case to tamper with the encrypted data directly
 
     if(first && second && third && fourth)
     {
         return true;
-    }
-    else
-    {
-        return false;
     }
 
     return false;
