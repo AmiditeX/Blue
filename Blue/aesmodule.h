@@ -38,7 +38,7 @@ protected:
     //Return result of encryption/decryption of a test vector
     static bool testVectorVerify(const QString &msg, const QString &key, const QString &nonce,
                                  const QString &header, const QString &cipher, QStringList &logs);
-    static bool randomCheck();
+    static bool randomCheck(QStringList &logs);
     static QString generateRandomString();
 
 private:

@@ -291,18 +291,13 @@ bool AESModule::integrityCheck()
                                     QStringLiteral("8395FCF1E95BEBD697BD010BC766AAC3"),
                                     QStringLiteral("22E7ADD93CFC6393C57EC0B3C17D6B44"),
                                     QStringLiteral("126735FCC320D25A"),
-                                    QStringLiteral("CB8920F87A6C75CFF39627B5695A7CFC46AFC253B4652B1AF3795B124AB6E"),
+                                    QStringLiteral("CB8920F87A6C75CFF39627B56E3ED197C552D295A7CFC46AFC253B4652B1AF3795B124AB6E"),
                                     loggingList)); //10
-
-    for(int i = 0; i < 10; i++)
-    {
-        qWarning() << AESModule::randomCheck();
-    }
 
     //If a test vector failed, send error to logger
     if(results.contains(false))
     {
-        spdlog::get("LOGGER")->error("Integrity check has failed");
+        spdlog::get("LOGGER")->error("Integrity check has failed : test vector failed");
         spdlog::get("LOGGER")->error("[K = Key] [N = Nonce] [H = Header, Additional Data(ADATA)] "
                                      "[M = Message, encrypted data] [C = Cipher, Expected encrypted result]");
         for(int i = 0; i < loggingList.size(); i++)
@@ -312,6 +307,27 @@ bool AESModule::integrityCheck()
         spdlog::get("LOGGER")->flush();
         return false;
     }
+
+    loggingList.clear();
+
+    //Test 50 random vectors
+    for(int i = 0; i < 50; i++)
+    {
+        if(AESModule::randomCheck(loggingList) == false)
+        {
+            spdlog::get("LOGGER")->error("Random test #" + QString::number(i).toStdString());
+            for(int i = 0; i < loggingList.size(); i++)
+            {
+                spdlog::get("LOGGER")->error(loggingList.at(i).toStdString());
+            }
+            spdlog::get("LOGGER")->flush();
+            return false;
+        }
+
+    }
+
+    loggingList.clear();
+
     return true;
 }
 
@@ -406,7 +422,7 @@ bool AESModule::testVectorVerify(const QString &msg, const QString &key, const Q
     }
 }
 
-bool AESModule::randomCheck()
+bool AESModule::randomCheck(QStringList &logs)
 {
     //Generate random parameters and key
     QString randomString = generateRandomString();
@@ -416,15 +432,16 @@ bool AESModule::randomCheck()
     QByteArray salt = generateSalt();
     QByteArray privateKey = derivateKey(randomPassword.toUtf8(), salt, (qrand() % 10000) + 1, 0);
     QByteArray encrypted, decrypted;
-    bool first = false , second = false, third = false, fourth = false;
+    bool first = false , second = false, third = false, fourth = false, fifth = false;
 
     try //Encrypt data to pass all the following tests
     {
         encrypted = encryptBinary(randomString.toUtf8(), authenticatedData.toUtf8(), privateKey, initializationVector);
     }
-    catch(std::exception &e) //Fatal exception, can't continue in the following tests, integrity check has failed
+    catch(std::exception &e) //Fatal exception, can't continue to the following tests, integrity check has failed
     {
-        qWarning() << "Encryption failed, fatal error, integrity test failed";
+        logs.append("Encryption of random data has failed, integrity check failed");
+        logs.append(QString("Test failed with RDATA(%1) RPASSWORD(%2), RADATA(%3)").arg(randomString, randomPassword, authenticatedData));
         return false;
     }
 
@@ -439,21 +456,22 @@ bool AESModule::randomCheck()
 
         if(randomString == QString(decrypted)) //Test that decrypted data matches the plaintext data that was encrypted
         {
-            qWarning() << " EQUAL ";
             first = true;
         }
         else
         {
+            logs.append("1ST Test has failed : decrypted != data when decryption successful");
             first = false;
         }
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test failed
     {
+        logs.append(QString("1ST Test has failed : failed to decrypt : %1").arg(e.what()));
         first = false;
     }
     catch(std::exception &e) //Decryption failed in an abnormal way, test failed
     {
-        qWarning() << e.what();
+        logs.append(QString("1ST Test has failed : fatal exception : %1").arg(e.what()));
         first = false;
     }
 
@@ -471,15 +489,15 @@ bool AESModule::randomCheck()
 
         decrypted = decryptBinary(encrypted, authenticatedData.toUtf8(), tamperedKey, initializationVector);
         second = false; //If decryptBinary didn't throw, decryption worked, test failed
+        logs.append(QString("2ND Test has failed : decryptBinary failed to throw"));
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test passed
     {
-        qWarning() << "exception " << e.what();
         second = true;
     }
     catch(std::exception &e) //Decryption failed in an abnormal way, test failed
     {
-        qWarning() << "Other exception" << e.what();
+        logs.append(QString("2ND Test has failed : fatal exception : %1").arg(e.what()));
         second = false;
     }
 
@@ -495,16 +513,16 @@ bool AESModule::randomCheck()
 
         decrypted = decryptBinary(encrypted, tamperedAAD.toUtf8(), privateKey, initializationVector);
         third = false; //If decryptBinary didn't throw, decryption worked, test failed
+        logs.append(QString("3RD Test has failed : decryptBinary failed to throw"));
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test passed
     {
-        qWarning() << "exception  vvv" << e.what();
         third = true;
     }
     catch(std::exception &e) //Decryption failed in an abnormal way, test has failed
     {
-        qWarning() << "Other exception" << e.what();
         third = false;
+        logs.append(QString("3RD Test has failed : fatal exception : %1").arg(e.what()));
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -520,15 +538,15 @@ bool AESModule::randomCheck()
 
         decrypted = decryptBinary(encrypted, authenticatedData.toUtf8(), privateKey, tamperedIV);
         fourth = false; //If decryptBinary didn't throw, decryption worked, test failed
+        logs.append(QString("4TH Test has failed : decryptBinary failed to throw"));
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test passed
     {
-        qWarning() << "exception " << e.what();
         fourth = true;
     }
     catch(std::exception &e) //Decryption failed in an abnormal way, test failed
     {
-        qWarning() << "Other exception" << e.what();
+        logs.append(QString("4TH Test has failed : fatal exception : %1").arg(e.what()));
         fourth = false;
     }
 
@@ -536,13 +554,39 @@ bool AESModule::randomCheck()
     //                                                    FIFTH TEST                                                   //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //todo add case to tamper with the encrypted data directly
+    //Fifth test : has to fail, data was tampered
+    try
+    {
+        QByteArray tamper("a");
+        QByteArray tamperedData = encrypted;
+        tamperedData.replace(1, 1, tamper);
 
-    if(first && second && third && fourth)
+        decrypted = decryptBinary(tamperedData, authenticatedData.toUtf8(), privateKey, initializationVector);
+        fifth = false; //If decryptBinary didn't throw, decryption worked, test failed
+        logs.append(QString("5TH Test has failed : decryptBinary failed to throw"));
+    }
+    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test passed
+    {
+        fifth = true;
+    }
+    catch(std::exception &e) //Decryption failed in an abnormal way, test failed
+    {
+        logs.append(QString("5TH Test has failed : fatal exception : %1").arg(e.what()));
+        fifth = false;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                                      RETURN                                                     //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //Random test passes if each individual test passed
+    if(first && second && third && fourth && fifth)
     {
         return true;
     }
 
+    logs.append("Integrity check has failed, one or more test failed");
+    logs.append(QString("Test failed with RDATA(%1) RPASSWORD(%2), RADATA(%3)").arg(randomString, randomPassword, authenticatedData));
     return false;
 }
 
@@ -550,7 +594,7 @@ bool AESModule::randomCheck()
 QString AESModule::generateRandomString()
 {
     const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
-    const int randomStringLength = (qrand() % 31) + 1; // assuming you want random strings of 12 characters
+    const int randomStringLength = (qrand() % 31) + 1;
 
     QString randomString;
     for(int i = 0; i < randomStringLength; i++)
