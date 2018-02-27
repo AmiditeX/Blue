@@ -15,15 +15,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     aesmodule.cpp \
-    #bluedbmanager.cpp \
-    #blueiointerface.cpp
+    bluedbmanager.cpp \
+    blueiointerface.cpp \
     Tools/qiodevicesink.cpp \
     Tools/qiodevicesource.cpp
 
 HEADERS  += mainwindow.h \
     aesmodule.h \
-    #bluedbmanager.h \
-    #blueiointerface.h
+    bluedbmanager.h \
+    blueiointerface.h \
     Tools/qiodevicesink.h \
     Tools/qiodevicesource.h
 

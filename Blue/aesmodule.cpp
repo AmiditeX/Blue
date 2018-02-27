@@ -323,7 +323,6 @@ bool AESModule::integrityCheck()
             spdlog::get("LOGGER")->flush();
             return false;
         }
-
     }
 
     loggingList.clear();

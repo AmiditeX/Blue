@@ -1,6 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QDebug>
+#include "blueiointerface.h"
+#include <iostream>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -9,7 +14,34 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     qDebug() << AESModule::integrityCheck(); //TODO REACTIVATE HEXADECIMAL INTEGRITY CHECK
-    //BlueDBManager db;
+
+    QJsonObject finalObject; //Prepare the file with the database and its metadata
+    finalObject.insert("DBField", "HELLO"); //Add the encrypted database
+    QJsonDocument finalDoc(finalObject);
+
+    connect(&i, SIGNAL(readCompleted(DBParameters)), this, SLOT(read(DBParameters)));
+    connect(&i, SIGNAL(writeCompleted()), this, SLOT(write()));
+    connect(&i, SIGNAL(errorSignal(QString)), this, SLOT(error(QString)));
+    i.writeFile("encryptedmessage.txt", finalDoc, "Password", 1500, 0);
+}
+
+void MainWindow::error(QString err)
+{
+    qWarning() << " Error " << err;
+}
+
+void MainWindow::write()
+{
+    qWarning() << "Write successful";
+    i.readFile("encryptedmessage.txt", "Password");
+}
+
+void MainWindow::read(DBParameters param)
+{
+    qWarning() << "Reading";
+    qWarning() << param.DBDecrypted;
+    qWarning() << param.DBKeySalt;
+    qWarning() << param.DBIterations;
 }
 
 MainWindow::~MainWindow()

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "aesmodule.h"
 #include "bluedbmanager.h"
+#include "blueiointerface.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,7 +18,14 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+
+    void error(QString err);
+    void write();
+    void read(DBParameters param);
+
 private:
+    BlueIOInterface i;
     Ui::MainWindow *ui;
 };
 
