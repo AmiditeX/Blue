@@ -3,7 +3,7 @@
 #include <QApplication>
 
 #include <QDebug>
-#include "aesmodule.h"
+#include "BlueCrypto/aesmodule.h"
 #include <iostream>
 #include <cryptlib.h>
 

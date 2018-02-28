@@ -4,7 +4,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QDebug>
-#include "blueiointerface.h"
+#include "BlueCrypto/blueiointerface.h"
 #include "bluedbmanager.h"
 #include <iostream>
 

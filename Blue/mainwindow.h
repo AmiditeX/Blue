@@ -2,9 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "aesmodule.h"
+#include "BlueCrypto/aesmodule.h"
 #include "bluedbmanager.h"
-#include "blueiointerface.h"
+#include "BlueCrypto/blueiointerface.h"
 
 namespace Ui {
 class MainWindow;

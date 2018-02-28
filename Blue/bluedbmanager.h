@@ -2,8 +2,8 @@
 #define BLUEDBMANAGER_H
 
 #include <QObject>
+#include "BlueCrypto/blueiointerface.h"
 #include "bluedatabase.h"
-#include "blueiointerface.h"
 
 class BlueDBManager : public QObject
 {

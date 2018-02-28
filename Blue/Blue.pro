@@ -14,21 +14,21 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    aesmodule.cpp \
-    bluedbmanager.cpp \
-    blueiointerface.cpp \
-    Tools/qiodevicesink.cpp \
-    Tools/qiodevicesource.cpp \
+    BlueCrypto/aesmodule.cpp \
+    BlueCrypto/blueiointerface.cpp \
+    BlueCrypto/qiodevicesink.cpp \
+    BlueCrypto/qiodevicesource.cpp \
     bluedatabase.cpp \
+    bluedbmanager.cpp \
     DBElements/databaseitem.cpp
 
 HEADERS  += mainwindow.h \
-    aesmodule.h \
-    bluedbmanager.h \
-    blueiointerface.h \
-    Tools/qiodevicesink.h \
-    Tools/qiodevicesource.h \
+    BlueCrypto/aesmodule.h \
+    BlueCrypto/blueiointerface.h \
+    BlueCrypto/qiodevicesink.h \
+    BlueCrypto/qiodevicesource.h \
     bluedatabase.h \
+    bluedbmanager.h \
     DBElements/databaseitem.h
 
 FORMS    += mainwindow.ui

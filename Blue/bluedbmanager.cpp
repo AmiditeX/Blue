@@ -3,8 +3,7 @@
 #include <QObject>
 #include <QThread>
 #include <QJsonDocument>
-#include "aesmodule.h"
-#include "blueiointerface.h"
+#include "BlueCrypto/blueiointerface.h"
 #include "bluedatabase.h"
 
 #include <QDebug>
