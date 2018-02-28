@@ -6,8 +6,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QMutex>
-
-#include <qdebug.h>
+#include <filters.h>
 
 BlueIOInterface::BlueIOInterface()
 {
@@ -61,7 +60,7 @@ void BlueIOInterface::writeFile(const QString &filePath, const QJsonDocument jso
         //Emit completion signal
         emit writeCompleted();
     }
-    catch(const std::exception &exception)
+    catch(const std::exception &exception) //Fatal error
     {
         emit errorSignal(exception.what());
     }
@@ -81,8 +80,7 @@ void BlueIOInterface::readFile(const QString &filePath, const QString &composite
             throw std::runtime_error("Failed to open reading device");
         }
 
-        QByteArray a = file.readAll();
-        QByteArray wrappedData = qUncompress(a); //Retrieve uncompressed data
+        QByteArray wrappedData = qUncompress(file.readAll()); //Retrieve uncompressed data
         file.close();
         fileMutex.unlock();
 
@@ -92,14 +90,13 @@ void BlueIOInterface::readFile(const QString &filePath, const QString &composite
         QByteArray DBField = QByteArray::fromBase64(jsonObject.value("DBField").toString().toUtf8()); //Recover encrypted database
         QByteArray DBInitVector = QByteArray::fromBase64(jsonObject.value("DBInitVector").toString().toUtf8()); //Recover initialization vector
         QByteArray DBKeySalt = QByteArray::fromBase64(jsonObject.value("DBKeySalt").toString().toUtf8()); //Recover KDF salt
-        unsigned int DBIterations = jsonObject.value("DBIterations").toInt(); //Recover KDF iterations
-        unsigned int DBStretchTime = jsonObject.value("DBStretchTime").toInt(); //Recover KDF stretch time
+        int DBIterations = jsonObject.value("DBIterations").toInt(); //Recover KDF iterations
+        int DBStretchTime = jsonObject.value("DBStretchTime").toInt(); //Recover KDF stretch time
         QByteArray iter, stretch; iter.setNum(DBIterations); stretch.setNum(DBStretchTime); //Int parameters to binary
         QByteArray aData = DBKeySalt + DBInitVector + iter + stretch; //Compute authenticated data
 
         if(DBField.isEmpty() || DBInitVector.isEmpty() || DBKeySalt.isEmpty() || iter.isEmpty() || stretch.isEmpty())
             throw std::runtime_error("Undefined database value on reading");
-        qWarning() << "2";
 
         QByteArray derivedKey = AESModule::derivateKey(compositeKey.toUtf8(), DBKeySalt, DBIterations, DBStretchTime); //Derivate key using database parameters
 
@@ -109,7 +106,11 @@ void BlueIOInterface::readFile(const QString &filePath, const QString &composite
         DBParameters returnObject{QJsonDocument::fromBinaryData(decryptedData), DBInitVector, DBKeySalt, DBIterations, DBStretchTime};
         emit readCompleted(returnObject); //Return decrypted database + database parameters
     }
-    catch(const std::exception &exception)
+    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &exception) //Decryption failed (bad composite key, tampered file..)
+    {
+        emit decryptionFailed(exception.what());
+    }
+    catch(const std::exception &exception) //Fatal error
     {
         emit errorSignal(exception.what());
     }

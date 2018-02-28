@@ -5,7 +5,11 @@
 #include <QJsonDocument>
 #include <QDebug>
 #include "blueiointerface.h"
+#include "bluedbmanager.h"
 #include <iostream>
+
+
+#include <QElapsedTimer> //too remove
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -13,7 +17,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    qDebug() << AESModule::integrityCheck(); //TODO REACTIVATE HEXADECIMAL INTEGRITY CHECK
+    for(int i = 0; i < 5; i++)
+    {
+        QElapsedTimer timer;
+              timer.start();
+        qWarning() << AESModule::integrityCheck();
+        qWarning() << "Milli " << timer.elapsed();
+    }
 
     QJsonObject finalObject; //Prepare the file with the database and its metadata
     finalObject.insert("DBField", "HELLO"); //Add the encrypted database
@@ -23,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&i, SIGNAL(writeCompleted()), this, SLOT(write()));
     connect(&i, SIGNAL(errorSignal(QString)), this, SLOT(error(QString)));
     i.writeFile("encryptedmessage.txt", finalDoc, "Password", 1500, 0);
+
 }
 
 void MainWindow::error(QString err)
@@ -33,7 +44,8 @@ void MainWindow::error(QString err)
 void MainWindow::write()
 {
     qWarning() << "Write successful";
-    i.readFile("encryptedmessage.txt", "Password");
+    BlueDBManager manager;
+    manager.readDatabase("encryptedmessage.txt", "Password");
 }
 
 void MainWindow::read(DBParameters param)

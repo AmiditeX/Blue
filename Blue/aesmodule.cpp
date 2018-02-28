@@ -1,11 +1,9 @@
 #include "aesmodule.h"
 
 #include <QVector>
-#include <string>
-#include <iostream>
-#include <spdlog/spdlog.h>
 #include <Tools/qiodevicesink.h>
 #include <Tools/qiodevicesource.h>
+#include <spdlog/spdlog.h>
 #include <cryptlib.h>
 #include <pwdbased.h>
 #include <eax.h>
@@ -459,18 +457,18 @@ bool AESModule::randomCheck(QStringList &logs)
         }
         else
         {
-            logs.append("1ST Test has failed : decrypted != data when decryption successful");
+            logs.append("1ST Sub-Test has failed : decrypted != data when decryption successful");
             first = false;
         }
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test failed
     {
-        logs.append(QString("1ST Test has failed : failed to decrypt : %1").arg(e.what()));
+        logs.append(QString("1ST Sub-Test has failed : failed to decrypt : %1").arg(e.what()));
         first = false;
     }
     catch(std::exception &e) //Decryption failed in an abnormal way, test failed
     {
-        logs.append(QString("1ST Test has failed : fatal exception : %1").arg(e.what()));
+        logs.append(QString("1ST Sub-Test has failed : fatal exception : %1").arg(e.what()));
         first = false;
     }
 
@@ -484,11 +482,16 @@ bool AESModule::randomCheck(QStringList &logs)
     {
         QByteArray tamper("a");
         QByteArray tamperedKey = privateKey;
+        if(tamperedKey.at(1) == 'a') //Don't replace if it won't tamper the data
+        {
+            tamper = "b"; //Replace with data that does tamper the data
+        }
         tamperedKey.replace(1, 1, tamper);
 
         decrypted = decryptBinary(encrypted, authenticatedData.toUtf8(), tamperedKey, initializationVector);
         second = false; //If decryptBinary didn't throw, decryption worked, test failed
-        logs.append(QString("2ND Test has failed : decryptBinary failed to throw"));
+        logs.append(QString("2ND Sub-Test has failed : decryptBinary failed to throw"));
+        logs.append(QString("Found : %1").arg(QString(decrypted)));
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test passed
     {
@@ -496,7 +499,7 @@ bool AESModule::randomCheck(QStringList &logs)
     }
     catch(std::exception &e) //Decryption failed in an abnormal way, test failed
     {
-        logs.append(QString("2ND Test has failed : fatal exception : %1").arg(e.what()));
+        logs.append(QString("2ND Sub-Test has failed : fatal exception : %1").arg(e.what()));
         second = false;
     }
 
@@ -512,7 +515,8 @@ bool AESModule::randomCheck(QStringList &logs)
 
         decrypted = decryptBinary(encrypted, tamperedAAD.toUtf8(), privateKey, initializationVector);
         third = false; //If decryptBinary didn't throw, decryption worked, test failed
-        logs.append(QString("3RD Test has failed : decryptBinary failed to throw"));
+        logs.append(QString("3RD Sub-Test has failed : decryptBinary failed to throw"));
+        logs.append(QString("Found : %1").arg(QString(decrypted)));
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test passed
     {
@@ -521,7 +525,7 @@ bool AESModule::randomCheck(QStringList &logs)
     catch(std::exception &e) //Decryption failed in an abnormal way, test has failed
     {
         third = false;
-        logs.append(QString("3RD Test has failed : fatal exception : %1").arg(e.what()));
+        logs.append(QString("3RD Sub-Test has failed : fatal exception : %1").arg(e.what()));
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -533,11 +537,16 @@ bool AESModule::randomCheck(QStringList &logs)
     {
         QByteArray tamper("a");
         QByteArray tamperedIV = initializationVector;
+        if(tamperedIV.at(1) == 'a') //Don't replace if it won't tamper the data
+        {
+            tamper = "b"; //Replace with data that does tamper the data
+        }
         tamperedIV.replace(1, 1, tamper);
 
         decrypted = decryptBinary(encrypted, authenticatedData.toUtf8(), privateKey, tamperedIV);
         fourth = false; //If decryptBinary didn't throw, decryption worked, test failed
-        logs.append(QString("4TH Test has failed : decryptBinary failed to throw"));
+        logs.append(QString("4TH Sub-Test has failed : decryptBinary failed to throw"));
+        logs.append(QString("Found : %1").arg(QString(decrypted)));
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test passed
     {
@@ -545,7 +554,7 @@ bool AESModule::randomCheck(QStringList &logs)
     }
     catch(std::exception &e) //Decryption failed in an abnormal way, test failed
     {
-        logs.append(QString("4TH Test has failed : fatal exception : %1").arg(e.what()));
+        logs.append(QString("4TH Sub-Test has failed : fatal exception : %1").arg(e.what()));
         fourth = false;
     }
 
@@ -558,11 +567,16 @@ bool AESModule::randomCheck(QStringList &logs)
     {
         QByteArray tamper("a");
         QByteArray tamperedData = encrypted;
+        if(tamperedData.at(1) == 'a') //Don't replace if it won't tamper the data
+        {
+            tamper = "b"; //Replace with data that does tamper the data
+        }
         tamperedData.replace(1, 1, tamper);
 
         decrypted = decryptBinary(tamperedData, authenticatedData.toUtf8(), privateKey, initializationVector);
         fifth = false; //If decryptBinary didn't throw, decryption worked, test failed
-        logs.append(QString("5TH Test has failed : decryptBinary failed to throw"));
+        logs.append(QString("5TH Sub-Test has failed : decryptBinary failed to throw"));
+        logs.append(QString("Found : %1").arg(QString(decrypted)));
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test passed
     {
@@ -570,7 +584,7 @@ bool AESModule::randomCheck(QStringList &logs)
     }
     catch(std::exception &e) //Decryption failed in an abnormal way, test failed
     {
-        logs.append(QString("5TH Test has failed : fatal exception : %1").arg(e.what()));
+        logs.append(QString("5TH Sub-Test has failed : fatal exception : %1").arg(e.what()));
         fifth = false;
     }
 

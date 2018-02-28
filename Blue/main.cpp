@@ -19,9 +19,7 @@ int main(int argc, char *argv[])
         spdlog::basic_logger_mt("LOGGER", "logs.txt");
         spdlog::set_pattern("[%d/%m/%Y %H:%M:%S.%e] [T:%t P:%P] [%l] %v");
         spdlog::get("LOGGER")->info("");
-        spdlog::get("LOGGER")->info("  - - - - - - - - - - - - - - - - - - - - - - - - - -");
         spdlog::get("LOGGER")->info("  - - - Program started - log recording started - - -");
-        spdlog::get("LOGGER")->info("  - - - - - - - - - - - - - - - - - - - - - - - - - -");
         spdlog::get("LOGGER")->info("");
         spdlog::set_pattern("[%d/%m/%Y %H:%M:%S.%e] [%l] %v");
         spdlog::get("LOGGER")->flush();

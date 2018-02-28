@@ -18,14 +18,18 @@ SOURCES += main.cpp\
     bluedbmanager.cpp \
     blueiointerface.cpp \
     Tools/qiodevicesink.cpp \
-    Tools/qiodevicesource.cpp
+    Tools/qiodevicesource.cpp \
+    bluedatabase.cpp \
+    DBElements/databaseitem.cpp
 
 HEADERS  += mainwindow.h \
     aesmodule.h \
     bluedbmanager.h \
     blueiointerface.h \
     Tools/qiodevicesink.h \
-    Tools/qiodevicesource.h
+    Tools/qiodevicesource.h \
+    bluedatabase.h \
+    DBElements/databaseitem.h
 
 FORMS    += mainwindow.ui
 

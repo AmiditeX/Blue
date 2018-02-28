@@ -8,7 +8,7 @@ struct DBParameters
 {
     const QJsonDocument DBDecrypted;
     const QByteArray DBInitVector, DBKeySalt;
-    const unsigned int DBIterations = 0, DBStretchTime = 0;
+    const int DBIterations = 0, DBStretchTime = 0;
 };
 
 class BlueIOInterface : public QObject
@@ -29,6 +29,7 @@ signals:
     void writeCompleted();
     void readCompleted(DBParameters dbParam);
     void errorSignal(QString errorString);
+    void decryptionFailed(QString errorString);
 
 };
 
