@@ -16,8 +16,8 @@ public:
     static QByteArray decryptBinary(const QByteArray &binaryToDecrypt, const QByteArray &additionalData,
                                     const QByteArray &privateKey, const QByteArray &initializationVector);
     
-    static QString encryptData(const QString &privateData, const QString &addData, const QString &privateKey, const QString &initializationVector);
-    static QString decryptData(const QString &encryptedData, const QString &addData, const QString &privateKey, const QString &initializationVector);
+
+    //Key stretching and generation
     static QByteArray derivateKey(const QByteArray &password, const QByteArray &salt, const unsigned int iterations, const unsigned int time);
     static QByteArray generateIV();
     static QByteArray generateSalt();
@@ -25,24 +25,16 @@ public:
     //Integrity check
     static bool integrityCheck();
 
-    static QString fromHex(const QString &data);
-    static QString toHex(const QString &data);
 
-    //Hexadecimal encode/decode
-    static QString toQStringBase64(const std::string &data);
-    static std::string toStdBase64(const QString &data);
-    static QString fromStdBase64(const std::string &data);
-    static std::string fromQStringBase64(const QString &data);
-
-protected:
-    //Return result of encryption/decryption of a test vector
+protected: 
+    //Vector verification, ensuring good implementation
     static bool testVectorVerify(const QString &msg, const QString &key, const QString &nonce,
                                  const QString &header, const QString &cipher, QStringList &logs);
     static bool randomCheck(QStringList &logs);
     static QString generateRandomString();
 
 private:
-    const static int TAG_SIZE = 16;
+    const int TAG_SIZE = 16;
 
 };
 

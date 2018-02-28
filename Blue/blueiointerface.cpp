@@ -1,5 +1,4 @@
 #include "blueiointerface.h"
-#include "aesmodule.h"
 
 #include <QFile>
 #include <QJsonDocument>
@@ -7,6 +6,7 @@
 #include <QJsonValue>
 #include <QMutex>
 #include <filters.h>
+#include "aesmodule.h"
 
 BlueIOInterface::BlueIOInterface()
 {
@@ -17,6 +17,7 @@ BlueIOInterface::BlueIOInterface()
 ///                                                       PUBLIC SLOTS                                                               //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//Encrypt database, add the metadata and write it to a file
 void BlueIOInterface::writeFile(const QString &filePath, const QJsonDocument jsonDoc, const QString &compositeKey,
                                 int iterations, int stretchTime)
 {
@@ -66,6 +67,7 @@ void BlueIOInterface::writeFile(const QString &filePath, const QJsonDocument jso
     }
 }
 
+//Read database file, decrypt it using metadata and return it decrypted
 void BlueIOInterface::readFile(const QString &filePath, const QString &compositeKey)
 {
     try

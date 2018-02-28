@@ -4,6 +4,7 @@
 
 class DataBaseItem
 {
+
 public:
     DataBaseItem();
 };

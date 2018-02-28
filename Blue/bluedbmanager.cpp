@@ -11,10 +11,7 @@
 
 BlueDBManager::BlueDBManager()
 {
-    /*void writeCompleted();
-    void readCompleted(DBParameters dbParam);
-    void errorSignal(QString errorString);
-    void decryptionFailed(QString errorString);*/
+
 }
 
 void BlueDBManager::writeDatabase(const BlueDatabase &dataBase)

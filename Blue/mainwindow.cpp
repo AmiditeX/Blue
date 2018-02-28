@@ -9,7 +9,7 @@
 #include <iostream>
 
 
-#include <QElapsedTimer> //too remove
+#include <QElapsedTimer> //to remove
 
 
 MainWindow::MainWindow(QWidget *parent) :
