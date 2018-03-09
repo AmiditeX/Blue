@@ -20,7 +20,11 @@ SOURCES += main.cpp\
     BlueCrypto/qiodevicesource.cpp \
     bluedatabase.cpp \
     bluedbmanager.cpp \
-    DBElements/databaseitem.cpp
+    DBElements/abstractdatabaseitem.cpp \
+    DBElements/dbpasswordfield.cpp \
+    DBElements/dbnamefield.cpp \
+    DBElements/dbemailfield.cpp \
+    DBElements/dbotpitem.cpp
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
@@ -29,7 +33,11 @@ HEADERS  += mainwindow.h \
     BlueCrypto/qiodevicesource.h \
     bluedatabase.h \
     bluedbmanager.h \
-    DBElements/databaseitem.h
+    DBElements/abstractdatabaseitem.h \
+    DBElements/dbpasswordfield.h \
+    DBElements/dbnamefield.h \
+    DBElements/dbemailfield.h \
+    DBElements/dbotpitem.h
 
 FORMS    += mainwindow.ui
 
