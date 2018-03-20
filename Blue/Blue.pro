@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     DBElements/dbpasswordfield.cpp \
     DBElements/dbnamefield.cpp \
     DBElements/dbemailfield.cpp \
-    DBElements/dbotpitem.cpp
+    DBElements/dbotpitem.cpp \
+    DBElements/dbcontainers.cpp
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     DBElements/dbpasswordfield.h \
     DBElements/dbnamefield.h \
     DBElements/dbemailfield.h \
-    DBElements/dbotpitem.h
+    DBElements/dbotpitem.h \
+    DBElements/dbcontainers.h
 
 FORMS    += mainwindow.ui
 

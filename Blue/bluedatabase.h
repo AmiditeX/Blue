@@ -16,9 +16,12 @@ public:
         const int iterations = 0;
         const int stretchTime = 0;
     };
-
     Metadata mData;
+
     const QJsonDocument getJsonDocument() const;
+
+private:
+
 
 };
 

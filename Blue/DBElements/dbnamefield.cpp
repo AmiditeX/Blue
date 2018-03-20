@@ -2,7 +2,7 @@
 
 DBNameField::DBNameField(const QJsonObject &obj)
 {
-    //Retrieve name and bool
+    //Retrieve name
     _name = obj.value("Name").toString();
     _isExpirable = obj.value("IsExpirable").toBool();
     _expires = QDateTime::fromString(obj.value("DateTime").toString());
@@ -48,7 +48,7 @@ QDateTime DBNameField::getExpireDate() const
 
 void DBNameField::setExpirable(bool isExperiable)
 {
-    _isExpirable= isExperiable;
+    _isExpirable = isExperiable;
 }
 
 bool DBNameField::isExpirable() const

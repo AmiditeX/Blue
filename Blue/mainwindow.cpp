@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 1; i++)
     {
         QElapsedTimer timer;
               timer.start();

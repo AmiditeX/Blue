@@ -2,7 +2,7 @@
 
 DBPasswordField::DBPasswordField(const QJsonObject &obj)
 {
-    //Retrieve password and bool
+    //Retrieve password
     _password = obj.value("Password").toString();
     _isExpirable = obj.value("IsExpirable").toBool();
     _expires = QDateTime::fromString(obj.value("DateTime").toString());
