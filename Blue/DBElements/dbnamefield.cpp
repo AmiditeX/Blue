@@ -1,12 +1,17 @@
 #include "dbnamefield.h"
 
+DBNameField::DBNameField()
+{
+    setID("DBNameField");
+}
+
 DBNameField::DBNameField(const QJsonObject &obj)
 {
     //Retrieve name
     _name = obj.value("Name").toString();
     _isExpirable = obj.value("IsExpirable").toBool();
     _expires = QDateTime::fromString(obj.value("DateTime").toString());
-    setID(obj.value("ID").toInt());
+    setID(obj.value("ID").toString());
     setRow(obj.value("Row").toInt());
 
 }

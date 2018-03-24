@@ -2,13 +2,15 @@
 #define BLUEIOINTERFACE_H
 
 #include <QObject>
+#include <QMutex>
 #include <QJsonDocument>
 
 struct DBParameters
 {
-    const QJsonDocument DBDecrypted;
-    const QByteArray DBInitVector, DBKeySalt;
-    const int DBIterations = 0, DBStretchTime = 0;
+    QJsonDocument DBDecrypted;
+    QByteArray DBInitVector, DBKeySalt;
+    int DBIterations = 0, DBStretchTime = 0;
+    QString DBPassword, DBPath;
 };
 
 class BlueIOInterface : public QObject
@@ -30,6 +32,9 @@ signals:
     void readCompleted(DBParameters dbParam);
     void errorSignal(QString errorString);
     void decryptionFailed(QString errorString);
+
+private:
+    QMutex _fileMutex;
 
 };
 

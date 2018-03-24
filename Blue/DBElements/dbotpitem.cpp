@@ -1,12 +1,17 @@
 #include "dbotpitem.h"
 
+DBOtpItem::DBOtpItem()
+{
+    setID("DBOtpItem");
+}
+
 DBOtpItem::DBOtpItem(const QJsonObject &obj)
 {
     //Retrieve seed
     _seed = obj.value("Seed").toString();
     _isExpirable = obj.value("IsExpirable").toBool();
     _expires = QDateTime::fromString(obj.value("DateTime").toString());
-    setID(obj.value("ID").toInt());
+    setID(obj.value("ID").toString());
     setRow(obj.value("Row").toInt());
 
 }

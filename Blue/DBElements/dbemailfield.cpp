@@ -1,12 +1,17 @@
 #include "dbemailfield.h"
 
+DBEmailField::DBEmailField()
+{
+    setID("DBEmailField");
+}
+
 DBEmailField::DBEmailField(const QJsonObject &obj)
 {
     //Retrieve email and bool
     _email = obj.value("Email").toString();
     _isExpirable = obj.value("IsExpirable").toBool();
     _expires = QDateTime::fromString(obj.value("DateTime").toString());
-    setID(obj.value("ID").toInt());
+    setID(obj.value("ID").toString());
     setRow(obj.value("Row").toInt());
 
 }

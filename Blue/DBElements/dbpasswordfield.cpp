@@ -1,12 +1,17 @@
 #include "dbpasswordfield.h"
 
+DBPasswordField::DBPasswordField()
+{
+    setID("DBPasswordField");
+}
+
 DBPasswordField::DBPasswordField(const QJsonObject &obj)
 {
     //Retrieve password
     _password = obj.value("Password").toString();
     _isExpirable = obj.value("IsExpirable").toBool();
     _expires = QDateTime::fromString(obj.value("DateTime").toString());
-    setID(obj.value("ID").toInt());
+    setID(obj.value("ID").toString());
     setRow(obj.value("Row").toInt());
 
 }

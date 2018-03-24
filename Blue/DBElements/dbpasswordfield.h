@@ -9,6 +9,7 @@ class DBPasswordField : public AbstractDataBaseItem
 {
 
 public:
+    DBPasswordField();
     DBPasswordField(const QJsonObject &obj);
 
     QString getValue() const override;
@@ -23,8 +24,8 @@ public:
 
 private:
     QString _password;
-    QDateTime _expires;
-    bool _isExpirable;
+    QDateTime _expires = QDateTime(QDate(2000,1,1));
+    bool _isExpirable = false;
 
 };
 

@@ -3,26 +3,23 @@
 
 #include <QObject>
 #include <QJsonDocument>
+#include <vector>
+#include "DBElements/dbcontainers.h"
+#include "BlueCrypto/blueiointerface.h"
 
 class BlueDatabase
 {
+
 public:
-    BlueDatabase();
+    BlueDatabase(const DBParameters &param);
 
-    struct Metadata
-    {
-        const QString compositeKey;
-        const QString path;
-        const int iterations = 0;
-        const int stretchTime = 0;
-    };
-    Metadata mData;
-
+    const DBParameters getParameters() const;
     const QJsonDocument getJsonDocument() const;
 
 private:
-
-
+    DBParameters _dbData;
+    std::vector<std::shared_ptr<DBContainers>> _containerList;
+    
 };
 
 #endif // BLUEDATABASE_H

@@ -4,7 +4,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
-#include <QMutex>
 #include <filters.h>
 #include "BlueCrypto/aesmodule.h"
 
@@ -43,20 +42,18 @@ void BlueIOInterface::writeFile(const QString &filePath, const QJsonDocument jso
         finalObject.insert("DBStretchTime", stretchTime); //Add KDF stretch time
         QJsonDocument finalDoc(finalObject);
 
-        QMutex fileMutex; //Lock mutex to avoid multiple thread overlapping
-        fileMutex.lock();
+        QMutexLocker locker(&_fileMutex); //Lock mutex to avoid multiple thread overlapping
 
         QFile file(filePath); //Open the file and check for errors
         if(!file.open(QIODevice::WriteOnly))
         {
-            fileMutex.unlock(); //Unlock mutex before throwing
             throw std::runtime_error("Failed to open writing device");
         }
 
         //Write the encrypted database and metada as a compressed binary file
         file.write(qCompress(finalDoc.toBinaryData(), 9));
         file.close();
-        fileMutex.unlock();
+        locker.unlock();
 
         //Emit completion signal
         emit writeCompleted();
@@ -72,19 +69,17 @@ void BlueIOInterface::readFile(const QString &filePath, const QString &composite
 {
     try
     {
-        QMutex fileMutex; //Lock mutex to avoid multiple thread overlapping
-        fileMutex.lock();
+        QMutexLocker locker(&_fileMutex); //Lock mutex to avoid multiple thread overlapping
 
         QFile file(filePath); //Open the file and check for errors
         if(!file.open(QIODevice::ReadOnly))
         {
-            fileMutex.unlock(); //Unlock mutex before throwing
             throw std::runtime_error("Failed to open reading device");
         }
 
         QByteArray wrappedData = qUncompress(file.readAll()); //Retrieve uncompressed data
         file.close();
-        fileMutex.unlock();
+        locker.unlock();
 
         QJsonDocument doc = QJsonDocument::fromBinaryData(wrappedData);
         QJsonObject jsonObject = doc.object(); //Recover JSON encapsulating object
@@ -105,7 +100,7 @@ void BlueIOInterface::readFile(const QString &filePath, const QString &composite
         //Decrypt data, uncompress it
         QByteArray decryptedData = qUncompress(AESModule::decryptBinary(DBField, aData, derivedKey, DBInitVector));
 
-        DBParameters returnObject{QJsonDocument::fromBinaryData(decryptedData), DBInitVector, DBKeySalt, DBIterations, DBStretchTime};
+        DBParameters returnObject{QJsonDocument::fromBinaryData(decryptedData), DBInitVector, DBKeySalt, DBIterations, DBStretchTime, compositeKey, filePath};
         emit readCompleted(returnObject); //Return decrypted database + database parameters
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &exception) //Decryption failed (bad composite key, tampered file..)

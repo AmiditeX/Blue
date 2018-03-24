@@ -3,14 +3,15 @@
 DBContainers::DBContainers(const QJsonObject &obj)
 {
     //Retrieve all items contained in the container in JSON format
-    QJsonArray allElements = obj.value("Items").toArray();
+    QJsonArray allElements = obj.value("DBItems").toArray();
 
-    //Instanciate each of them and store pointers in a QVector
+    //Instanciate each of them and store pointers in a vector
     for(int i = 0; i < allElements.size(); i++)
     {
-        //Shared pointer of the new element, owned by DBContainers
+        //Current item as a JSON array element
         QJsonObject currentItem = allElements[i].toObject();
 
+        //Fetch ID of the item to construct the matching object
         const QString ID = currentItem.value("ID").toString();
         if(ID == "DBEmailField")
         {
@@ -30,8 +31,7 @@ DBContainers::DBContainers(const QJsonObject &obj)
         }
         else
         {
-            //If the ID doesn't exist, data is flawed, the item won't be created nor displayed
-            //Maybe display warning with ID
+            throw std::runtime_error("Invalid type was provided in DBContainers constructor");
         }
     }
 }
@@ -53,6 +53,6 @@ QJsonObject DBContainers::toJson() const
 
     //Return the object containing all the elements
     QJsonObject obj;
-    obj.insert("Items", allElements);
+    obj.insert("DBItems", allElements);
     return obj;
 }
