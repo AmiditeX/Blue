@@ -3,7 +3,9 @@
 #include <QApplication>
 
 #include <QDebug>
+#include "BlueCrypto/blueiointerface.h"
 #include "BlueCrypto/aesmodule.h"
+#include "DBMainComponents/bluedbmanager.h"
 #include <iostream>
 #include <cryptlib.h>
 
@@ -31,6 +33,7 @@ int main(int argc, char *argv[])
     }
 
     qsrand(time(NULL));
+    qRegisterMetaType<DBParameters>("DBParameters");
 
     MainWindow w;
     w.show();

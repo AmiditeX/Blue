@@ -1,5 +1,12 @@
 #include "dbcontainers.h"
 
+#include <algorithm>
+
+DBContainers::DBContainers()
+{
+
+}
+
 DBContainers::DBContainers(const QJsonObject &obj)
 {
     //Retrieve all items contained in the container in JSON format
@@ -13,26 +20,7 @@ DBContainers::DBContainers(const QJsonObject &obj)
 
         //Fetch ID of the item to construct the matching object
         const QString ID = currentItem.value("ID").toString();
-        if(ID == "DBEmailField")
-        {
-            _itemList.push_back(std::move(std::make_shared<DBEmailField>(currentItem)));
-        }
-        else if(ID == "DBNameField")
-        {
-            _itemList.push_back(std::move(std::make_shared<DBNameField>(currentItem)));
-        }
-        else if(ID == "DBOtpItem")
-        {
-            _itemList.push_back(std::move(std::make_shared<DBOtpItem>(currentItem)));
-        }
-        else if(ID == "DBPasswordField")
-        {
-            _itemList.push_back(std::move(std::make_shared<DBPasswordField>(currentItem)));
-        }
-        else
-        {
-            throw std::runtime_error("Invalid type was provided in DBContainers constructor");
-        }
+        _itemList.push_back(std::move(createItem(ID)));
     }
 }
 
@@ -40,6 +28,7 @@ DBContainers::DBContainers(const QJsonObject &obj)
 ///                                                           PUBLIC                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//Convert whole containers to a JSON Object
 QJsonObject DBContainers::toJson() const
 {
     QJsonArray allElements;
@@ -56,3 +45,79 @@ QJsonObject DBContainers::toJson() const
     obj.insert("DBItems", allElements);
     return obj;
 }
+
+std::shared_ptr<AbstractDataBaseItem> DBContainers::addItem(const QString &ID)
+{
+    std::shared_ptr<AbstractDataBaseItem> newObject = createItem(ID);
+    _itemList.push_back(std::move(newObject));
+
+    return newObject;
+}
+
+void DBContainers::removeItem(std::shared_ptr<AbstractDataBaseItem> ptr)
+{
+    _itemList.erase(std::remove(_itemList.begin(), _itemList.end(), ptr));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///                                                           PUBLIC                                                                 //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///                                                         PROTECTED                                                                //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Create an item without settings
+std::shared_ptr<AbstractDataBaseItem> DBContainers::createItem(const QString &ID)
+{
+    if(ID == "DBEmailField")
+    {
+        return std::make_shared<DBEmailField>();
+    }
+    else if(ID == "DBNameField")
+    {
+        return std::make_shared<DBNameField>();
+    }
+    else if(ID == "DBOtpItem")
+    {
+        return std::make_shared<DBOtpItem>();
+    }
+    else if(ID == "DBPasswordField")
+    {
+        return std::make_shared<DBPasswordField>();
+    }
+    else
+    {
+        throw std::runtime_error("Invalid type was provided in DBContainers item factory");
+    }
+}
+
+//Create an item given a JSON Object containing its settings
+std::shared_ptr<AbstractDataBaseItem> DBContainers::createItem(const QString &ID, const QJsonObject &doc)
+{
+    if(ID == "DBEmailField")
+    {
+        return std::make_shared<DBEmailField>(doc);
+    }
+    else if(ID == "DBNameField")
+    {
+        return std::make_shared<DBNameField>(doc);
+    }
+    else if(ID == "DBOtpItem")
+    {
+        return std::make_shared<DBOtpItem>(doc);
+    }
+    else if(ID == "DBPasswordField")
+    {
+        return std::make_shared<DBPasswordField>(doc);
+    }
+    else
+    {
+        throw std::runtime_error("Invalid type was provided in DBContainers item factory");
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///                                                         PROTECTED                                                                //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

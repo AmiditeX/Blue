@@ -18,7 +18,7 @@ class BlueIOInterface : public QObject
     Q_OBJECT
 
 public:
-    BlueIOInterface();
+    BlueIOInterface(QMutex *mutex);
 
 public slots:
     //Encrypt database, add the metadata and write it to a file
@@ -34,7 +34,7 @@ signals:
     void decryptionFailed(QString errorString);
 
 private:
-    QMutex _fileMutex;
+    QMutex *_fileMutex;
 
 };
 

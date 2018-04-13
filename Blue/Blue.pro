@@ -18,30 +18,50 @@ SOURCES += main.cpp\
     BlueCrypto/blueiointerface.cpp \
     BlueCrypto/qiodevicesink.cpp \
     BlueCrypto/qiodevicesource.cpp \
-    bluedatabase.cpp \
-    bluedbmanager.cpp \
+    DBMainComponents/bluedatabase.cpp \
+    DBMainComponents/bluedbmanager.cpp \
     DBElements/abstractdatabaseitem.cpp \
     DBElements/dbpasswordfield.cpp \
     DBElements/dbnamefield.cpp \
     DBElements/dbemailfield.cpp \
     DBElements/dbotpitem.cpp \
-    DBElements/dbcontainers.cpp
+    DBElements/dbcontainers.cpp \
+    DBWidgets/abstractdbwidget.cpp \
+    DBWidgets/dbwcontainers.cpp \
+    DBWidgets/dbwemailfield.cpp \
+    DBWidgets/dbwnamefield.cpp \
+    DBWidgets/dbwotpitem.cpp \
+    DBWidgets/dbwpasswordfield.cpp \
+    DBMainComponents/bluewidget.cpp
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
     BlueCrypto/blueiointerface.h \
     BlueCrypto/qiodevicesink.h \
     BlueCrypto/qiodevicesource.h \
-    bluedatabase.h \
-    bluedbmanager.h \
+    DBMainComponents/bluedatabase.h \
+    DBMainComponents/bluedbmanager.h \
     DBElements/abstractdatabaseitem.h \
     DBElements/dbpasswordfield.h \
     DBElements/dbnamefield.h \
     DBElements/dbemailfield.h \
     DBElements/dbotpitem.h \
-    DBElements/dbcontainers.h
+    DBElements/dbcontainers.h \
+    DBWidgets/abstractdbwidget.h \
+    DBWidgets/dbwcontainers.h \
+    DBWidgets/dbwemailfield.h \
+    DBWidgets/dbwnamefield.h \
+    DBWidgets/dbwotpitem.h \
+    DBWidgets/dbwpasswordfield.h \
+    DBMainComponents/bluewidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    DBWidgets/dbwcontainers.ui \
+    DBWidgets/dbwemailfield.ui \
+    DBWidgets/dbwnamefield.ui \
+    DBWidgets/dbwotpitem.ui \
+    DBWidgets/dbwpasswordfield.ui \
+    DBMainComponents/bluewidget.ui
 
 #SPDLOG LINKAGE
 INCLUDEPATH += $$PWD/../spdlog-master/include

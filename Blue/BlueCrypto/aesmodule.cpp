@@ -95,16 +95,16 @@ QByteArray AESModule::decryptBinary(const QByteArray &binaryToDecrypt, const QBy
 }
 
 //Derivates a key from a password given a number of iterations to process or a length of time to process
-QByteArray AESModule::derivateKey(const QByteArray &password, const QByteArray &salt, const unsigned int iterations, const unsigned int time)
+AESModule::DerivedObject AESModule::derivateKey(const QByteArray &password, const QByteArray &salt, const unsigned int iterations, const unsigned int time)
 {
     SecByteBlock derivatedBlock(32);
     PKCS5_PBKDF2_HMAC<SHA256> keyDerivator;
-    keyDerivator.DeriveKey(derivatedBlock.data(), derivatedBlock.size(), 0, (const byte*)password.data(), password.size(),
-                           (const byte*)salt.data(), salt.size(), iterations, time);
+    int it = keyDerivator.DeriveKey(derivatedBlock.data(), derivatedBlock.size(), 0, (const byte*)password.data(), password.size(),
+                                    (const byte*)salt.data(), salt.size(), iterations, time);
 
     QByteArray key;
     ArraySource(derivatedBlock, sizeof(derivatedBlock), true, new QByteArraySink(key));
-    return key;
+    return DerivedObject{key, it};
 }
 
 //Generate a random initialization vector
@@ -339,7 +339,7 @@ bool AESModule::randomCheck(QStringList &logs)
     QString authenticatedData = generateRandomString();
     QByteArray initializationVector = generateIV();
     QByteArray salt = generateSalt();
-    QByteArray privateKey = derivateKey(randomPassword.toUtf8(), salt, (qrand() % 10000) + 1, 0);
+    QByteArray privateKey = derivateKey(randomPassword.toUtf8(), salt, (qrand() % 10000) + 1, 0).derivedKey;
     QByteArray encrypted, decrypted;
     bool first = false , second = false, third = false, fourth = false, fifth = false;
 

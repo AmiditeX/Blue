@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "BlueCrypto/aesmodule.h"
-#include "bluedbmanager.h"
+#include "DBMainComponents/bluedbmanager.h"
 #include "BlueCrypto/blueiointerface.h"
 
 namespace Ui {
@@ -25,7 +25,6 @@ public slots:
     void read(DBParameters param);
 
 private:
-    BlueIOInterface i;
     Ui::MainWindow *ui;
 };
 

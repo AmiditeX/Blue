@@ -5,7 +5,7 @@
 #include <QJsonDocument>
 #include <QDebug>
 #include "BlueCrypto/blueiointerface.h"
-#include "bluedbmanager.h"
+#include "DBMainComponents/bluedbmanager.h"
 #include <iostream>
 
 
@@ -22,17 +22,21 @@ MainWindow::MainWindow(QWidget *parent) :
         QElapsedTimer timer;
               timer.start();
         qWarning() << AESModule::integrityCheck();
+
+        BlueDBManager *manager = new BlueDBManager();
+        manager->createNewDatabase("Testdb.txt", "password", 0, 10);
+        manager->writeDatabaseObject();
         qWarning() << "Milli " << timer.elapsed();
     }
 
-    QJsonObject finalObject; //Prepare the file with the database and its metadata
+    /*QJsonObject finalObject; //Prepare the file with the database and its metadata
     finalObject.insert("DBField", "HELLO"); //Add the encrypted database
     QJsonDocument finalDoc(finalObject);
 
     connect(&i, SIGNAL(readCompleted(DBParameters)), this, SLOT(read(DBParameters)));
     connect(&i, SIGNAL(writeCompleted()), this, SLOT(write()));
     connect(&i, SIGNAL(errorSignal(QString)), this, SLOT(error(QString)));
-    i.writeFile("encryptedmessage.txt", finalDoc, "Password", 1500, 0);
+    i.writeFile("encryptedmessage.txt", finalDoc, "Password", 1500, 0);*/
 
 }
 
@@ -45,7 +49,7 @@ void MainWindow::write()
 {
     qWarning() << "Write successful";
     BlueDBManager manager;
-    manager.readDatabase("encryptedmessage.txt", "Password");
+    //manager.readDatabase("encryptedmessage.txt", "Password");
 }
 
 void MainWindow::read(DBParameters param)

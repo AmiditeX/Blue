@@ -9,6 +9,12 @@ class AESModule
 public:
     AESModule();
 
+    struct DerivedObject
+    {
+        QByteArray derivedKey;
+        int iterations;
+    };
+
     //Cryptographic operations
     static QByteArray encryptBinary(const QByteArray &binaryToEncrypt, const QByteArray &additionalData,
                                     const QByteArray &privateKey, const QByteArray &initializationVector);
@@ -18,13 +24,12 @@ public:
     
 
     //Key stretching and generation
-    static QByteArray derivateKey(const QByteArray &password, const QByteArray &salt, const unsigned int iterations, const unsigned int time);
+    static DerivedObject derivateKey(const QByteArray &password, const QByteArray &salt, const unsigned int iterations, const unsigned int time);
     static QByteArray generateIV();
     static QByteArray generateSalt();
 
     //Integrity check
     static bool integrityCheck();
-
 
 protected: 
     //Vector verification, ensuring good implementation
