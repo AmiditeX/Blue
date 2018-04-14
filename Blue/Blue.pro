@@ -68,12 +68,14 @@ FORMS    += mainwindow.ui \
 INCLUDEPATH += $$PWD/../spdlog-master/include
 
 #CRYPTOPP INCLUDE
-INCLUDEPATH += $$PWD/../libcrypto/include
-DEPENDPATH += $$PWD/../libcrypto/include
+win32:INCLUDEPATH += $$PWD/../libcrypto/include/w32
+win32:DEPENDPATH += $$PWD/../libcrypto/include/w32
+unix:!macx:INCLUDEPATH += $$PWD/../libcrypto/include/lnx
+unix:!macx:DEPENDPATH += $$PWD/../libcrypto/include/lnx
 
 #LINUX CRYPTOPP LINKAGE
-unix:!macx: LIBS += -L$$PWD/../libcrypto/lib/lnx/ -lcryptopplnx
-unix:!macx: PRE_TARGETDEPS += $$PWD/../libcrypto/lib/lnx/libcryptopplnx.a
+unix:!macx: LIBS += -L$$PWD/../libcrypto/lib/lnx/ -lcryptopp
+unix:!macx: PRE_TARGETDEPS += $$PWD/../libcrypto/lib/lnx/libcryptopp.a
 
 #WINDOWS CRYPTOPP LINKAGE
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../libcrypto/lib/w32/ -lcryptopp
