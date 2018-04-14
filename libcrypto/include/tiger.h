@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+// tiger.h - originally written and placed in the public domain by Wei Dai
+
+/// \file tiger.h
+/// \brief Classes for the Tiger message digest
+/// \since Crypto++ 2.1
+
+=======
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #ifndef CRYPTOPP_TIGER_H
 #define CRYPTOPP_TIGER_H
 
@@ -12,14 +21,24 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// \brief Tiger message digest
+/// \sa <a href="http://www.cryptolounge.org/wiki/Tiger">Tiger</a>
+/// \since Crypto++ 2.1
+=======
 /// <a href="http://www.cryptolounge.org/wiki/Tiger">Tiger</a>
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class Tiger : public IteratedHashWithStaticTransform<word64, LittleEndian, 64, 24, Tiger>
 {
 public:
 	static void InitState(HashWordType *state);
 	static void Transform(word64 *digest, const word64 *data);
 	void TruncatedFinal(byte *hash, size_t size);
+<<<<<<< HEAD
+	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "Tiger";}
+=======
 	CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return "Tiger";}
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 protected:
 	static const word64 table[4*256+3];

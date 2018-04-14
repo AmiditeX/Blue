@@ -1,13 +1,24 @@
+<<<<<<< HEAD
+// emsa2.h - originally written and placed in the public domain by Wei Dai
+
+/// \file emsa2.h
+/// \brief Classes and functions for various padding schemes used in public key algorithms
+=======
 // emsa2.h - written and placed in the public domain by Wei Dai
 
 //! \file emsa2.h
 //! \brief Classes and functions for various padding schemes used in public key algorithms
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_EMSA2_H
 #define CRYPTOPP_EMSA2_H
 
 #include "cryptlib.h"
 #include "pubkey.h"
+<<<<<<< HEAD
+#include "hashfwd.h"
+=======
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #include "misc.h"
 
 #ifdef CRYPTOPP_IS_DLL
@@ -16,12 +27,24 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// \brief EMSA2 hash identifier
+/// \tparam H HashTransformation derived class
+/// \since Crypto++ 5.0
+=======
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class H> class EMSA2HashId
 {
 public:
 	static const byte id;
 };
 
+<<<<<<< HEAD
+/// \brief EMSA2 padding method
+/// \tparam BASE Message encoding method
+/// \since Crypto++ 5.0
+=======
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class BASE>
 class EMSA2HashIdLookup : public BASE
 {
@@ -39,6 +62,9 @@ public:
 };
 
 // EMSA2HashId can be instantiated with the following classes.
+<<<<<<< HEAD
+// SHA1, SHA224, SHA256, SHA384, SHA512, RIPEMD128, RIPEMD160, Whirlpool
+=======
 class SHA1;
 class SHA224;
 class SHA256;
@@ -48,6 +74,7 @@ class RIPEMD128;
 class RIPEMD160;
 class Whirlpool;
 // end of list
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifdef CRYPTOPP_IS_DLL
 CRYPTOPP_DLL_TEMPLATE_CLASS EMSA2HashId<SHA1>;
@@ -57,11 +84,30 @@ CRYPTOPP_DLL_TEMPLATE_CLASS EMSA2HashId<SHA384>;
 CRYPTOPP_DLL_TEMPLATE_CLASS EMSA2HashId<SHA512>;
 #endif
 
+<<<<<<< HEAD
+// https://github.com/weidai11/cryptopp/issues/300 and
+// https://github.com/weidai11/cryptopp/issues/533
+#if defined(__clang__)
+template<> const byte EMSA2HashId<SHA1>::id;
+template<> const byte EMSA2HashId<SHA224>::id;
+template<> const byte EMSA2HashId<SHA256>::id;
+template<> const byte EMSA2HashId<SHA384>::id;
+template<> const byte EMSA2HashId<SHA512>::id;
+#endif
+
+/// \brief EMSA2 padding method
+/// \since Crypto++ 5.0
+class CRYPTOPP_DLL EMSA2Pad : public EMSA2HashIdLookup<PK_DeterministicSignatureMessageEncodingMethod>
+{
+public:
+	CRYPTOPP_STATIC_CONSTEXPR const char* CRYPTOPP_API StaticAlgorithmName() {return "EMSA2";}
+=======
 //! _
 class CRYPTOPP_DLL EMSA2Pad : public EMSA2HashIdLookup<PK_DeterministicSignatureMessageEncodingMethod>
 {
 public:
 	CRYPTOPP_CONSTEXPR static const char * CRYPTOPP_API StaticAlgorithmName() {return "EMSA2";}
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 	size_t MinRepresentativeBitLength(size_t hashIdentifierLength, size_t digestLength) const
 		{CRYPTOPP_UNUSED(hashIdentifierLength); return 8*digestLength + 31;}
@@ -72,12 +118,24 @@ public:
 		byte *representative, size_t representativeBitLength) const;
 };
 
+<<<<<<< HEAD
+// EMSA2, for use with RWSS and RSA_ISO
+// Only the following hash functions are supported by this signature standard:
+//  \dontinclude emsa2.h
+//  \skip EMSA2HashId can be instantiated
+//  \until end of list
+
+/// \brief EMSA2/P1363 padding method
+/// \details Use with RWSS and RSA_ISO
+/// \since Crypto++ 5.0
+=======
 //! EMSA2, for use with RWSS and RSA_ISO
 /*! Only the following hash functions are supported by this signature standard:
 	\dontinclude emsa2.h
 	\skip EMSA2HashId can be instantiated
 	\until end of list
 */
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 struct P1363_EMSA2 : public SignatureStandard
 {
 	typedef EMSA2Pad SignatureMessageEncodingMethod;

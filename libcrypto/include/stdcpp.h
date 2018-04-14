@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+// stdcpp.h - originally written and placed in the public domain by Wei Dai
+
+/// \file stdcpp.h
+/// \brief Common C++ header files
+
+=======
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #ifndef CRYPTOPP_STDCPP_H
 #define CRYPTOPP_STDCPP_H
 
@@ -48,6 +56,10 @@ namespace std {
 #include <cstddef>
 #include <cstring>
 #include <climits>
+<<<<<<< HEAD
+#include <cmath>
+=======
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 // uintptr_t and ptrdiff_t
 #if (__cplusplus < 201103L) && (!defined(_MSC_VER) || (_MSC_VER >= 1700))
@@ -61,6 +73,12 @@ namespace std {
 # include <vector.cc>
 #endif
 
+<<<<<<< HEAD
+// C++Builder's standard library (Dinkumware) do not have C's global log() function
+// https://github.com/weidai11/cryptopp/issues/520
+#ifdef __BORLANDC__
+using std::log;
+=======
 // for alloca
 #if defined(CRYPTOPP_BSD_AVAILABLE)
 # include <stdlib.h>
@@ -75,6 +93,7 @@ namespace std {
 # ifdef _CRTAPI1
 #  define CRYPTOPP_MSVCRT6
 # endif
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #endif
 
 #endif

@@ -10,7 +10,11 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// Message Queue
+=======
 //! Message Queue
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL MessageQueue : public AutoSignaling<BufferedTransformation>
 {
 public:
@@ -67,14 +71,22 @@ private:
 };
 
 
+<<<<<<< HEAD
+/// A filter that checks messages on two channels for equality
+=======
 //! A filter that checks messages on two channels for equality
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL EqualityComparisonFilter : public Unflushable<Multichannel<Filter> >
 {
 public:
 	struct MismatchDetected : public Exception {MismatchDetected() : Exception(DATA_INTEGRITY_CHECK_FAILED, "EqualityComparisonFilter: did not receive the same data on two channels") {}};
 
 	/*! if throwIfNotEqual is false, this filter will output a '\\0' byte when it detects a mismatch, '\\1' otherwise */
+<<<<<<< HEAD
+	EqualityComparisonFilter(BufferedTransformation *attachment=NULLPTR, bool throwIfNotEqual=true, const std::string &firstChannel="0", const std::string &secondChannel="1")
+=======
 	EqualityComparisonFilter(BufferedTransformation *attachment=NULL, bool throwIfNotEqual=true, const std::string &firstChannel="0", const std::string &secondChannel="1")
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		: m_throwIfNotEqual(throwIfNotEqual), m_mismatchDetected(false)
 		, m_firstChannel(firstChannel), m_secondChannel(secondChannel)
 		{Detach(attachment);}

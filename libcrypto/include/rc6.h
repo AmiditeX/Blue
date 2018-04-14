@@ -1,7 +1,15 @@
+<<<<<<< HEAD
+// rc6.h - originally written and placed in the public domain by Wei Dai
+
+/// \file rc6.h
+/// \brief Classes for the RC6 block cipher
+/// \since Crypto++ 3.0
+=======
 // rc6.h - written and placed in the public domain by Wei Dai
 
 //! \file rc6.h
 //! \brief Classes for the RC6 block cipher
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_RC6_H
 #define CRYPTOPP_RC6_H
@@ -11,6 +19,19 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// \brief RC6 block cipher information
+/// \since Crypto++ 3.0
+struct RC6_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 16, 32, 8>, public VariableRounds<20>
+{
+	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "RC6";}
+	typedef word32 RC6_WORD;
+};
+
+/// \brief RC6 block cipher
+/// \sa <a href="http://www.cryptopp.com/wiki/RC6">RC6</a>
+/// \since Crypto++ 3.0
+=======
 //! \class RC6_Info
 //! \brief RC6 block cipher information
 struct RC6_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 16, 32, 8>, public VariableRounds<20>
@@ -22,6 +43,7 @@ struct RC6_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 16, 32
 //! \class RC6
 //! \brief RC6 block cipher
 //! \sa <a href="http://www.weidai.com/scan-mirror/cs.html#RC6">RC6</a>
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class RC6 : public RC6_Info, public BlockCipherDocumentation
 {
 	class CRYPTOPP_NO_VTABLE Base : public BlockCipherImpl<RC6_Info>

@@ -1,7 +1,14 @@
+<<<<<<< HEAD
+// rc5.h - originally written and placed in the public domain by Wei Dai
+
+/// \file rc5.h
+/// \brief Classes for the RC5 block cipher
+=======
 // rc5.h - written and placed in the public domain by Wei Dai
 
 //! \file rc5.h
 //! \brief Classes for the RC5 block cipher
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_RC5_H
 #define CRYPTOPP_RC5_H
@@ -11,6 +18,19 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// \brief RC5 block cipher information
+/// \since Crypto++ 1.0
+struct RC5_Info : public FixedBlockSize<8>, public VariableKeyLength<16, 0, 255>, public VariableRounds<16>
+{
+	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "RC5";}
+	typedef word32 RC5_WORD;
+};
+
+/// \brief RC5 block cipher
+/// \sa <a href="http://www.cryptopp.com/wiki/RC5">RC5</a>
+/// \since Crypto++ 1.0
+=======
 //! \class RC5_Info
 //! \brief RC5 block cipher information
 struct RC5_Info : public FixedBlockSize<8>, public VariableKeyLength<16, 0, 255>, public VariableRounds<16>
@@ -22,6 +42,7 @@ struct RC5_Info : public FixedBlockSize<8>, public VariableKeyLength<16, 0, 255>
 //! \class RC5
 //! \brief RC5 block cipher
 //! \sa <a href="http://www.weidai.com/scan-mirror/cs.html#RC5">RC5</a>
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class RC5 : public RC5_Info, public BlockCipherDocumentation
 {
 	class CRYPTOPP_NO_VTABLE Base : public BlockCipherImpl<RC5_Info>

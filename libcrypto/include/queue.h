@@ -1,8 +1,15 @@
+<<<<<<< HEAD
+// queue.h - originally written and placed in the public domain by Wei Dai
+
+/// \file
+/// \brief Classes for an unlimited queue to store bytes
+=======
 // queue.h - written and placed in the public domain by Wei Dai
 
 //! \file
 //! \headerfile queue.h
 //! \brief Classes for an unlimited queue to store bytes
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_QUEUE_H
 #define CRYPTOPP_QUEUE_H
@@ -14,6 +21,22 @@ NAMESPACE_BEGIN(CryptoPP)
 
 class ByteQueueNode;
 
+<<<<<<< HEAD
+/// \brief Data structure used to store byte strings
+/// \details The queue is implemented as a linked list of byte arrays
+class CRYPTOPP_DLL ByteQueue : public Bufferless<BufferedTransformation>
+{
+public:
+	/// \brief Construct a ByteQueue
+	/// \param nodeSize the initial node size
+	/// \details Internally, ByteQueue uses a ByteQueueNode to store bytes, and \p nodeSize determines the
+	///   size of the ByteQueueNode. A value of 0 indicates the ByteQueueNode should be automatically sized,
+	///   which means a value of 256 is used.
+	ByteQueue(size_t nodeSize=0);
+
+	/// \brief Copy construct a ByteQueue
+	/// \param copy the other ByteQueue
+=======
 //! \class ByteQueue
 //! \brief Data structure used to store byte strings
 //! \details The queue is implemented as a linked list of byte arrays
@@ -29,6 +52,7 @@ public:
 
 	//! \brief Copy construct a ByteQueue
 	//! \param copy the other ByteQueue
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	ByteQueue(const ByteQueue &copy);
 	~ByteQueue();
 
@@ -74,6 +98,16 @@ public:
 	byte operator[](lword i) const;
 	void swap(ByteQueue &rhs);
 
+<<<<<<< HEAD
+	/// \brief A ByteQueue iterator
+	class Walker : public InputRejecting<BufferedTransformation>
+	{
+	public:
+		/// \brief Construct a ByteQueue Walker
+		/// \param queue a ByteQueue
+		Walker(const ByteQueue &queue)
+			: m_queue(queue), m_node(NULLPTR), m_position(0), m_offset(0), m_lazyString(NULLPTR), m_lazyLength(0)
+=======
 	//! \class Walker
 	//! \brief A ByteQueue iterator
 	class Walker : public InputRejecting<BufferedTransformation>
@@ -83,6 +117,7 @@ public:
 		//! \param queue a ByteQueue
 		Walker(const ByteQueue &queue)
 			: m_queue(queue), m_node(NULL), m_position(0), m_offset(0), m_lazyString(NULL), m_lazyLength(0)
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 				{Initialize();}
 
 		lword GetCurrentPosition() {return m_position;}
@@ -125,7 +160,11 @@ private:
 	bool m_lazyStringModifiable;
 };
 
+<<<<<<< HEAD
+/// use this to make sure LazyPut is finalized in event of exception
+=======
 //! use this to make sure LazyPut is finalized in event of exception
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL LazyPutter
 {
 public:
@@ -139,7 +178,11 @@ private:
 	ByteQueue &m_bq;
 };
 
+<<<<<<< HEAD
+/// like LazyPutter, but does a LazyPutModifiable instead
+=======
 //! like LazyPutter, but does a LazyPutModifiable instead
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class LazyPutterModifiable : public LazyPutter
 {
 public:

@@ -1,7 +1,14 @@
+<<<<<<< HEAD
+// idea.h - originally written and placed in the public domain by Wei Dai
+
+/// \file idea.h
+/// \brief Classes for the IDEA block cipher
+=======
 // idea.h - written and placed in the public domain by Wei Dai
 
 //! \file idea.h
 //! \brief Classes for the IDEA block cipher
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_IDEA_H
 #define CRYPTOPP_IDEA_H
@@ -11,6 +18,18 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// \brief IDEA block cipher information
+/// \since Crypto++ 1.0
+struct IDEA_Info : public FixedBlockSize<8>, public FixedKeyLength<16>, public FixedRounds<8>
+{
+	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "IDEA";}
+};
+
+/// \brief IDEA block cipher
+/// \sa <a href="http://www.cryptopp.com/wiki/IDEA">IDEA</a>
+/// \since Crypto++ 1.0
+=======
 //! \class IDEA_Info
 //! \brief IDEA block cipher information
 struct IDEA_Info : public FixedBlockSize<8>, public FixedKeyLength<16>, public FixedRounds<8>
@@ -21,6 +40,7 @@ struct IDEA_Info : public FixedBlockSize<8>, public FixedKeyLength<16>, public F
 //! \class IDEA
 //! \brief IDEA block cipher
 //! \sa <a href="http://www.weidai.com/scan-mirror/cs.html#IDEA">IDEA</a>
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class IDEA : public IDEA_Info, public BlockCipherDocumentation
 {
 public:		// made public for internal purposes

@@ -1,8 +1,15 @@
+<<<<<<< HEAD
+// adler32.h - originally written and placed in the public domain by Wei Dai
+
+/// \file adler32.h
+/// \brief Class file for ADLER-32 checksum calculations
+=======
 // adler32.h - written and placed in the public domain by Wei Dai
 
 //! \file
 //! \headerfile adler32.h
 //! \brief Class file for ADLER-32 checksum calculations
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_ADLER32_H
 #define CRYPTOPP_ADLER32_H
@@ -11,7 +18,11 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// ADLER-32 checksum calculations
+=======
 //! ADLER-32 checksum calculations
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class Adler32 : public HashTransformation
 {
 public:
@@ -20,7 +31,11 @@ public:
 	void Update(const byte *input, size_t length);
 	void TruncatedFinal(byte *hash, size_t size);
 	unsigned int DigestSize() const {return DIGESTSIZE;}
+<<<<<<< HEAD
+    CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "Adler32";}
+=======
     CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return "Adler32";}
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
     std::string AlgorithmName() const {return StaticAlgorithmName();}
 
 private:

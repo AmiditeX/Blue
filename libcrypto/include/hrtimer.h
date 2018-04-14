@@ -15,8 +15,12 @@ NAMESPACE_BEGIN(CryptoPP)
 	typedef clock_t TimerWord;
 #endif
 
+<<<<<<< HEAD
+/// \brief Base class for timers
+=======
 //! \class TimerBase
 //! \brief Base class for timers
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL CRYPTOPP_NO_VTABLE TimerBase
 {
 public:
@@ -40,11 +44,18 @@ private:
 	TimerWord m_start, m_last;
 };
 
+<<<<<<< HEAD
+/// \brief Measure CPU time spent executing instructions of this thread (if supported by OS)
+/// \note ThreadUserTimer only works correctly on Windows NT or later desktops and servers.
+/// On Unix-based it reports process time. On Windows Phone and Windows Store it reports wall
+/// clock time with performance counter precision. On all others it reports wall clock time.
+=======
 //! \class ThreadUserTimer
 //! \brief Measure CPU time spent executing instructions of this thread (if supported by OS)
 //! \note ThreadUserTimer only works correctly on Windows NT or later desktops and servers.
 //! On Unix-based it reports process time. On Windows Phone and Windows Store it reports wall
 //! clock time with performance counter precision. On all others it reports wall clock time.
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class ThreadUserTimer : public TimerBase
 {
 public:
@@ -53,7 +64,11 @@ public:
 	TimerWord TicksPerSecond();
 };
 
+<<<<<<< HEAD
+/// high resolution timer
+=======
 //! high resolution timer
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL Timer : public TimerBase
 {
 public:

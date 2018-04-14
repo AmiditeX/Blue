@@ -7,7 +7,11 @@ NAMESPACE_BEGIN(CryptoPP)
 
 namespace Weak1 {
 
+<<<<<<< HEAD
+/// <a href="http://www.weidai.com/scan-mirror/md.html#MD4">MD4</a>
+=======
 //! <a href="http://www.weidai.com/scan-mirror/md.html#MD4">MD4</a>
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 /*! \warning MD4 is considered insecure, and should not be used
 	unless you absolutely need it for compatibility. */
 class MD4 : public IteratedHashWithStaticTransform<word32, LittleEndian, 64, 16, MD4>
@@ -15,7 +19,11 @@ class MD4 : public IteratedHashWithStaticTransform<word32, LittleEndian, 64, 16,
 public:
 	static void InitState(HashWordType *state);
 	static void Transform(word32 *digest, const word32 *data);
+<<<<<<< HEAD
+	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "MD4";}
+=======
 	CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return "MD4";}
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 };
 
 }

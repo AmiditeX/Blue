@@ -1,19 +1,46 @@
+<<<<<<< HEAD
+// whrlpool.h - originally modified by Kevin Springle from Paulo Barreto and Vincent Rijmen's
+//              public domain code, whirlpool.c. Updated to Whirlpool version 3.0, optimized
+//              and SSE version added by WD. All modifications are placed in the public domain.
+
 #ifndef CRYPTOPP_WHIRLPOOL_H
 #define CRYPTOPP_WHIRLPOOL_H
 
+/// \file whrlpool.h
+/// \brief Classes for the Whirlpool message digest
+/// \details Crypto++ provides version 3.0 of the Whirlpool algorithm.
+///   This version of the algorithm was submitted for ISO standardization.
+
+=======
+#ifndef CRYPTOPP_WHIRLPOOL_H
+#define CRYPTOPP_WHIRLPOOL_H
+
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #include "config.h"
 #include "iterhash.h"
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// \brief Whirlpool message digest
+/// \details Crypto++ provides version 3.0 of the Whirlpool algorithm.
+///   This version of the algorithm was submitted for ISO standardization.
+/// \since Crypto++ 5.2
+/// \sa <a href="http://www.cryptopp.com/wiki/Whirlpool">Whirlpool</a>
+=======
 //! <a href="http://www.cryptolounge.org/wiki/Whirlpool">Whirlpool</a>
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class Whirlpool : public IteratedHashWithStaticTransform<word64, BigEndian, 64, 64, Whirlpool>
 {
 public:
 	static void InitState(HashWordType *state);
 	static void Transform(word64 *digest, const word64 *data);
 	void TruncatedFinal(byte *hash, size_t size);
+<<<<<<< HEAD
+	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "Whirlpool";}
+=======
 	CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return "Whirlpool";}
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 };
 
 NAMESPACE_END

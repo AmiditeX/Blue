@@ -1,7 +1,15 @@
+<<<<<<< HEAD
+// mars.h - originally written and placed in the public domain by Wei Dai
+
+/// \file mars.h
+/// \brief Classes for the MARS block cipher (IBM AES submission)
+/// \since Crypto++ 3.0
+=======
 // mars.h - written and placed in the public domain by Wei Dai
 
 //! \file mars.h
 //! \brief Classes for the MARS block cipher (IBM AES submission)
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_MARS_H
 #define CRYPTOPP_MARS_H
@@ -11,6 +19,18 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// \brief MARS block cipher information
+/// \since Crypto++ 3.0
+struct MARS_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 16, 56, 8>
+{
+	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "MARS";}
+};
+
+/// \brief MARS block cipher
+/// \sa <a href="http://www.cryptopp.com/wiki/MARS">MARS</a>
+/// \since Crypto++ 3.0
+=======
 //! \class MARS_Info
 //! \brief MARS block cipher information
 struct MARS_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 16, 56, 8>
@@ -21,6 +41,7 @@ struct MARS_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 16, 5
 //! \class MARS
 //! \brief MARS block cipher
 //! \sa <a href="http://www.weidai.com/scan-mirror/cs.html#MARS">MARS</a>
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class MARS : public MARS_Info, public BlockCipherDocumentation
 {
 	class CRYPTOPP_NO_VTABLE Base : public BlockCipherImpl<MARS_Info>

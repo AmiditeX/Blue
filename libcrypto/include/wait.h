@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+// wait.h - originally written and placed in the public domain by Wei Dai
+=======
 // wait.h - written and placed in the public domain by Wei Dai
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_WAIT_H
 #define CRYPTOPP_WAIT_H
@@ -18,7 +22,11 @@
 #include <sys/select.h>
 #endif
 
+<<<<<<< HEAD
+// For definitions of VOID, PVOID, HANDLE, PHANDLE, etc.
+=======
 // For defintions of VOID, PVOID, HANDLE, PHANDLE, etc.
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #if defined(CRYPTOPP_WIN32_AVAILABLE)
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -34,7 +42,11 @@
 
 // http://connect.microsoft.com/VisualStudio/feedback/details/1581706
 //   and http://github.com/weidai11/cryptopp/issues/214
+<<<<<<< HEAD
+#if (CRYPTOPP_MSC_VERSION >= 1900)
+=======
 #if CRYPTOPP_MSC_VERSION == 1900
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 # pragma warning(push)
 # pragma warning(disable: 4589)
 #endif
@@ -48,7 +60,11 @@ public:
 	virtual ~Tracer() {}
 
 protected:
+<<<<<<< HEAD
+	/// Override this in your most-derived tracer to do the actual tracing.
+=======
 	//! Override this in your most-derived tracer to do the actual tracing.
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	virtual void Trace(unsigned int n, std::string const& s) = 0;
 
 	/*! By default, tracers will decide which trace messages to trace according to a trace level
@@ -165,11 +181,19 @@ CRYPTOPP_END_TRACER_CLASS
 
 struct WaitingThreadData;
 
+<<<<<<< HEAD
+/// container of wait objects
+class WaitObjectContainer : public NotCopyable
+{
+public:
+	/// exception thrown by WaitObjectContainer
+=======
 //! container of wait objects
 class WaitObjectContainer : public NotCopyable
 {
 public:
 	//! exception thrown by WaitObjectContainer
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	class Err : public Exception
 	{
 	public:
@@ -178,7 +202,11 @@ public:
 
 	static unsigned int MaxWaitObjects();
 
+<<<<<<< HEAD
+	WaitObjectContainer(WaitObjectsTracer* tracer = NULLPTR);
+=======
 	WaitObjectContainer(WaitObjectsTracer* tracer = 0);
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 	void Clear();
 	void SetNoWait(CallStack const& callStack);
@@ -187,11 +215,15 @@ public:
 	bool Wait(unsigned long milliseconds);
 
 #ifdef USE_WINDOWS_STYLE_SOCKETS
+<<<<<<< HEAD
+	virtual ~WaitObjectContainer();
+=======
 # ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
 	virtual ~WaitObjectContainer();
 # else
 	~WaitObjectContainer();
 #endif
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	void AddHandle(HANDLE handle, CallStack const& callStack);
 #else
 	void AddReadFd(int fd, CallStack const& callStack);
@@ -230,6 +262,15 @@ private:
 
 NAMESPACE_END
 
+<<<<<<< HEAD
+#if (CRYPTOPP_MSC_VERSION >= 1900)
+# pragma warning(pop)
+#endif
+
+#endif  // NO_OS_DEPENDENCE
+
+#endif // CRYPTOPP_WAIT_H
+=======
 #if CRYPTOPP_MSC_VERSION == 1900
 # pragma warning(pop)
 #endif
@@ -237,3 +278,4 @@ NAMESPACE_END
 #endif
 
 #endif
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56

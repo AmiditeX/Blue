@@ -1,8 +1,15 @@
+<<<<<<< HEAD
+// smartptr.h - originally written and placed in the public domain by Wei Dai
+
+/// \file smartptr.h
+/// \brief Classes for automatic resource management
+=======
 // smartptr.h - written and placed in the public domain by Wei Dai
 
 //! \file
 //! \headerfile smartptr.h
 //! \brief Classes for automatic resource management
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_SMARTPTR_H
 #define CRYPTOPP_SMARTPTR_H
@@ -12,6 +19,20 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// \brief Manages resources for a single object
+/// \tparam T class or type
+/// \details \p simple_ptr is used frequently in the library to manage resources and
+///   ensure cleanup under the RAII pattern (Resource Acquisition Is Initialization).
+template <class T> class simple_ptr
+{
+public:
+	simple_ptr(T *p = NULLPTR) : m_p(p) {}
+	~simple_ptr()
+	{
+		delete m_p;
+		m_p = NULLPTR;
+=======
 //! \class simple_ptr
 //! \brief Manages resources for a single object
 //! \tparam T class or type
@@ -25,11 +46,23 @@ public:
 	{
 		delete m_p;
 		*((volatile T**)&m_p) = NULL;
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	}
 
 	T *m_p;
 };
 
+<<<<<<< HEAD
+/// \brief Pointer that overloads operator ->
+/// \tparam T class or type
+/// \details member_ptr is used frequently in the library to avoid the issues related to
+///   std::auto_ptr in C++11 (deprecated) and std::unique_ptr in C++03 (non-existent).
+/// \bug <a href="http://github.com/weidai11/cryptopp/issues/48">Issue 48: "Use of auto_ptr causes dirty compile under C++11"</a>
+template <class T> class member_ptr
+{
+public:
+	explicit member_ptr(T *p = NULLPTR) : m_p(p) {}
+=======
 //! \class member_ptr
 //! \brief Pointer that overloads operator ->
 //! \tparam T class or type
@@ -40,6 +73,7 @@ template <class T> class member_ptr
 {
 public:
 	explicit member_ptr(T *p = NULL) : m_p(p) {}
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 	~member_ptr();
 
@@ -55,7 +89,11 @@ public:
 	T* release()
 	{
 		T *old_p = m_p;
+<<<<<<< HEAD
+		m_p = NULLPTR;
+=======
 		*((volatile T**)&m_p) = NULL;
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		return old_p;
 	}
 
@@ -73,16 +111,27 @@ template <class T> void member_ptr<T>::reset(T *p) {delete m_p; m_p = p;}
 
 // ********************************************************
 
+<<<<<<< HEAD
+/// \brief Value pointer
+/// \tparam T class or type
+=======
 //! \class value_ptr
 //! \brief Value pointer
 //! \tparam T class or type
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template<class T> class value_ptr : public member_ptr<T>
 {
 public:
 	value_ptr(const T &obj) : member_ptr<T>(new T(obj)) {}
+<<<<<<< HEAD
+	value_ptr(T *p = NULLPTR) : member_ptr<T>(p) {}
+	value_ptr(const value_ptr<T>& rhs)
+		: member_ptr<T>(rhs.m_p ? new T(*rhs.m_p) : NULLPTR) {}
+=======
 	value_ptr(T *p = NULL) : member_ptr<T>(p) {}
 	value_ptr(const value_ptr<T>& rhs)
 		: member_ptr<T>(rhs.m_p ? new T(*rhs.m_p) : NULL) {}
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 	value_ptr<T>& operator=(const value_ptr<T>& rhs);
 	bool operator==(const value_ptr<T>& rhs)
@@ -94,24 +143,40 @@ public:
 template <class T> value_ptr<T>& value_ptr<T>::operator=(const value_ptr<T>& rhs)
 {
 	T *old_p = this->m_p;
+<<<<<<< HEAD
+	this->m_p = rhs.m_p ? new T(*rhs.m_p) : NULLPTR;
+=======
 	this->m_p = rhs.m_p ? new T(*rhs.m_p) : NULL;
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	delete old_p;
 	return *this;
 }
 
 // ********************************************************
 
+<<<<<<< HEAD
+/// \brief A pointer which can be copied and cloned
+/// \tparam T class or type
+/// \details \p T should adhere to the \p Clonable interface
+=======
 //! \class clonable_ptr
 //! \brief A pointer which can be copied and cloned
 //! \tparam T class or type
 //! \details \p T should adhere to the \p Clonable interface
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template<class T> class clonable_ptr : public member_ptr<T>
 {
 public:
 	clonable_ptr(const T &obj) : member_ptr<T>(obj.Clone()) {}
+<<<<<<< HEAD
+	clonable_ptr(T *p = NULLPTR) : member_ptr<T>(p) {}
+	clonable_ptr(const clonable_ptr<T>& rhs)
+		: member_ptr<T>(rhs.m_p ? rhs.m_p->Clone() : NULLPTR) {}
+=======
 	clonable_ptr(T *p = NULL) : member_ptr<T>(p) {}
 	clonable_ptr(const clonable_ptr<T>& rhs)
 		: member_ptr<T>(rhs.m_p ? rhs.m_p->Clone() : NULL) {}
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 	clonable_ptr<T>& operator=(const clonable_ptr<T>& rhs);
 };
@@ -119,18 +184,29 @@ public:
 template <class T> clonable_ptr<T>& clonable_ptr<T>::operator=(const clonable_ptr<T>& rhs)
 {
 	T *old_p = this->m_p;
+<<<<<<< HEAD
+	this->m_p = rhs.m_p ? rhs.m_p->Clone() : NULLPTR;
+=======
 	this->m_p = rhs.m_p ? rhs.m_p->Clone() : NULL;
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	delete old_p;
 	return *this;
 }
 
 // ********************************************************
 
+<<<<<<< HEAD
+/// \brief Reference counted pointer
+/// \tparam T class or type
+/// \details users should declare \p m_referenceCount as <tt>std::atomic<unsigned></tt>
+///   (or similar) under C++ 11
+=======
 //! \class counted_ptr
 //! \brief Reference counted pointer
 //! \tparam T class or type
 //! \details users should declare \p m_referenceCount as <tt>std::atomic<unsigned></tt>
 //!   (or similar) under C++ 11
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template<class T> class counted_ptr
 {
 public:
@@ -220,6 +296,16 @@ template <class T> counted_ptr<T> & counted_ptr<T>::operator=(const counted_ptr<
 
 // ********************************************************
 
+<<<<<<< HEAD
+/// \brief Manages resources for an array of objects
+/// \tparam T class or type
+template <class T> class vector_member_ptrs
+{
+public:
+	/// Construct an arry of \p T
+	/// \param size the size of the array, in elements
+	/// \details If \p T is a Plain Old Dataype (POD), then the array is uninitialized.
+=======
 //! \class vector_ptr
 //! \brief Manages resources for an array of objects
 //! \tparam T class or type
@@ -287,6 +373,7 @@ public:
 	//! Construct an arry of \p T
 	//! \param size the size of the array, in elements
 	//! \details If \p T is a Plain Old Dataype (POD), then the array is uninitialized.
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	vector_member_ptrs(size_t size=0)
 		: m_size(size), m_ptr(new member_ptr<T>[size]) {}
 	~vector_member_ptrs()

@@ -1,7 +1,14 @@
+<<<<<<< HEAD
+// square.h - originally written and placed in the public domain by Wei Dai
+
+/// \file square.h
+/// \brief Classes for the Square block cipher
+=======
 // square.h - written and placed in the public domain by Wei Dai
 
 //! \file square.h
 //! \brief Classes for the Square block cipher
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_SQUARE_H
 #define CRYPTOPP_SQUARE_H
@@ -11,6 +18,18 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// \brief Square block cipher information
+/// \since Crypto++ 2.2
+struct Square_Info : public FixedBlockSize<16>, public FixedKeyLength<16>, FixedRounds<8>
+{
+	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "Square";}
+};
+
+/// \brief Square block cipher
+/// \sa <a href="http://www.cryptopp.com/wiki/Square">Square</a>
+/// \since Crypto++ 2.2
+=======
 //! \class Square_Info
 //! \brief Square block cipher information
 struct Square_Info : public FixedBlockSize<16>, public FixedKeyLength<16>, FixedRounds<8>
@@ -21,6 +40,7 @@ struct Square_Info : public FixedBlockSize<16>, public FixedKeyLength<16>, Fixed
 //! \class Square
 //! \brief Square block cipher
 //! \sa <a href="http://www.weidai.com/scan-mirror/cs.html#Square">Square</a>
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class Square : public Square_Info, public BlockCipherDocumentation
 {
 	class CRYPTOPP_NO_VTABLE Base : public BlockCipherImpl<Square_Info>

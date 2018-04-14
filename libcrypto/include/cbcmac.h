@@ -1,8 +1,16 @@
+<<<<<<< HEAD
+// cbcmac.h - originally written and placed in the public domain by Wei Dai
+
+/// \file
+/// \brief Classes for CBC MAC
+/// \since Crypto++ 3.1
+=======
 // cbcmac.h - written and placed in the public domain by Wei Dai
 
 //! \file
 //! \headerfile cbcmac.h
 //! \brief Classes for CBC MAC
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_CBCMAC_H
 #define CRYPTOPP_CBCMAC_H
@@ -12,7 +20,12 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// \brief CBC-MAC base class
+/// \since Crypto++ 3.1
+=======
 //! _
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL CRYPTOPP_NO_VTABLE CBC_MAC_Base : public MessageAuthenticationCode
 {
 public:
@@ -32,10 +45,19 @@ private:
 	unsigned int m_counter;
 };
 
+<<<<<<< HEAD
+/// \brief CBC-MAC
+/// \tparam T BlockCipherDocumentation derived class
+/// \details CBC-MAC is compatible with FIPS 113. The MAC is secure only for fixed
+///   length messages. For variable length messages use CMAC or DMAC.
+/// \sa <a href="http://www.weidai.com/scan-mirror/mac.html#CBC-MAC">CBC-MAC</a>
+/// \since Crypto++ 3.1
+=======
 //! <a href="http://www.weidai.com/scan-mirror/mac.html#CBC-MAC">CBC-MAC</a>
 /*! Compatible with FIPS 113. T should be a class derived from BlockCipherDocumentation.
 	Secure only for fixed length messages. For variable length messages use CMAC or DMAC.
 */
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class CBC_MAC : public MessageAuthenticationCodeImpl<CBC_MAC_Base, CBC_MAC<T> >, public SameKeyLengthAs<T>
 {

@@ -1,7 +1,14 @@
+<<<<<<< HEAD
+// panama.h - originally written and placed in the public domain by Wei Dai
+
+/// \file panama.h
+/// \brief Classes for Panama hash and stream cipher
+=======
 // panama.h - written and placed in the public domain by Wei Dai
 
 //! \file panama.h
 //! \brief Classes for Panama hash and stream cipher
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_PANAMA_H
 #define CRYPTOPP_PANAMA_H
@@ -23,7 +30,11 @@ class CRYPTOPP_NO_VTABLE Panama
 {
 public:
 	void Reset();
+<<<<<<< HEAD
+	void Iterate(size_t count, const word32 *p=NULLPTR, byte *output=NULLPTR, const byte *input=NULLPTR, KeystreamOperation operation=WRITE_KEYSTREAM);
+=======
 	void Iterate(size_t count, const word32 *p=NULL, byte *output=NULL, const byte *input=NULL, KeystreamOperation operation=WRITE_KEYSTREAM);
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 protected:
 	typedef word32 Stage[8];
@@ -33,9 +44,14 @@ protected:
 };
 
 namespace Weak {
+<<<<<<< HEAD
+/// \brief Panama hash
+/// \sa <a href="http://www.weidai.com/scan-mirror/md.html#Panama">Panama Hash</a>
+=======
 //! \class PanamaHash
 //! \brief Panama hash
 //! \sa <a href="http://www.weidai.com/scan-mirror/md.html#Panama">Panama Hash</a>
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class B = LittleEndian>
 class PanamaHash : protected Panama<B>, public AlgorithmImpl<IteratedHash<word32, NativeByteOrder, 32>, PanamaHash<B> >
 {
@@ -44,18 +60,30 @@ public:
 	PanamaHash() {Panama<B>::Reset();}
 	unsigned int DigestSize() const {return DIGESTSIZE;}
 	void TruncatedFinal(byte *hash, size_t size);
+<<<<<<< HEAD
+	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return B::ToEnum() == BIG_ENDIAN_ORDER ? "Panama-BE" : "Panama-LE";}
+=======
 	CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return B::ToEnum() == BIG_ENDIAN_ORDER ? "Panama-BE" : "Panama-LE";}
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 protected:
 	void Init() {Panama<B>::Reset();}
 	void HashEndianCorrectedBlock(const word32 *data) {this->Iterate(1, data);}	// push
 	size_t HashMultipleBlocks(const word32 *input, size_t length);
+<<<<<<< HEAD
+	word32* StateBuf() {return NULLPTR;}
+};
+}
+
+/// \brief MAC construction using a hermetic hash function
+=======
 	word32* StateBuf() {return NULL;}
 };
 }
 
 //! \class HermeticHashFunctionMAC
 //! \brief MAC construction using a hermetic hash function
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T_Hash, class T_Info = T_Hash>
 class HermeticHashFunctionMAC : public AlgorithmImpl<SimpleKeyingInterfaceImpl<TwoBases<MessageAuthenticationCode, VariableKeyLength<32, 0, INT_MAX> > >, T_Info>
 {
@@ -111,8 +139,12 @@ protected:
 };
 
 namespace Weak {
+<<<<<<< HEAD
+/// \brief Panama message authentication code
+=======
 //! \class PanamaMAC
 //! \brief Panama message authentication code
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class B = LittleEndian>
 class PanamaMAC : public HermeticHashFunctionMAC<PanamaHash<B> >
 {
@@ -123,6 +155,16 @@ public:
 };
 }
 
+<<<<<<< HEAD
+/// \brief Panama stream cipher information
+template <class B>
+struct PanamaCipherInfo : public FixedKeyLength<32, SimpleKeyingInterface::UNIQUE_IV, 32>
+{
+	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return B::ToEnum() == BIG_ENDIAN_ORDER ? "Panama-BE" : "Panama-LE";}
+};
+
+/// \brief Panama stream cipher operation
+=======
 //! \class PanamaCipherInfo
 //! \brief Panama stream cipher information
 template <class B>
@@ -133,6 +175,7 @@ struct PanamaCipherInfo : public FixedKeyLength<32, SimpleKeyingInterface::UNIQU
 
 //! \class PanamaCipherPolicy
 //! \brief Panama stream cipher operation
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class B>
 class PanamaCipherPolicy : public AdditiveCipherConcretePolicy<word32, 8>,
 							public PanamaCipherInfo<B>,
@@ -148,9 +191,14 @@ protected:
 	FixedSizeSecBlock<word32, 8> m_key;
 };
 
+<<<<<<< HEAD
+/// \brief Panama stream cipher
+/// \sa <a href="http://www.cryptolounge.org/wiki/PANAMA">Panama Stream Cipher</a>
+=======
 //! \class PanamaCipher
 //! \brief Panama stream cipher
 //! \sa <a href="http://www.cryptolounge.org/wiki/PANAMA">Panama Stream Cipher</a>
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class B = LittleEndian>
 struct PanamaCipher : public PanamaCipherInfo<B>, public SymmetricCipherDocumentation
 {

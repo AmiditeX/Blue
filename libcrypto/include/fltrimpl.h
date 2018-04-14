@@ -30,7 +30,11 @@
 /*
 #define FILTER_END	\
 	case -1:	\
+<<<<<<< HEAD
+		if (messageEnd && Output(-1, NULLPTR, 0, messageEnd, blocking))	\
+=======
 		if (messageEnd && Output(-1, NULL, 0, messageEnd, blocking))	\
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 			return 1;	\
 	FILTER_END_NO_MESSAGE_END
 */
@@ -54,6 +58,10 @@
 
 #define FILTER_OUTPUT2_MODIFIABLE(site, statement, output, length, messageEnd)	\
 	{\
+<<<<<<< HEAD
+	/* fall through */ \
+=======
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	case site:	\
 	statement;	\
 	if (OutputModifiable(site, output, length, messageEnd, blocking))	\
@@ -65,6 +73,10 @@
 
 #define FILTER_OUTPUT2_MAYBE_MODIFIABLE(site, statement, output, length, messageEnd, modifiable)	\
 	{\
+<<<<<<< HEAD
+	/* fall through */ \
+=======
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	case site:	\
 	statement;	\
 	if (modifiable ? OutputModifiable(site, output, length, messageEnd, blocking) : Output(site, output, length, messageEnd, blocking))	\

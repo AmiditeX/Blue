@@ -12,6 +12,16 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
+<<<<<<< HEAD
+/// \brief Windows Handle
+class WindowsHandle
+{
+public:
+	virtual ~WindowsHandle();
+
+	WindowsHandle(HANDLE h = INVALID_HANDLE_VALUE, bool own=false);
+	WindowsHandle(const WindowsHandle &h) : m_h(h.m_h), m_own(false) {}
+=======
 //! \brief Windows Handle
 class WindowsHandle
 {
@@ -19,6 +29,7 @@ public:
 	WindowsHandle(HANDLE h = INVALID_HANDLE_VALUE, bool own=false);
 	WindowsHandle(const WindowsHandle &h) : m_h(h.m_h), m_own(false) {}
 	virtual ~WindowsHandle();
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 	bool GetOwnership() const {return m_own;}
 	void SetOwnership(bool own) {m_own = own;}
@@ -37,7 +48,11 @@ protected:
 	bool m_own;
 };
 
+<<<<<<< HEAD
+/// \brief Windows Pipe
+=======
 //! \brief Windows Pipe
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class WindowsPipe
 {
 public:
@@ -58,7 +73,11 @@ protected:
 		{if (!result) HandleError(operation);}
 };
 
+<<<<<<< HEAD
+/// \brief Pipe-based implementation of NetworkReceiver
+=======
 //! \brief Pipe-based implementation of NetworkReceiver
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class WindowsPipeReceiver : public WindowsPipe, public NetworkReceiver
 {
 public:
@@ -81,7 +100,11 @@ private:
 	bool m_eofReceived;
 };
 
+<<<<<<< HEAD
+/// \brief Pipe-based implementation of NetworkSender
+=======
 //! \brief Pipe-based implementation of NetworkSender
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class WindowsPipeSender : public WindowsPipe, public NetworkSender
 {
 public:
@@ -104,11 +127,19 @@ private:
 	bool m_resultPending;
 };
 
+<<<<<<< HEAD
+/// \brief Windows Pipe Source
+class WindowsPipeSource : public WindowsHandle, public NetworkSource, public WindowsPipeReceiver
+{
+public:
+	WindowsPipeSource(HANDLE h=INVALID_HANDLE_VALUE, bool pumpAll=false, BufferedTransformation *attachment=NULLPTR)
+=======
 //! \brief Windows Pipe Source
 class WindowsPipeSource : public WindowsHandle, public NetworkSource, public WindowsPipeReceiver
 {
 public:
 	WindowsPipeSource(HANDLE h=INVALID_HANDLE_VALUE, bool pumpAll=false, BufferedTransformation *attachment=NULL)
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		: WindowsHandle(h), NetworkSource(attachment)
 	{
 		if (pumpAll)
@@ -123,7 +154,11 @@ private:
 	NetworkReceiver & AccessReceiver() {return *this;}
 };
 
+<<<<<<< HEAD
+/// \brief Windows Pipe Sink
+=======
 //! \brief Windows Pipe Sink
+>>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class WindowsPipeSink : public WindowsHandle, public NetworkSink, public WindowsPipeSender
 {
 public:
