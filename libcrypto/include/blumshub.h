@@ -1,15 +1,7 @@
-<<<<<<< HEAD
 // blumshub.h - originally written and placed in the public domain by Wei Dai
 
 /// \file blumshub.h
 /// \brief Classes for Blum Blum Shub generator
-=======
-// blumshub.h - written and placed in the public domain by Wei Dai
-
-//! \file
-//! \headerfile blumshub.h
-//! \brief Classes for Blum Blum Shub generator
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_BLUMSHUB_H
 #define CRYPTOPP_BLUMSHUB_H
@@ -20,20 +12,13 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// BlumBlumShub without factorization of the modulus
-=======
-//! BlumBlumShub without factorization of the modulus
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class PublicBlumBlumShub : public RandomNumberGenerator,
 						   public StreamTransformation
 {
 public:
-<<<<<<< HEAD
 	virtual ~PublicBlumBlumShub() {}
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	PublicBlumBlumShub(const Integer &n, const Integer &seed);
 
 	unsigned int GenerateBit();
@@ -44,32 +29,18 @@ public:
 	bool IsSelfInverting() const {return true;}
 	bool IsForwardTransformation() const {return true;}
 
-<<<<<<< HEAD
-=======
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~PublicBlumBlumShub() {}
-#endif
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 protected:
 	ModularArithmetic modn;
 	Integer current;
 	word maxBits, bitsLeft;
 };
 
-<<<<<<< HEAD
 /// BlumBlumShub with factorization of the modulus
 class BlumBlumShub : public PublicBlumBlumShub
 {
 public:
 	virtual ~BlumBlumShub() {}
 
-=======
-//! BlumBlumShub with factorization of the modulus
-class BlumBlumShub : public PublicBlumBlumShub
-{
-public:
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	// Make sure p and q are both primes congruent to 3 mod 4 and at least 512 bits long,
 	// seed is the secret key and should be about as big as p*q
 	BlumBlumShub(const Integer &p, const Integer &q, const Integer &seed);
@@ -77,13 +48,6 @@ public:
 	bool IsRandomAccess() const {return true;}
 	void Seek(lword index);
 
-<<<<<<< HEAD
-=======
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~BlumBlumShub() {}
-#endif
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 protected:
 	const Integer p, q;
 	const Integer x0;

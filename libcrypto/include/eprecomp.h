@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 // eprecomp.h - originally written and placed in the public domain by Wei Dai
 
 /// \file eprecomp.h
 /// \brief Classes for precomputation in a group
-=======
-// eprecomp.h - written and placed in the public domain by Wei Dai
-
-//! \file eprecomp.h
-//! \brief Classes for precomputation in a group
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_EPRECOMP_H
 #define CRYPTOPP_EPRECOMP_H
@@ -20,18 +13,14 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief DL_GroupPrecomputation interface
 /// \tparam T Field element
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class DL_GroupPrecomputation
 {
 public:
 	typedef T Element;
 
-<<<<<<< HEAD
 	virtual ~DL_GroupPrecomputation() {}
 
 	/// \brief Determines if elements needs conversion
@@ -67,27 +56,12 @@ public:
 
 /// \brief DL_FixedBasePrecomputation interface
 /// \tparam T Field element
-=======
-	virtual bool NeedConversions() const {return false;}
-	virtual Element ConvertIn(const Element &v) const {return v;}
-	virtual Element ConvertOut(const Element &v) const {return v;}
-	virtual const AbstractGroup<Element> & GetGroup() const =0;
-	virtual Element BERDecodeElement(BufferedTransformation &bt) const =0;
-	virtual void DEREncodeElement(BufferedTransformation &bt, const Element &P) const =0;
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DL_GroupPrecomputation() {}
-#endif
-};
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class DL_FixedBasePrecomputation
 {
 public:
 	typedef T Element;
 
-<<<<<<< HEAD
 	virtual ~DL_FixedBasePrecomputation() {}
 
 	/// \brief Determines whether this object is initialized
@@ -148,33 +122,14 @@ public:
 
 /// \brief DL_FixedBasePrecomputation adapter class
 /// \tparam T Field element
-=======
-	virtual bool IsInitialized() const =0;
-	virtual void SetBase(const DL_GroupPrecomputation<Element> &group, const Element &base) =0;
-	virtual const Element & GetBase(const DL_GroupPrecomputation<Element> &group) const =0;
-	virtual void Precompute(const DL_GroupPrecomputation<Element> &group, unsigned int maxExpBits, unsigned int storage) =0;
-	virtual void Load(const DL_GroupPrecomputation<Element> &group, BufferedTransformation &storedPrecomputation) =0;
-	virtual void Save(const DL_GroupPrecomputation<Element> &group, BufferedTransformation &storedPrecomputation) const =0;
-	virtual Element Exponentiate(const DL_GroupPrecomputation<Element> &group, const Integer &exponent) const =0;
-	virtual Element CascadeExponentiate(const DL_GroupPrecomputation<Element> &group, const Integer &exponent, const DL_FixedBasePrecomputation<Element> &pc2, const Integer &exponent2) const =0;
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DL_FixedBasePrecomputation() {}
-#endif
-};
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class DL_FixedBasePrecomputationImpl : public DL_FixedBasePrecomputation<T>
 {
 public:
 	typedef T Element;
 
-<<<<<<< HEAD
 	virtual ~DL_FixedBasePrecomputationImpl() {}
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	DL_FixedBasePrecomputationImpl() : m_windowSize(0) {}
 
 	// DL_FixedBasePrecomputation
@@ -187,15 +142,7 @@ public:
 	void Load(const DL_GroupPrecomputation<Element> &group, BufferedTransformation &storedPrecomputation);
 	void Save(const DL_GroupPrecomputation<Element> &group, BufferedTransformation &storedPrecomputation) const;
 	Element Exponentiate(const DL_GroupPrecomputation<Element> &group, const Integer &exponent) const;
-<<<<<<< HEAD
 	Element CascadeExponentiate(const DL_GroupPrecomputation<Element> &pc1, const Integer &exponent1, const DL_FixedBasePrecomputation<Element> &pc2, const Integer &exponent2) const;
-=======
-	Element CascadeExponentiate(const DL_GroupPrecomputation<Element> &group, const Integer &exponent, const DL_FixedBasePrecomputation<Element> &pc2, const Integer &exponent2) const;
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DL_FixedBasePrecomputationImpl() {}
-#endif
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 private:
 	void PrepareCascade(const DL_GroupPrecomputation<Element> &group, std::vector<BaseAndExponent<Element> > &eb, const Integer &exponent) const;

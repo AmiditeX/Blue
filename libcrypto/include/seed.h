@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 // seed.h - originally written and placed in the public domain by Wei Dai
 
 /// \file seed.h
 /// \brief Classes for the SEED block cipher
 /// \since Crypto++ 5.6.0
-=======
-// seed.h - written and placed in the public domain by Wei Dai
-
-//! \file seed.h
-//! \brief Classes for the SEED block cipher
-//! \since Crypto++ 5.6.0
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_SEED_H
 #define CRYPTOPP_SEED_H
@@ -20,7 +12,6 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief SEED block cipher information
 /// \since Crypto++ 5.6.0
 struct SEED_Info : public FixedBlockSize<16>, public FixedKeyLength<16>, public FixedRounds<16>
@@ -31,20 +22,6 @@ struct SEED_Info : public FixedBlockSize<16>, public FixedKeyLength<16>, public 
 /// \brief SEED block cipher
 /// \sa <a href="http://www.cryptolounge.org/wiki/SEED">SEED</a>
 /// \since Crypto++ 5.6.0
-=======
-//! \class SEED_Info
-//! \brief SEED block cipher information
-//! \since Crypto++ 5.6.0
-struct SEED_Info : public FixedBlockSize<16>, public FixedKeyLength<16>, public FixedRounds<16>
-{
-	CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return "SEED";}
-};
-
-//! \class SEED
-//! \brief SEED block cipher
-//! \sa <a href="http://www.cryptolounge.org/wiki/SEED">SEED</a>
-//! \since Crypto++ 5.6.0
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class SEED : public SEED_Info, public BlockCipherDocumentation
 {
 	class CRYPTOPP_NO_VTABLE Base : public BlockCipherImpl<SEED_Info>

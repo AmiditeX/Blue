@@ -4,7 +4,6 @@ NAMESPACE_BEGIN(CryptoPP)
 
 // linear transformation
 #define LT(i,a,b,c,d,e)	{\
-<<<<<<< HEAD
 	a = rotlConstant<13>(a);	\
 	c = rotlConstant<3>(c); 	\
 	d = rotlConstant<7>(d ^ c ^ (a << 3)); 	\
@@ -23,26 +22,6 @@ NAMESPACE_BEGIN(CryptoPP)
 	b ^= a ^ c; 		\
 	c = rotrConstant<3>(c); 	\
 	a = rotrConstant<13>(a);}
-=======
-	a = rotlFixed(a, 13);	\
-	c = rotlFixed(c, 3); 	\
-	d = rotlFixed(d ^ c ^ (a << 3), 7); 	\
-	b = rotlFixed(b ^ a ^ c, 1); 	\
-	a = rotlFixed(a ^ b ^ d, 5); 		\
-	c = rotlFixed(c ^ d ^ (b << 7), 22);}
-
-// inverse linear transformation
-#define ILT(i,a,b,c,d,e)	{\
-	c = rotrFixed(c, 22);	\
-	a = rotrFixed(a, 5); 	\
-	c ^= d ^ (b << 7);	\
-	a ^= b ^ d; 		\
-	b = rotrFixed(b, 1); 	\
-	d = rotrFixed(d, 7) ^ c ^ (a << 3);	\
-	b ^= a ^ c; 		\
-	c = rotrFixed(c, 3); 	\
-	a = rotrFixed(a, 13);}
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 // order of output from S-box functions
 #define beforeS0(f) f(0,a,b,c,d,e)

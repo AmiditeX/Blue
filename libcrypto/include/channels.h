@@ -1,15 +1,7 @@
-<<<<<<< HEAD
 // channels.h - originally written and placed in the public domain by Wei Dai
 
 /// \file channels.h
 /// \brief Classes for multiple named channels
-=======
-// channels.h - written and placed in the public domain by Wei Dai
-
-//! \file
-//! \headerfile channels.h
-//! \brief Classes for multiple named channels
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_CHANNELS_H
 #define CRYPTOPP_CHANNELS_H
@@ -19,7 +11,6 @@
 #include "smartptr.h"
 #include "stdcpp.h"
 
-<<<<<<< HEAD
 #if CRYPTOPP_MSC_VERSION
 # pragma warning(push)
 # pragma warning(disable: 4355)
@@ -29,12 +20,6 @@ NAMESPACE_BEGIN(CryptoPP)
 
 #if 0
 /// Route input on default channel to different and/or multiple channels based on message sequence number
-=======
-NAMESPACE_BEGIN(CryptoPP)
-
-#if 0
-//! Route input on default channel to different and/or multiple channels based on message sequence number
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class MessageSwitch : public Sink
 {
 public:
@@ -107,11 +92,7 @@ protected:
 	ChannelRouteIterator();
 };
 
-<<<<<<< HEAD
 /// Route input to different and/or multiple channels based on channel ID
-=======
-//! Route input to different and/or multiple channels based on channel ID
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL ChannelSwitch : public Multichannel<Sink>, public ChannelSwitchTypedefs
 {
 public:
@@ -154,11 +135,8 @@ private:
 
 NAMESPACE_END
 
-<<<<<<< HEAD
 #if CRYPTOPP_MSC_VERSION
 # pragma warning(pop)
 #endif
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #endif

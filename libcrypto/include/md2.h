@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 // md2.h - originally written and placed in the public domain by Wei Dai
 
 /// \file md2.h
 /// \brief Classes for the MD2 message digest
 /// \since Crypto++ 3.0
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #ifndef CRYPTOPP_MD2_H
 #define CRYPTOPP_MD2_H
 
@@ -17,13 +14,9 @@ NAMESPACE_BEGIN(CryptoPP)
 
 namespace Weak1 {
 
-<<<<<<< HEAD
 /// \brief MD2 message digest
 /// \sa <a href="http://www.cryptolounge.org/wiki/MD2">MD2</a>
 /// \since Crypto++ 3.0
-=======
-/// <a href="http://www.cryptolounge.org/wiki/MD2">MD2</a>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class MD2 : public HashTransformation
 {
 public:
@@ -32,11 +25,7 @@ public:
 	void TruncatedFinal(byte *hash, size_t size);
 	unsigned int DigestSize() const {return DIGESTSIZE;}
 	unsigned int BlockSize() const {return BLOCKSIZE;}
-<<<<<<< HEAD
 	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "MD2";}
-=======
-	CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return "MD2";}
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 	CRYPTOPP_CONSTANT(DIGESTSIZE = 16)
 	CRYPTOPP_CONSTANT(BLOCKSIZE = 16)

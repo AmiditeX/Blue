@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 // dh.h - originally written and placed in the public domain by Wei Dai
 
 /// \file dh.h
 /// \brief Classes for Diffie-Hellman key exchange
-=======
-// dh.h - written and placed in the public domain by Wei Dai
-
-//! \file dh.h
-//! \brief Classes for Diffie-Hellman key exchange
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_DH_H
 #define CRYPTOPP_DH_H
@@ -19,7 +12,6 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief Diffie-Hellman domain
 /// \tparam GROUP_PARAMETERS group parameters
 /// \tparam COFACTOR_OPTION cofactor multiplication option
@@ -30,16 +22,6 @@ NAMESPACE_BEGIN(CryptoPP)
 /// \sa DL_SimpleKeyAgreementDomainBase
 /// \since Crypto++ 1.0
 template <class GROUP_PARAMETERS, class COFACTOR_OPTION = typename GROUP_PARAMETERS::DefaultCofactorOption>
-=======
-//! \class DH_Domain
-//! \brief Diffie-Hellman domain
-//! \tparam GROUP_PARAMETERS group parameters
-//! \tparam COFACTOR_OPTION \ref CofactorMultiplicationOption "cofactor multiplication option"
-//! \details A Diffie-Hellman domain is a set of parameters that must be shared
-//!   by two parties in a key agreement protocol, along with the algorithms
-//!   for generating key pairs and deriving agreed values.
-template <class GROUP_PARAMETERS, class COFACTOR_OPTION = CPP_TYPENAME GROUP_PARAMETERS::DefaultCofactorOption>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class DH_Domain : public DL_SimpleKeyAgreementDomainBase<typename GROUP_PARAMETERS::Element>
 {
 	typedef DL_SimpleKeyAgreementDomainBase<typename GROUP_PARAMETERS::Element> Base;
@@ -50,7 +32,6 @@ public:
 	typedef DL_KeyAgreementAlgorithm_DH<Element, COFACTOR_OPTION> DH_Algorithm;
 	typedef DH_Domain<GROUP_PARAMETERS, COFACTOR_OPTION> Domain;
 
-<<<<<<< HEAD
 	virtual ~DH_Domain() {}
 
 	/// \brief Construct a Diffie-Hellman domain
@@ -71,31 +52,10 @@ public:
 	/// \param v1 RandomNumberGenerator derived class
 	/// \param v2 second parameter
 	/// \details v1 and v2 are passed directly to the GROUP_PARAMETERS object.
-=======
-	//! \brief Construct a Diffie-Hellman domain
-	DH_Domain() {}
-
-	//! \brief Construct a Diffie-Hellman domain
-	//! \param params group parameters and options
-	DH_Domain(const GroupParameters &params)
-		: m_groupParameters(params) {}
-
-	//! \brief Construct a Diffie-Hellman domain
-	//! \param bt BufferedTransformation with group parameters and options
-	DH_Domain(BufferedTransformation &bt)
-		{m_groupParameters.BERDecode(bt);}
-
-	//! \brief Construct a Diffie-Hellman domain
-	//! \tparam T2 template parameter used as a constructor parameter
-	//! \param v1 RandomNumberGenerator derived class
-	//! \param v2 second parameter
-	//! \details v1 and v2 are passed directly to the GROUP_PARAMETERS object.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	template <class T2>
 	DH_Domain(RandomNumberGenerator &v1, const T2 &v2)
 		{m_groupParameters.Initialize(v1, v2);}
 
-<<<<<<< HEAD
 	/// \brief Create a Diffie-Hellman domain
 	/// \tparam T2 template parameter used as a constructor parameter
 	/// \tparam T3 template parameter used as a constructor parameter
@@ -103,20 +63,10 @@ public:
 	/// \param v2 second parameter
 	/// \param v3 third parameter
 	/// \details v1, v2 and v3 are passed directly to the GROUP_PARAMETERS object.
-=======
-	//! \brief Construct a Diffie-Hellman domain
-	//! \tparam T2 template parameter used as a constructor parameter
-	//! \tparam T3 template parameter used as a constructor parameter
-	//! \param v1 RandomNumberGenerator derived class
-	//! \param v2 second parameter
-	//! \param v3 third parameter
-	//! \details v1, v2 and v3 are passed directly to the GROUP_PARAMETERS object.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	template <class T2, class T3>
 	DH_Domain(RandomNumberGenerator &v1, const T2 &v2, const T3 &v3)
 		{m_groupParameters.Initialize(v1, v2, v3);}
 
-<<<<<<< HEAD
 	/// \brief Create a Diffie-Hellman domain
 	/// \tparam T2 template parameter used as a constructor parameter
 	/// \tparam T3 template parameter used as a constructor parameter
@@ -126,41 +76,20 @@ public:
 	/// \param v3 third parameter
 	/// \param v4 fourth parameter
 	/// \details v1, v2, v3 and v4 are passed directly to the GROUP_PARAMETERS object.
-=======
-	//! \brief Construct a Diffie-Hellman domain
-	//! \tparam T2 template parameter used as a constructor parameter
-	//! \tparam T3 template parameter used as a constructor parameter
-	//! \tparam T4 template parameter used as a constructor parameter
-	//! \param v1 RandomNumberGenerator derived class
-	//! \param v2 second parameter
-	//! \param v3 third parameter
-	//! \param v4 fourth parameter
-	//! \details v1, v2, v3 and v4 are passed directly to the GROUP_PARAMETERS object.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	template <class T2, class T3, class T4>
 	DH_Domain(RandomNumberGenerator &v1, const T2 &v2, const T3 &v3, const T4 &v4)
 		{m_groupParameters.Initialize(v1, v2, v3, v4);}
 
-<<<<<<< HEAD
 	/// \brief Construct a Diffie-Hellman domain
 	/// \tparam T1 template parameter used as a constructor parameter
 	/// \tparam T2 template parameter used as a constructor parameter
 	/// \param v1 first parameter
 	/// \param v2 second parameter
 	/// \details v1 and v2 are passed directly to the GROUP_PARAMETERS object.
-=======
-	//! \brief Construct a Diffie-Hellman domain
-	//! \tparam T1 template parameter used as a constructor parameter
-	//! \tparam T2 template parameter used as a constructor parameter
-	//! \param v1 first parameter
-	//! \param v2 second parameter
-	//! \details v1 and v2 are passed directly to the GROUP_PARAMETERS object.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	template <class T1, class T2>
 	DH_Domain(const T1 &v1, const T2 &v2)
 		{m_groupParameters.Initialize(v1, v2);}
 
-<<<<<<< HEAD
 	/// \brief Construct a Diffie-Hellman domain
 	/// \tparam T1 template parameter used as a constructor parameter
 	/// \tparam T2 template parameter used as a constructor parameter
@@ -169,21 +98,10 @@ public:
 	/// \param v2 second parameter
 	/// \param v3 third parameter
 	/// \details v1, v2 and v3 are passed directly to the GROUP_PARAMETERS object.
-=======
-	//! \brief Construct a Diffie-Hellman domain
-	//! \tparam T1 template parameter used as a constructor parameter
-	//! \tparam T2 template parameter used as a constructor parameter
-	//! \tparam T3 template parameter used as a constructor parameter
-	//! \param v1 first parameter
-	//! \param v2 second parameter
-	//! \param v3 third parameter
-	//! \details v1, v2 and v3 are passed directly to the GROUP_PARAMETERS object.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	template <class T1, class T2, class T3>
 	DH_Domain(const T1 &v1, const T2 &v2, const T3 &v3)
 		{m_groupParameters.Initialize(v1, v2, v3);}
 
-<<<<<<< HEAD
 	/// \brief Construct a Diffie-Hellman domain
 	/// \tparam T1 template parameter used as a constructor parameter
 	/// \tparam T2 template parameter used as a constructor parameter
@@ -194,23 +112,10 @@ public:
 	/// \param v3 third parameter
 	/// \param v4 fourth parameter
 	/// \details v1, v2, v3 and v4 are passed directly to the GROUP_PARAMETERS object.
-=======
-	//! \brief Construct a Diffie-Hellman domain
-	//! \tparam T1 template parameter used as a constructor parameter
-	//! \tparam T2 template parameter used as a constructor parameter
-	//! \tparam T3 template parameter used as a constructor parameter
-	//! \tparam T4 template parameter used as a constructor parameter
-	//! \param v1 first parameter
-	//! \param v2 second parameter
-	//! \param v3 third parameter
-	//! \param v4 fourth parameter
-	//! \details v1, v2, v3 and v4 are passed directly to the GROUP_PARAMETERS object.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	template <class T1, class T2, class T3, class T4>
 	DH_Domain(const T1 &v1, const T2 &v2, const T3 &v3, const T4 &v4)
 		{m_groupParameters.Initialize(v1, v2, v3, v4);}
 
-<<<<<<< HEAD
 	/// \brief Retrieves the group parameters for this domain
 	/// \return the group parameters for this domain as a const reference
 	const GroupParameters & GetGroupParameters() const {return m_groupParameters;}
@@ -227,24 +132,6 @@ public:
 	///   builds of the library do not provide FIPS validated cryptography, so the code should be
 	///   removed by the optimizer.
 	/// \pre <tt>COUNTOF(publicKey) == PublicKeyLength()</tt>
-=======
-	//! \brief Retrieves the group parameters for this domain
-	//! \return the group parameters for this domain as a const reference
-	const GroupParameters & GetGroupParameters() const {return m_groupParameters;}
-	//! \brief Retrieves the group parameters for this domain
-	//! \return the group parameters for this domain as a non-const reference
-	GroupParameters & AccessGroupParameters() {return m_groupParameters;}
-
-	//! \brief Generate a public key from a private key in this domain
-	//! \param rng RandomNumberGenerator derived class
-	//! \param privateKey byte buffer with the previously generated private key
-	//! \param publicKey byte buffer for the generated public key in this domain
-	//! \details If using a FIPS 140-2 validated library on Windows, then this class will perform
-	//!   a self test to ensure the key pair is pairwise consistent. Non-FIPS and non-Windows
-	//!   builds of the library do not provide FIPS validated cryptography, so the code should be
-	//!   removed by the optimizer.
-	//! \pre <tt>COUNTOF(publicKey) == PublicKeyLength()</tt>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	void GeneratePublicKey(RandomNumberGenerator &rng, const byte *privateKey, byte *publicKey) const
 	{
 		Base::GeneratePublicKey(rng, privateKey, publicKey);
@@ -270,13 +157,6 @@ public:
 		{return GroupParameters::StaticAlgorithmNamePrefix() + DH_Algorithm::StaticAlgorithmName();}
 	std::string AlgorithmName() const {return StaticAlgorithmName();}
 
-<<<<<<< HEAD
-=======
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DH_Domain() {}
-#endif
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 private:
 	const DL_KeyAgreementAlgorithm<Element> & GetKeyAgreementAlgorithm() const
 		{return Singleton<DH_Algorithm>().Ref();}
@@ -288,7 +168,6 @@ private:
 
 CRYPTOPP_DLL_TEMPLATE_CLASS DH_Domain<DL_GroupParameters_GFP_DefaultSafePrime>;
 
-<<<<<<< HEAD
 /// \brief Diffie-Hellman in GF(p)
 /// \details DH() class is a typedef of DH_Domain(). The documentation that follows
 ///   does not exist. Rather the documentation was created in response to <a href="https://github.com/weidai11/cryptopp/issues/328">Issue
@@ -390,10 +269,6 @@ struct DH : public DH_Domain<DL_GroupParameters_GFP_DefaultSafePrime>
 // The real DH class is a typedef.
 typedef DH_Domain<DL_GroupParameters_GFP_DefaultSafePrime> DH;
 #endif
-=======
-//! <a href="http://www.weidai.com/scan-mirror/ka.html#DH">Diffie-Hellman</a> in GF(p) with key validation
-typedef DH_Domain<DL_GroupParameters_GFP_DefaultSafePrime> DH;
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 NAMESPACE_END
 

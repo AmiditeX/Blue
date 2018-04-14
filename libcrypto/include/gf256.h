@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 // gf256.h - originally written and placed in the public domain by Wei Dai
 
 /// \file gf256.h
 /// \brief Classes and functions for schemes over GF(256)
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #ifndef CRYPTOPP_GF256_H
 #define CRYPTOPP_GF256_H
 
@@ -14,11 +11,7 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief GF(256) with polynomial basis
-=======
-//! GF(256) with polynomial basis
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class GF256
 {
 public:

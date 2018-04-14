@@ -1,16 +1,11 @@
-<<<<<<< HEAD
 // bench.h - originally written and placed in the public domain by Wei Dai
 //           CryptoPP::Test namespace added by JW in February 2017
-=======
-// bench.h - written and placed in the public domain by Wei Dai
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_BENCH_H
 #define CRYPTOPP_BENCH_H
 
 #include "cryptlib.h"
 
-<<<<<<< HEAD
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -58,11 +53,5 @@ void OutputResultOperations(const char *name, const char *operation, bool pc, un
 
 NAMESPACE_END  // Test
 NAMESPACE_END  // CryptoPP
-=======
-extern const double CLOCK_TICKS_PER_SECOND;
-
-void BenchmarkAll(double t, double hertz);
-void BenchmarkAll2(double t, double hertz);
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #endif

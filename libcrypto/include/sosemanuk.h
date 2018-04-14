@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 // sosemanuk.h - originally written and placed in the public domain by Wei Dai
 
 /// \file sosemanuk.h
 /// \brief Classes for Sosemanuk stream cipher
 /// \since Crypto++ 5.5
-=======
-// sosemanuk.h - written and placed in the public domain by Wei Dai
-
-//! \file sosemanuk.h
-//! \brief Classes for Sosemanuk stream cipher
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_SOSEMANUK_H
 #define CRYPTOPP_SOSEMANUK_H
@@ -25,7 +18,6 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief Sosemanuk stream cipher information
 	/// \since Crypto++ 5.5
 struct SosemanukInfo : public VariableKeyLength<16, 1, 32, 1, SimpleKeyingInterface::UNIQUE_IV, 16>
@@ -35,15 +27,6 @@ struct SosemanukInfo : public VariableKeyLength<16, 1, 32, 1, SimpleKeyingInterf
 
 /// \brief Sosemanuk stream cipher implementation
 /// \since Crypto++ 5.5
-=======
-//! algorithm info
-struct SosemanukInfo : public VariableKeyLength<16, 1, 32, 1, SimpleKeyingInterface::UNIQUE_IV, 16>
-{
-	CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return "Sosemanuk";}
-};
-
-//! _
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class SosemanukPolicy : public AdditiveCipherConcretePolicy<word32, 20>, public SosemanukInfo
 {
 protected:
@@ -51,11 +34,7 @@ protected:
 	void OperateKeystream(KeystreamOperation operation, byte *output, const byte *input, size_t iterationCount);
 	void CipherResynchronize(byte *keystreamBuffer, const byte *iv, size_t length);
 	bool CipherIsRandomAccess() const {return false;}
-<<<<<<< HEAD
 #if (CRYPTOPP_BOOL_X86 || CRYPTOPP_BOOL_X32 || CRYPTOPP_BOOL_X64)
-=======
-#if (CRYPTOPP_BOOL_X86 || CRYPTOPP_BOOL_X32 || CRYPTOPP_BOOL_X64) && !defined(CRYPTOPP_DISABLE_SOSEMANUK_ASM)
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	unsigned int GetAlignment() const;
 	unsigned int GetOptimalBlockSize() const;
 #endif
@@ -64,7 +43,6 @@ protected:
 	FixedSizeAlignedSecBlock<word32, 12> m_state;
 };
 
-<<<<<<< HEAD
 /// \brief Sosemanuk stream cipher
 /// \details is a stream cipher developed by Come Berbain, Olivier Billet, Anne Canteaut, Nicolas Courtois,
 ///   Henri Gilbert, Louis Goubin, Aline Gouget, Louis Granboulan, Cédric Lauradoux, Marine Minier, Thomas
@@ -72,9 +50,6 @@ protected:
 ///   the eSTREAM Portfolio.
 /// \sa <a href="http://www.cryptolounge.org/wiki/Sosemanuk">Sosemanuk</a>
 /// \since Crypto++ 5.5
-=======
-//! <a href="http://www.cryptolounge.org/wiki/Sosemanuk">Sosemanuk</a>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 struct Sosemanuk : public SosemanukInfo, public SymmetricCipherDocumentation
 {
 	typedef SymmetricCipherFinal<ConcretePolicyHolder<SosemanukPolicy, AdditiveCipherTemplate<> >, SosemanukInfo> Encryption;

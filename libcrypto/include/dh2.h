@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 // dh2.h - originally written and placed in the public domain by Wei Dai
 
 /// \file dh2.h
 /// \brief Classes for Unified Diffie-Hellman key exchange
 /// \since Crypto++ 3.0
-=======
-// dh2.h - written and placed in the public domain by Wei Dai
-
-//! \file
-//! \headerfile dh2.h
-//! \brief Classes for Diffie-Hellman authenticated key exchange
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_DH2_H
 #define CRYPTOPP_DH2_H
@@ -19,7 +11,6 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief Unified Diffie-Hellman in GF(p)
 /// \details A Diffie-Hellman domain is a set of parameters that must be shared
 ///   by two parties in a key agreement protocol, along with the algorithms
@@ -35,14 +26,6 @@ public:
 	DH2(SimpleKeyAgreementDomain &domain)
 		: d1(domain), d2(domain) {}
 	/// \brief Construct a DH2
-=======
-/// <a href="http://www.weidai.com/scan-mirror/ka.html#DH2">Unified Diffie-Hellman</a>
-class DH2 : public AuthenticatedKeyAgreementDomain
-{
-public:
-	DH2(SimpleKeyAgreementDomain &domain)
-		: d1(domain), d2(domain) {}
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	DH2(SimpleKeyAgreementDomain &staticDomain, SimpleKeyAgreementDomain &ephemeralDomain)
 		: d1(staticDomain), d2(ephemeralDomain) {}
 
@@ -78,13 +61,6 @@ public:
 		const byte *staticOtherPublicKey, const byte *ephemeralOtherPublicKey,
 		bool validateStaticOtherPublicKey=true) const;
 
-<<<<<<< HEAD
-=======
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DH2() {}
-#endif
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 protected:
 	SimpleKeyAgreementDomain &d1, &d2;
 };

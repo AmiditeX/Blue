@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 // ccm.h - originally written and placed in the public domain by Wei Dai
 
 /// \file ccm.h
 /// \brief CCM block cipher mode of operation
 /// \since Crypto++ 5.6.0
-=======
-// ccm.h - written and placed in the public domain by Wei Dai
-
-//! \file ccm.h
-//! \brief CCM block cipher mode of operation
-//! \since Crypto++ 5.6.0
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_CCM_H
 #define CRYPTOPP_CCM_H
@@ -20,16 +12,9 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief CCM block cipher base implementation
 /// \details Base implementation of the AuthenticatedSymmetricCipher interface
 /// \since Crypto++ 5.6.0
-=======
-//! \class CCM_Base
-//! \brief CCM block cipher base implementation
-//! \details Base implementation of the AuthenticatedSymmetricCipher interface
-//! \since Crypto++ 5.6.0
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL CRYPTOPP_NO_VTABLE CCM_Base : public AuthenticatedSymmetricCipherBase
 {
 public:
@@ -45,17 +30,10 @@ public:
 		{return GetBlockCipher().MaxKeyLength();}
 	size_t DefaultKeyLength() const
 		{return GetBlockCipher().DefaultKeyLength();}
-<<<<<<< HEAD
 	size_t GetValidKeyLength(size_t keylength) const
 		{return GetBlockCipher().GetValidKeyLength(keylength);}
 	bool IsValidKeyLength(size_t keylength) const
 		{return GetBlockCipher().IsValidKeyLength(keylength);}
-=======
-	size_t GetValidKeyLength(size_t n) const
-		{return GetBlockCipher().GetValidKeyLength(n);}
-	bool IsValidKeyLength(size_t n) const
-		{return GetBlockCipher().IsValidKeyLength(n);}
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	unsigned int OptimalDataAlignment() const
 		{return GetBlockCipher().OptimalDataAlignment();}
 	IV_Requirement IVRequirement() const
@@ -102,20 +80,11 @@ protected:
 	CTR_Mode_ExternalCipher::Encryption m_ctr;
 };
 
-<<<<<<< HEAD
 /// \brief CCM block cipher final implementation
 /// \tparam T_BlockCipher block cipher
 /// \tparam T_DefaultDigestSize default digest size, in bytes
 /// \tparam T_IsEncryption direction in which to operate the cipher
 /// \since Crypto++ 5.6.0
-=======
-//! \class CCM_Final
-//! \brief CCM block cipher final implementation
-//! \tparam T_BlockCipher block cipher
-//! \tparam T_DefaultDigestSize default digest size, in bytes
-//! \tparam T_IsEncryption direction in which to operate the cipher
-//! \since Crypto++ 5.6.0
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T_BlockCipher, int T_DefaultDigestSize, bool T_IsEncryption>
 class CCM_Final : public CCM_Base
 {
@@ -131,7 +100,6 @@ private:
 	typename T_BlockCipher::Encryption m_cipher;
 };
 
-<<<<<<< HEAD
 /// \brief CCM block cipher mode of operation
 /// \tparam T_BlockCipher block cipher
 /// \tparam T_DefaultDigestSize default digest size, in bytes
@@ -141,16 +109,6 @@ private:
 ///   <A HREF="http://www.cryptopp.com/wiki/Modes_of_Operation">Modes of Operation</A>
 ///   on the Crypto++ wiki.
 /// \since Crypto++ 5.6.0
-=======
-//! \class CCM
-//! \brief CCM block cipher mode of operation
-//! \tparam T_BlockCipher block cipher
-//! \tparam T_DefaultDigestSize default digest size, in bytes
-//! \details \p CCM provides the \p Encryption and \p Decryption typedef. See GCM_Base
-//!   and GCM_Final for the AuthenticatedSymmetricCipher implementation.
-//! \sa <a href="http://www.cryptolounge.org/wiki/CCM">CCM</a> at the Crypto Lounge
-//! \since Crypto++ 5.6.0
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T_BlockCipher, int T_DefaultDigestSize = 16>
 struct CCM : public AuthenticatedSymmetricCipherDocumentation
 {

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // rng.h - originally written and placed in the public domain by Wei Dai
 
 /// \file rng.h
@@ -6,15 +5,6 @@
 /// \details This file contains miscellaneous classes for RNGs, including LC_RNG(),
 ///   X917RNG() and MaurerRandomnessTest()
 /// \sa osrng.h, randpool.h
-=======
-// rng.h - written and placed in the public domain by Wei Dai
-
-//! \file rng.h
-//! \brief Miscellaneous classes for RNGs
-//! \details This file contains miscellaneous classes for RNGs, including LC_RNG(),
-//!   X917RNG() and MaurerRandomnessTest()
-//! \sa osrng.h, randpool.h
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_RNG_H
 #define CRYPTOPP_RNG_H
@@ -25,7 +15,6 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief Linear Congruential Generator (LCG)
 /// \details Originally propsed by William S. England.
 /// \warning LC_RNG is suitable for simulations, where uniformaly distrubuted numbers are
@@ -35,17 +24,6 @@ class LC_RNG : public RandomNumberGenerator
 public:
 	/// \brief Construct a Linear Congruential Generator (LCG)
 	/// \param init_seed the initial value for the generator
-=======
-//! \brief Linear Congruential Generator (LCG)
-//! \details Originally propsed by William S. England.
-//! \warning LC_RNG is suitable for simulations, where uniformaly distrubuted numbers are
-//!   required quickly. It should not be used for cryptographic purposes.
-class LC_RNG : public RandomNumberGenerator
-{
-public:
-	//! \brief Construct a Linear Congruential Generator (LCG)
-	//! \param init_seed the initial value for the generator
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	LC_RNG(word32 init_seed)
 		: seed(init_seed) {}
 
@@ -62,7 +40,6 @@ private:
 	static const word16 r;
 };
 
-<<<<<<< HEAD
 /// \brief ANSI X9.17 RNG
 /// \details X917RNG is from ANSI X9.17 Appendix C, and it uses a 64-bit block cipher, like TripleDES.
 ///   If you use a 128-bit block cipher, like AES, then you are effectively using an ANSI X9.31 generator.
@@ -87,33 +64,6 @@ public:
 	///   X917RNG prng(new AES::Encryption(key, AES::DEFAULT_KEYLENGTH), seed, NULLPTR);</pre>
 	/// \sa AutoSeededX917RNG
 	X917RNG(BlockTransformation *cipher, const byte *seed, const byte *deterministicTimeVector = NULLPTR);
-=======
-//! \class X917RNG
-//! \brief ANSI X9.17 RNG
-//! \details X917RNG is from ANSI X9.17 Appendix C, and it uses a 64-bit block cipher, like TripleDES.
-//!   If you use a 128-bit block cipher, like AES, then you are effectively using an ANSI X9.31 generator.
-//! \sa AutoSeededX917RNG, DefaultAutoSeededRNG
-class CRYPTOPP_DLL X917RNG : public RandomNumberGenerator, public NotCopyable
-{
-public:
-	//! \brief Construct a X917RNG
-	//! \param cipher the block cipher to use for the generator
-	//! \param seed a byte buffer to use as a seed
-	//! \param deterministicTimeVector additional entropy
-	//! \details <tt>cipher</tt> will be deleted by the destructor. <tt>seed</tt> must be at least
-	//!   BlockSize() in length. <tt>deterministicTimeVector = 0</tt> means obtain time vector
-	//!   from the system.
-	//! \details When constructing a X917RNG, the generator must be keyed or an access
-	//!   violation will occur because the time vector is encrypted using the block cipher.
-	//!   To key the generator during constructions, perform the following:
-	//! <pre>
-	//!   SecByteBlock key(AES::DEFAULT_KEYLENGTH), seed(AES::BLOCKSIZE);
-	//!   OS_GenerateRandomBlock(false, key, key.size());
-	//!   OS_GenerateRandomBlock(false, seed, seed.size());
-	//!   X917RNG prng(new AES::Encryption(key, AES::DEFAULT_KEYLENGTH), seed, NULL);</pre>
-	//! \sa AutoSeededX917RNG
-	X917RNG(BlockTransformation *cipher, const byte *seed, const byte *deterministicTimeVector = 0);
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 	void GenerateIntoBufferedTransformation(BufferedTransformation &target, const std::string &channel, lword size);
 
@@ -124,7 +74,6 @@ private:
 	SecByteBlock m_randseed, m_lastBlock, m_deterministicTimeVector;
 };
 
-<<<<<<< HEAD
 /// \brief  Maurer's Universal Statistical Test for Random Bit Generators
 /// \details This class implements Maurer's Universal Statistical Test for
 ///   Random Bit Generators. It is intended for measuring the randomness of
@@ -134,29 +83,12 @@ class MaurerRandomnessTest : public Bufferless<Sink>
 {
 public:
 	/// \brief Construct a MaurerRandomnessTest
-=======
-//! \class MaurerRandomnessTest
-//! \brief  Maurer's Universal Statistical Test for Random Bit Generators
-//! \details This class implements Maurer's Universal Statistical Test for
-//!   Random Bit Generators. It is intended for measuring the randomness of
-//!   *PHYSICAL* RNGs.
-//! \details For more details see Maurer's paper in Journal of Cryptology, 1992.
-class MaurerRandomnessTest : public Bufferless<Sink>
-{
-public:
-	//! \brief Contruct a MaurerRandomnessTest
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	MaurerRandomnessTest();
 
 	size_t Put2(const byte *inString, size_t length, int messageEnd, bool blocking);
 
-<<<<<<< HEAD
 	/// \brief Provides the number of bytes of input is needed by the test
 	/// \returns how many more bytes of input is needed by the test
-=======
-	//! \brief Provides the number of bytes of input is needed by the test
-	//! \returns how many more bytes of input is needed by the test
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	// BytesNeeded() returns how many more bytes of input is needed by the test
 	// GetTestValue() should not be called before BytesNeeded()==0
 	unsigned int BytesNeeded() const {return n >= (Q+K) ? 0 : Q+K-n;}

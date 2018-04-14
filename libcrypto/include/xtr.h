@@ -1,15 +1,9 @@
 #ifndef CRYPTOPP_XTR_H
 #define CRYPTOPP_XTR_H
 
-<<<<<<< HEAD
 /// \file xtr.h
 /// \brief The XTR public key system
 /// \details The XTR public key system by Arjen K. Lenstra and Eric R. Verheul
-=======
-//! \file xtr.h
-//! \brief The XTR public key system
-//! \details The XTR public key system by Arjen K. Lenstra and Eric R. Verheul
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #include "cryptlib.h"
 #include "modarith.h"
@@ -18,12 +12,7 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief an element of GF(p^2)
-=======
-//! \class GFP2Element
-//! \brief an element of GF(p^2)
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class GFP2Element
 {
 public:
@@ -52,12 +41,7 @@ public:
 	Integer c1, c2;
 };
 
-<<<<<<< HEAD
 /// \brief GF(p^2), optimal normal basis
-=======
-//! \class GFP2_ONB
-//! \brief GF(p^2), optimal normal basis
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class F>
 class GFP2_ONB : public AbstractRing<GFP2Element>
 {
@@ -225,11 +209,7 @@ protected:
 	mutable Integer t;
 };
 
-<<<<<<< HEAD
 /// \brief Creates primes p,q and generator g for XTR
-=======
-//! \brief Creates primes p,q and generator g for XTR
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 void XTR_FindPrimesAndGenerator(RandomNumberGenerator &rng, Integer &p, Integer &q, GFP2Element &g, unsigned int pbits, unsigned int qbits);
 
 GFP2Element XTR_Exponentiate(const GFP2Element &b, const Integer &e, const Integer &p);

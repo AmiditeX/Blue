@@ -1,15 +1,7 @@
-<<<<<<< HEAD
 // crc.h - originally written and placed in the public domain by Wei Dai
 
 /// \file crc.h
 /// \brief Classes for CRC-32 and CRC-32C checksum algorithm
-=======
-// crc.h - written and placed in the public domain by Wei Dai
-
-//! \file
-//! \headerfile crc.h
-//! \brief Classes for CRC-32 and CRC-32C checksum algorithm
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_CRC32_H
 #define CRYPTOPP_CRC32_H
@@ -20,11 +12,7 @@ NAMESPACE_BEGIN(CryptoPP)
 
 const word32 CRC32_NEGL = 0xffffffffL;
 
-<<<<<<< HEAD
 #ifdef CRYPTOPP_LITTLE_ENDIAN
-=======
-#ifdef IS_LITTLE_ENDIAN
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #define CRC32_INDEX(c) (c & 0xff)
 #define CRC32_SHIFTED(c) (c >> 8)
 #else
@@ -32,13 +20,8 @@ const word32 CRC32_NEGL = 0xffffffffL;
 #define CRC32_SHIFTED(c) (c << 8)
 #endif
 
-<<<<<<< HEAD
 /// \brief CRC-32 Checksum Calculation
 /// \details Uses CRC polynomial 0xEDB88320
-=======
-//! \brief CRC-32 Checksum Calculation
-//! \details Uses CRC polynomial 0xEDB88320
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRC32 : public HashTransformation
 {
 public:
@@ -47,11 +30,7 @@ public:
 	void Update(const byte *input, size_t length);
 	void TruncatedFinal(byte *hash, size_t size);
 	unsigned int DigestSize() const {return DIGESTSIZE;}
-<<<<<<< HEAD
     CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "CRC32";}
-=======
-    CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return "CRC32";}
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
     std::string AlgorithmName() const {return StaticAlgorithmName();}
 
 	void UpdateByte(byte b) {m_crc = m_tab[CRC32_INDEX(m_crc) ^ b] ^ CRC32_SHIFTED(m_crc);}
@@ -65,15 +44,9 @@ private:
 	word32 m_crc;
 };
 
-<<<<<<< HEAD
 /// \brief CRC-32C Checksum Calculation
 /// \details Uses CRC polynomial 0x82F63B78
 /// \since Crypto++ 5.6.4
-=======
-//! \brief CRC-32C Checksum Calculation
-//! \details Uses CRC polynomial 0x82F63B78
-//! \since Crypto++ 5.6.4
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRC32C : public HashTransformation
 {
 public:
@@ -82,11 +55,7 @@ public:
 	void Update(const byte *input, size_t length);
 	void TruncatedFinal(byte *hash, size_t size);
 	unsigned int DigestSize() const {return DIGESTSIZE;}
-<<<<<<< HEAD
     CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return "CRC32C";}
-=======
-    CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return "CRC32C";}
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
     std::string AlgorithmName() const {return StaticAlgorithmName();}
 
 	void UpdateByte(byte b) {m_crc = m_tab[CRC32_INDEX(m_crc) ^ b] ^ CRC32_SHIFTED(m_crc);}

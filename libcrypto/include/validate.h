@@ -1,14 +1,10 @@
-<<<<<<< HEAD
 // validate.h - originally written and placed in the public domain by Wei Dai
 //              CryptoPP::Test namespace added by JW in February 2017
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #ifndef CRYPTOPP_VALIDATE_H
 #define CRYPTOPP_VALIDATE_H
 
 #include "cryptlib.h"
-<<<<<<< HEAD
 #include "integer.h"
 #include "misc.h"
 
@@ -20,15 +16,10 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 NAMESPACE_BEGIN(Test)
-=======
-#include <iostream>
-#include <iomanip>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 bool ValidateAll(bool thorough);
 bool TestSettings();
 bool TestOS_RNG();
-<<<<<<< HEAD
 // bool TestSecRandom();
 bool TestRandomPool();
 #if !defined(NO_OS_DEPENDENCE)
@@ -41,17 +32,6 @@ bool TestPadlockRNG();
 #endif
 bool ValidateBaseCode();
 bool ValidateEncoder();
-=======
-bool TestAutoSeeded();
-bool TestAutoSeededX917();
-
-#if (CRYPTOPP_BOOL_X86 || CRYPTOPP_BOOL_X32 || CRYPTOPP_BOOL_X64)
-bool TestRDRAND();
-bool TestRDSEED();
-#endif
-
-bool ValidateBaseCode();
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 bool ValidateCRC32();
 bool ValidateCRC32C();
 bool ValidateAdler32();
@@ -64,17 +44,12 @@ bool ValidateTiger();
 bool ValidateRIPEMD();
 bool ValidatePanama();
 bool ValidateWhirlpool();
-<<<<<<< HEAD
 
 bool ValidateSM3();
 bool ValidateBLAKE2s();
 bool ValidateBLAKE2b();
 bool ValidatePoly1305();
 bool ValidateSipHash();
-=======
-bool ValidateBLAKE2s();
-bool ValidateBLAKE2b();
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 bool ValidateHMAC();
 bool ValidateTTMAC();
@@ -82,10 +57,7 @@ bool ValidateTTMAC();
 bool ValidateCipherModes();
 bool ValidatePBKDF();
 bool ValidateHKDF();
-<<<<<<< HEAD
 bool ValidateScrypt();
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 bool ValidateDES();
 bool ValidateIDEA();
@@ -108,10 +80,7 @@ bool ValidateRijndael();
 bool ValidateTwofish();
 bool ValidateSerpent();
 bool ValidateSHACAL2();
-<<<<<<< HEAD
 bool ValidateARIA();
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 bool ValidateCamellia();
 bool ValidateSalsa();
 bool ValidateSosemanuk();
@@ -136,7 +105,6 @@ bool ValidateLUC_DH();
 bool ValidateXTR_DH();
 bool ValidateRabin();
 bool ValidateRW();
-<<<<<<< HEAD
 bool ValidateECP();
 bool ValidateEC2N();
 bool ValidateECDSA();
@@ -204,56 +172,22 @@ private:
 #endif
 
 #if 0
-=======
-//bool ValidateBlumGoldwasser();
-bool ValidateECP();
-bool ValidateEC2N();
-bool ValidateECDSA();
-bool ValidateESIGN();
-
-#if CRYPTOPP_DEBUG
-bool TestSecBlock();
-bool TestPolynomialMod2();
-bool TestHuffmanCodes();
-#endif
-
-// Coverity finding
-template <class T, bool NON_NEGATIVE>
-T StringToValue(const std::string& str);
-
-// Coverity finding
-template<>
-int StringToValue<int, true>(const std::string& str);
-
-// Coverity finding
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class StreamState
 {
 public:
 	StreamState(std::ostream& out)
-<<<<<<< HEAD
 		: m_out(out), m_state(NULLPTR)
 	{
 		m_state.copyfmt(m_out);
-=======
-		: m_out(out), m_fmt(out.flags()), m_prec(out.precision())
-	{
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	}
 
 	~StreamState()
 	{
-<<<<<<< HEAD
 		m_out.copyfmt(m_state);
-=======
-		m_out.precision(m_prec);
-		m_out.flags(m_fmt);
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	}
 
 private:
 	std::ostream& m_out;
-<<<<<<< HEAD
 	std::ios m_state;
 };
 #endif
@@ -322,21 +256,13 @@ inline int StringToValue<int, true>(const std::string& str)
 
 	return r;
 }
-=======
-	std::ios_base::fmtflags m_fmt;
-	std::streamsize m_prec;
-};
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 // Functions that need a RNG; uses AES inf CFB mode with Seed.
 CryptoPP::RandomNumberGenerator & GlobalRNG();
 
 bool RunTestDataFile(const char *filename, const CryptoPP::NameValuePairs &overrideParameters=CryptoPP::g_nullNameValuePairs, bool thorough=true);
 
-<<<<<<< HEAD
 NAMESPACE_END  // Test
 NAMESPACE_END  // CryptoPP
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #endif

@@ -12,15 +12,9 @@ NAMESPACE_BEGIN(CryptoPP)
 class ZlibCompressor : public Deflator
 {
 public:
-<<<<<<< HEAD
 	ZlibCompressor(BufferedTransformation *attachment=NULLPTR, unsigned int deflateLevel=DEFAULT_DEFLATE_LEVEL, unsigned int log2WindowSize=DEFAULT_LOG2_WINDOW_SIZE, bool detectUncompressible=true)
 		: Deflator(attachment, deflateLevel, log2WindowSize, detectUncompressible) {}
 	ZlibCompressor(const NameValuePairs &parameters, BufferedTransformation *attachment=NULLPTR)
-=======
-	ZlibCompressor(BufferedTransformation *attachment=NULL, unsigned int deflateLevel=DEFAULT_DEFLATE_LEVEL, unsigned int log2WindowSize=DEFAULT_LOG2_WINDOW_SIZE, bool detectUncompressible=true)
-		: Deflator(attachment, deflateLevel, log2WindowSize, detectUncompressible) {}
-	ZlibCompressor(const NameValuePairs &parameters, BufferedTransformation *attachment=NULL)
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		: Deflator(parameters, attachment) {}
 
 	unsigned int GetCompressionLevel() const;
@@ -43,19 +37,11 @@ public:
 	class UnsupportedAlgorithm : public Err {public: UnsupportedAlgorithm() : Err(INVALID_DATA_FORMAT, "ZlibDecompressor: unsupported algorithm") {}};
 	class UnsupportedPresetDictionary : public Err {public: UnsupportedPresetDictionary() : Err(INVALID_DATA_FORMAT, "ZlibDecompressor: unsupported preset dictionary") {}};
 
-<<<<<<< HEAD
 	/// \brief Construct a ZlibDecompressor
 	/// \param attachment a \ BufferedTransformation to attach to this object
 	/// \param repeat decompress multiple compressed streams in series
 	/// \param autoSignalPropagation 0 to turn off MessageEnd signal
 	ZlibDecompressor(BufferedTransformation *attachment = NULLPTR, bool repeat = false, int autoSignalPropagation = -1);
-=======
-	//! \brief Construct a ZlibDecompressor
-	//! \param attachment a \ BufferedTransformation to attach to this object
-	//! \param repeat decompress multiple compressed streams in series
-	//! \param autoSignalPropagation 0 to turn off MessageEnd signal
-	ZlibDecompressor(BufferedTransformation *attachment = NULL, bool repeat = false, int autoSignalPropagation = -1);
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	unsigned int GetLog2WindowSize() const {return m_log2WindowSize;}
 
 private:

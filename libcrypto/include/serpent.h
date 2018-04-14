@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 // serpent.h - originally written and placed in the public domain by Wei Dai
 
 /// \file serpent.h
 /// \brief Classes for the Serpent block cipher
-=======
-// serpent.h - written and placed in the public domain by Wei Dai
-
-//! \file serpent.h
-//! \brief Classes for the Serpent block cipher
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_SERPENT_H
 #define CRYPTOPP_SERPENT_H
@@ -18,7 +11,6 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief Serpent block cipher information
 /// \since Crypto++ 3.1
 struct Serpent_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 16, 32, 8>, public FixedRounds<32>
@@ -29,18 +21,6 @@ struct Serpent_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 16
 /// \brief Serpent block cipher
 /// \sa <a href="http://www.cryptopp.com/wiki/Serpent">Serpent</a>
 /// \since Crypto++ 3.1
-=======
-//! \class Serpent_Info
-//! \brief Serpent block cipher information
-struct Serpent_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 16, 32, 8>, public FixedRounds<32>
-{
-	CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return "Serpent";}
-};
-
-//! \class Serpent
-//! \brief Serpent block cipher
-/// \sa <a href="http://www.weidai.com/scan-mirror/cs.html#Serpent">Serpent</a>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class Serpent : public Serpent_Info, public BlockCipherDocumentation
 {
 	class CRYPTOPP_NO_VTABLE Base : public BlockCipherImpl<Serpent_Info>

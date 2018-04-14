@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // randpool.h - originally written and placed in the public domain by Wei Dai
 //              OldRandPool added by JW in August, 2017.
 
@@ -15,34 +14,6 @@
 ///   should migrate away from OldRandomPool at the earliest opportunity. Use RandomPool
 ///   or AutoSeededRandomPool instead.
 /// \since Crypto++ 4.0 (PGP 2.6.x style), Crypto++ 5.5 (AES-256 based)
-=======
-// randpool.h - written and placed in the public domain by Wei Dai
-
-//! \file randpool.h
-//! \brief Class file for Randomness Pool
-//! \details RandomPool can be used to generate cryptographic quality pseudorandom bytes
-//!   after seeding the pool with IncorporateEntropy(). Internally, the generator uses
-//!   AES-256 to produce the stream. Entropy is stirred in using SHA-256.
-//! \details RandomPool used to follow the design of randpool in PGP 2.6.x. At version 5.5
-//!   RandomPool was redesigned to reduce the risk of reusing random numbers after state
-//!   rollback (which may occur when running in a virtual machine like VMware or a hosted
-//!   environment).
-//! \details If you need the pre-Crypto++ 5.5 generator then you can find it with:
-//! <pre>
-//!    $ git clone https://github.com/weidai11/cryptopp cryptopp-ancient
-//!    $ cryptopp-ancient
-//!
-//!    # Checkout the RandomPool change
-//!    $ git checkout f41245df6fb9b85574260eca9cd32777e8ab5136
-//!
-//!    # Go back one more
-//!    git checkout HEAD~1
-//!
-//!    $ grep 'MDC<SHA>' *.h *.cpp
-//!    randpool.cpp:typedef MDC<SHA> RandomPoolCipher;
-//! </pre>
-//! \since Crypto++ 4.0 (PGP 2.6.x style), Crypto++ 5.5 (AES-256 based)
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_RANDPOOL_H
 #define CRYPTOPP_RANDPOOL_H
@@ -55,7 +26,6 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief Randomness Pool based on AES-256
 /// \details RandomPool can be used to generate cryptographic quality pseudorandom bytes
 ///   after seeding the pool with IncorporateEntropy(). Internally, the generator uses
@@ -72,34 +42,12 @@ class CRYPTOPP_DLL RandomPool : public RandomNumberGenerator, public NotCopyable
 {
 public:
 	/// \brief Construct a RandomPool
-=======
-//! \class RandomPool
-//! \brief Randomness Pool based on AES-256
-//! \details RandomPool can be used to generate cryptographic quality pseudorandom bytes
-//!   after seeding the pool with IncorporateEntropy(). Internally, the generator uses
-//!   AES-256 to produce the stream. Entropy is stirred in using SHA-256.
-//! \details RandomPool used to follow the design of randpool in PGP 2.6.x. At version 5.5
-//!   RandomPool was redesigned to reduce the risk of reusing random numbers after state
-//!   rollback (which may occur when running in a virtual machine like VMware or a hosted
-//!   environment).
-//! \since Crypto++ 4.0 (PGP 2.6.x style), Crypto++ 5.5 (AES-256 based)
-class CRYPTOPP_DLL RandomPool : public RandomNumberGenerator, public NotCopyable
-{
-public:
-	//! \brief Construct a RandomPool
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	RandomPool();
 
 	bool CanIncorporateEntropy() const {return true;}
 	void IncorporateEntropy(const byte *input, size_t length);
 	void GenerateIntoBufferedTransformation(BufferedTransformation &target, const std::string &channel, lword size);
 
-<<<<<<< HEAD
-=======
-	// for backwards compatibility. use RandomNumberSource, RandomNumberStore, and RandomNumberSink for other BufferTransformation functionality
-	void Put(const byte *input, size_t length) {IncorporateEntropy(input, length);}
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 private:
 	FixedSizeAlignedSecBlock<byte, 16, true> m_seed;
 	FixedSizeAlignedSecBlock<byte, 32> m_key;
@@ -107,7 +55,6 @@ private:
 	bool m_keySet;
 };
 
-<<<<<<< HEAD
 /// \brief Randomness Pool based on PGP 2.6.x with MDC
 /// \details If you need the pre-Crypto++ 5.5 generator then use OldRandomPool class. The
 ///   OldRandomPool class is always available so you dont need to define
@@ -146,8 +93,6 @@ private:
 	size_t addPos, getPos;
 };
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 NAMESPACE_END
 
 #endif

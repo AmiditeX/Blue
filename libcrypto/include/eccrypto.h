@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 // eccrypto.h - originally written and placed in the public domain by Wei Dai
 //              deterministic signatures added by by Douglas Roark
 
 /// \file eccrypto.h
 /// \brief Classes and functions for Elliptic Curves over prime and binary fields
-=======
-// eccrypto.h - written and placed in the public domain by Wei Dai
-
-//! \file eccrypto.h
-//! \brief Classes and functions for Elliptic Curves over prime and binary fields
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_ECCRYPTO_H
 #define CRYPTOPP_ECCRYPTO_H
@@ -29,7 +22,6 @@
 #include "ecp.h"
 #include "ec2n.h"
 
-<<<<<<< HEAD
 #if CRYPTOPP_MSC_VERSION
 # pragma warning(push)
 # pragma warning(disable: 4231 4275)
@@ -41,14 +33,6 @@ NAMESPACE_BEGIN(CryptoPP)
 /// \tparam EC elliptic curve field
 /// \details This class corresponds to the ASN.1 sequence of the same name
 ///   in ANSI X9.62 and SEC 1. EC is currently defined for ECP and EC2N.
-=======
-NAMESPACE_BEGIN(CryptoPP)
-
-//! \brief Elliptic Curve Parameters
-//! \tparam EC elliptic curve field
-//! \details This class corresponds to the ASN.1 sequence of the same name
-//!   in ANSI X9.62 and SEC 1. EC is currently defined for ECP and EC2N.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class EC>
 class DL_GroupParameters_EC : public DL_GroupParametersImpl<EcPrecomputation<EC> >
 {
@@ -60,7 +44,6 @@ public:
 	typedef Point Element;
 	typedef IncompatibleCofactorMultiplication DefaultCofactorOption;
 
-<<<<<<< HEAD
 	virtual ~DL_GroupParameters_EC() {}
 
 	/// \brief Construct an EC GroupParameters
@@ -90,16 +73,6 @@ public:
 	/// \param n the order of the base point
 	/// \param k the cofactor
 	/// \details This Initialize() function overload initializes group parameters from existing parameters.
-=======
-	DL_GroupParameters_EC() : m_compress(false), m_encodeAsOID(false) {}
-	DL_GroupParameters_EC(const OID &oid)
-		: m_compress(false), m_encodeAsOID(false) {Initialize(oid);}
-	DL_GroupParameters_EC(const EllipticCurve &ec, const Point &G, const Integer &n, const Integer &k = Integer::Zero())
-		: m_compress(false), m_encodeAsOID(false) {Initialize(ec, G, n, k);}
-	DL_GroupParameters_EC(BufferedTransformation &bt)
-		: m_compress(false), m_encodeAsOID(false) {BERDecode(bt);}
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	void Initialize(const EllipticCurve &ec, const Point &G, const Integer &n, const Integer &k = Integer::Zero())
 	{
 		this->m_groupPrecomputation.SetCurve(ec);
@@ -107,13 +80,10 @@ public:
 		m_n = n;
 		m_k = k;
 	}
-<<<<<<< HEAD
 
 	/// \brief Initialize a DL_GroupParameters_EC {EC,G,n,k}
 	/// \param oid the OID of a curve
 	/// \details This Initialize() function overload initializes group parameters from existing parameters.
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	void Initialize(const OID &oid);
 
 	// NameValuePairs
@@ -121,11 +91,7 @@ public:
 	void AssignFrom(const NameValuePairs &source);
 
 	// GeneratibleCryptoMaterial interface
-<<<<<<< HEAD
 	/// this implementation doesn't actually generate a curve, it just initializes the parameters with existing values
-=======
-	//! this implementation doesn't actually generate a curve, it just initializes the parameters with existing values
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	/*! parameters: (Curve, SubgroupGenerator, SubgroupOrder, Cofactor (optional)), or (GroupOID) */
 	void GenerateRandom(RandomNumberGenerator &rng, const NameValuePairs &alg);
 
@@ -156,11 +122,7 @@ public:
 		Point result;
 		if (!GetCurve().DecodePoint(result, encoded, GetEncodedElementSize(true)))
 			throw DL_BadElement();
-<<<<<<< HEAD
 		if (checkForGroupMembership && !ValidateElement(1, result, NULLPTR))
-=======
-		if (checkForGroupMembership && !ValidateElement(1, result, NULL))
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 			throw DL_BadElement();
 		return result;
 	}
@@ -196,19 +158,6 @@ public:
 	bool operator==(const ThisClass &rhs) const
 		{return this->m_groupPrecomputation.GetCurve() == rhs.m_groupPrecomputation.GetCurve() && this->m_gpc.GetBase(this->m_groupPrecomputation) == rhs.m_gpc.GetBase(rhs.m_groupPrecomputation);}
 
-<<<<<<< HEAD
-=======
-#ifdef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY
-	const Point& GetBasePoint() const {return this->GetSubgroupGenerator();}
-	const Integer& GetBasePointOrder() const {return this->GetSubgroupOrder();}
-	void LoadRecommendedParameters(const OID &oid) {Initialize(oid);}
-#endif
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DL_GroupParameters_EC() {}
-#endif
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 protected:
 	unsigned int FieldElementLength() const {return GetCurve().GetField().MaxElementByteLength();}
 	unsigned int ExponentLength() const {return m_n.ByteCount();}
@@ -219,19 +168,14 @@ protected:
 	mutable bool m_compress, m_encodeAsOID;		// presentation details
 };
 
-<<<<<<< HEAD
 /// \brief Elliptic Curve Discrete Log (DL) public key
 /// \tparam EC elliptic curve field
-=======
-//! EC public key
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class EC>
 class DL_PublicKey_EC : public DL_PublicKeyImpl<DL_GroupParameters_EC<EC> >
 {
 public:
 	typedef typename EC::Point Element;
 
-<<<<<<< HEAD
 	virtual ~DL_PublicKey_EC() {}
 
 	/// \brief Initialize an EC Public Key using {GP,Q}
@@ -247,37 +191,22 @@ public:
 	/// \param n the order of the base point
 	/// \param Q the public point
 	/// \details This Initialize() function overload initializes a public key from existing parameters.
-=======
-	void Initialize(const DL_GroupParameters_EC<EC> &params, const Element &Q)
-		{this->AccessGroupParameters() = params; this->SetPublicElement(Q);}
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	void Initialize(const EC &ec, const Element &G, const Integer &n, const Element &Q)
 		{this->AccessGroupParameters().Initialize(ec, G, n); this->SetPublicElement(Q);}
 
 	// X509PublicKey
 	void BERDecodePublicKey(BufferedTransformation &bt, bool parametersPresent, size_t size);
 	void DEREncodePublicKey(BufferedTransformation &bt) const;
-<<<<<<< HEAD
 };
 
 /// \brief Elliptic Curve Discrete Log (DL) private key
 /// \tparam EC elliptic curve field
-=======
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DL_PublicKey_EC() {}
-#endif
-};
-
-//! EC private key
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class EC>
 class DL_PrivateKey_EC : public DL_PrivateKeyImpl<DL_GroupParameters_EC<EC> >
 {
 public:
 	typedef typename EC::Point Element;
 
-<<<<<<< HEAD
 	virtual ~DL_PrivateKey_EC();
 
 	/// \brief Initialize an EC Private Key using {GP,x}
@@ -313,21 +242,12 @@ public:
 	/// \details This function overload of Initialize() creates a new private key because it
 	///   takes a RandomNumberGenerator() as a parameter. If you have an existing keypair,
 	///   then use one of the other Initialize() overloads.
-=======
-	void Initialize(const DL_GroupParameters_EC<EC> &params, const Integer &x)
-		{this->AccessGroupParameters() = params; this->SetPrivateExponent(x);}
-	void Initialize(const EC &ec, const Element &G, const Integer &n, const Integer &x)
-		{this->AccessGroupParameters().Initialize(ec, G, n); this->SetPrivateExponent(x);}
-	void Initialize(RandomNumberGenerator &rng, const DL_GroupParameters_EC<EC> &params)
-		{this->GenerateRandom(rng, params);}
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	void Initialize(RandomNumberGenerator &rng, const EC &ec, const Element &G, const Integer &n)
 		{this->GenerateRandom(rng, DL_GroupParameters_EC<EC>(ec, G, n));}
 
 	// PKCS8PrivateKey
 	void BERDecodePrivateKey(BufferedTransformation &bt, bool parametersPresent, size_t size);
 	void DEREncodePrivateKey(BufferedTransformation &bt) const;
-<<<<<<< HEAD
 };
 
 // Out-of-line dtor due to AIX and GCC, http://github.com/weidai11/cryptopp/issues/499
@@ -365,47 +285,6 @@ template <class EC, class COFACTOR_OPTION = typename DL_GroupParameters_EC<EC>::
 struct ECHMQV
 {
 	typedef HMQV_Domain<DL_GroupParameters_EC<EC>, COFACTOR_OPTION, HASH> Domain;
-=======
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DL_PrivateKey_EC() {}
-#endif
-};
-
-//! Elliptic Curve Diffie-Hellman, AKA <a href="http://www.weidai.com/scan-mirror/ka.html#ECDH">ECDH</a>
-template <class EC, class COFACTOR_OPTION = CPP_TYPENAME DL_GroupParameters_EC<EC>::DefaultCofactorOption>
-struct ECDH
-{
-	typedef DH_Domain<DL_GroupParameters_EC<EC>, COFACTOR_OPTION> Domain;
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~ECDH() {}
-#endif
-};
-
-/// Elliptic Curve Menezes-Qu-Vanstone, AKA <a href="http://www.weidai.com/scan-mirror/ka.html#ECMQV">ECMQV</a>
-template <class EC, class COFACTOR_OPTION = CPP_TYPENAME DL_GroupParameters_EC<EC>::DefaultCofactorOption>
-struct ECMQV
-{
-	typedef MQV_Domain<DL_GroupParameters_EC<EC>, COFACTOR_OPTION> Domain;
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~ECMQV() {}
-#endif
-};
-
-//! \brief Hashed Menezes-Qu-Vanstone in ECP or EC2N
-//! \details This implementation follows Hugo Krawczyk's <a href="http://eprint.iacr.org/2005/176">HMQV: A High-Performance
-//!   Secure Diffie-Hellman Protocol</a>. Note: this implements HMQV only. HMQV-C with Key Confirmation is not provided.
-template <class EC, class COFACTOR_OPTION = CPP_TYPENAME DL_GroupParameters_EC<EC>::DefaultCofactorOption, class HASH = SHA256>
-struct ECHMQV
-{
-	typedef HMQV_Domain<DL_GroupParameters_EC<EC>, COFACTOR_OPTION, HASH> Domain;
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~ECHMQV() {}
-#endif
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 };
 
 typedef ECHMQV< ECP, DL_GroupParameters_EC< ECP >::DefaultCofactorOption,   SHA1 >::Domain ECHMQV160;
@@ -413,7 +292,6 @@ typedef ECHMQV< ECP, DL_GroupParameters_EC< ECP >::DefaultCofactorOption, SHA256
 typedef ECHMQV< ECP, DL_GroupParameters_EC< ECP >::DefaultCofactorOption, SHA384 >::Domain ECHMQV384;
 typedef ECHMQV< ECP, DL_GroupParameters_EC< ECP >::DefaultCofactorOption, SHA512 >::Domain ECHMQV512;
 
-<<<<<<< HEAD
 /// \brief Fully Hashed Elliptic Curve Menezes-Qu-Vanstone
 /// \tparam EC elliptic curve field
 /// \tparam COFACTOR_OPTION cofactor multiplication option
@@ -425,20 +303,6 @@ template <class EC, class COFACTOR_OPTION = typename DL_GroupParameters_EC<EC>::
 struct ECFHMQV
 {
 	typedef FHMQV_Domain<DL_GroupParameters_EC<EC>, COFACTOR_OPTION, HASH> Domain;
-=======
-//! \brief Fully Hashed Menezes-Qu-Vanstone in ECP or EC2N
-//! \details This implementation follows Augustin P. Sarr and Philippe Elbaz–Vincent, and Jean–Claude Bajard's
-//!   <a href="http://eprint.iacr.org/2009/408">A Secure and Efficient Authenticated Diffie-Hellman Protocol</a>.
-//!   Note: this is FHMQV, Protocol 5, from page 11; and not FHMQV-C.
-template <class EC, class COFACTOR_OPTION = CPP_TYPENAME DL_GroupParameters_EC<EC>::DefaultCofactorOption, class HASH = SHA256>
-struct ECFHMQV
-{
-	typedef FHMQV_Domain<DL_GroupParameters_EC<EC>, COFACTOR_OPTION, HASH> Domain;
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~ECFHMQV() {}
-#endif
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 };
 
 typedef ECFHMQV< ECP, DL_GroupParameters_EC< ECP >::DefaultCofactorOption,   SHA1 >::Domain ECFHMQV160;
@@ -446,18 +310,13 @@ typedef ECFHMQV< ECP, DL_GroupParameters_EC< ECP >::DefaultCofactorOption, SHA25
 typedef ECFHMQV< ECP, DL_GroupParameters_EC< ECP >::DefaultCofactorOption, SHA384 >::Domain ECFHMQV384;
 typedef ECFHMQV< ECP, DL_GroupParameters_EC< ECP >::DefaultCofactorOption, SHA512 >::Domain ECFHMQV512;
 
-<<<<<<< HEAD
 /// \brief Elliptic Curve Discrete Log (DL) keys
 /// \tparam EC elliptic curve field
-=======
-//! EC keys
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class EC>
 struct DL_Keys_EC
 {
 	typedef DL_PublicKey_EC<EC> PublicKey;
 	typedef DL_PrivateKey_EC<EC> PrivateKey;
-<<<<<<< HEAD
 };
 
 // Forward declaration; documented below
@@ -467,43 +326,20 @@ struct ECDSA;
 /// \brief Elliptic Curve DSA keys
 /// \tparam EC elliptic curve field
 /// \since Crypto++ 3.2
-=======
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DL_Keys_EC() {}
-#endif
-};
-
-template <class EC, class H>
-struct ECDSA;
-
-//! ECDSA keys
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class EC>
 struct DL_Keys_ECDSA
 {
 	typedef DL_PublicKey_EC<EC> PublicKey;
 	typedef DL_PrivateKey_WithSignaturePairwiseConsistencyTest<DL_PrivateKey_EC<EC>, ECDSA<EC, SHA256> > PrivateKey;
-<<<<<<< HEAD
 };
 
 /// \brief Elliptic Curve DSA (ECDSA) signature algorithm
 /// \tparam EC elliptic curve field
 /// \since Crypto++ 3.2
-=======
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DL_Keys_ECDSA() {}
-#endif
-};
-
-//! ECDSA algorithm
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class EC>
 class DL_Algorithm_ECDSA : public DL_Algorithm_GDSA<typename EC::Point>
 {
 public:
-<<<<<<< HEAD
   CRYPTOPP_STATIC_CONSTEXPR const char* CRYPTOPP_API StaticAlgorithmName() {return "ECDSA";}
 };
 
@@ -521,21 +357,10 @@ public:
 
 /// \brief Elliptic Curve NR (ECNR) signature algorithm
 /// \tparam EC elliptic curve field
-=======
-	CRYPTOPP_CONSTEXPR static const char * CRYPTOPP_API StaticAlgorithmName() {return "ECDSA";}
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DL_Algorithm_ECDSA() {}
-#endif
-};
-
-//! ECNR algorithm
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class EC>
 class DL_Algorithm_ECNR : public DL_Algorithm_NR<typename EC::Point>
 {
 public:
-<<<<<<< HEAD
   CRYPTOPP_STATIC_CONSTEXPR const char* CRYPTOPP_API StaticAlgorithmName() {return "ECNR";}
 };
 
@@ -790,43 +615,10 @@ struct ECGDSA : public DL_SS<
 ///   Curve Integrated Encryption Schemes</A>
 /// \since Crypto++ 4.0, Crypto++ 5.7 for Bouncy Castle and Botan compatibility
 template <class EC, class HASH = SHA1, class COFACTOR_OPTION = NoCofactorMultiplication, bool DHAES_MODE = true, bool LABEL_OCTETS = false>
-=======
-	CRYPTOPP_CONSTEXPR static const char * CRYPTOPP_API StaticAlgorithmName() {return "ECNR";}
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~DL_Algorithm_ECNR() {}
-#endif
-};
-
-//! <a href="http://www.weidai.com/scan-mirror/sig.html#ECDSA">ECDSA</a>
-template <class EC, class H>
-struct ECDSA : public DL_SS<DL_Keys_ECDSA<EC>, DL_Algorithm_ECDSA<EC>, DL_SignatureMessageEncodingMethod_DSA, H>
-{
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~ECDSA() {}
-#endif
-};
-
-//! ECNR
-template <class EC, class H = SHA>
-struct ECNR : public DL_SS<DL_Keys_EC<EC>, DL_Algorithm_ECNR<EC>, DL_SignatureMessageEncodingMethod_NR, H>
-{
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~ECNR() {}
-#endif
-};
-
-//! Elliptic Curve Integrated Encryption Scheme, AKA <a href="http://www.weidai.com/scan-mirror/ca.html#ECIES">ECIES</a>
-/*! Default to (NoCofactorMultiplication and DHAES_MODE = false) for compatibilty with SEC1 and Crypto++ 4.2.
-	The combination of (IncompatibleCofactorMultiplication and DHAES_MODE = true) is recommended for best
-	efficiency and security. */
-template <class EC, class COFACTOR_OPTION = NoCofactorMultiplication, bool DHAES_MODE = false>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 struct ECIES
 	: public DL_ES<
 		DL_Keys_EC<EC>,
 		DL_KeyAgreementAlgorithm_DH<typename EC::Point, COFACTOR_OPTION>,
-<<<<<<< HEAD
 		DL_KeyDerivationAlgorithm_P1363<typename EC::Point, DHAES_MODE, P1363_KDF2<HASH> >,
 		DL_EncryptionAlgorithm_Xor<HMAC<HASH>, DHAES_MODE, LABEL_OCTETS>,
 		ECIES<EC> >
@@ -834,25 +626,6 @@ struct ECIES
 	// TODO: fix this after name is standardized
 	CRYPTOPP_STATIC_CONSTEXPR const char* CRYPTOPP_API StaticAlgorithmName() {return "ECIES";}
 };
-=======
-		DL_KeyDerivationAlgorithm_P1363<typename EC::Point, DHAES_MODE, P1363_KDF2<SHA1> >,
-		DL_EncryptionAlgorithm_Xor<HMAC<SHA1>, DHAES_MODE>,
-		ECIES<EC> >
-{
-	static std::string CRYPTOPP_API StaticAlgorithmName() {return "ECIES";}	// TODO: fix this after name is standardized
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~ECIES() {}
-#endif
-
-#if (CRYPTOPP_GCC_VERSION >= 40500) || (CRYPTOPP_LLVM_CLANG_VERSION >= 20800)
-} __attribute__((deprecated ("ECIES will be changing in the near future due to (1) an implementation bug and (2) an interop issue")));
-#elif (CRYPTOPP_GCC_VERSION)
-} __attribute__((deprecated));
-#else
-};
-#endif
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 NAMESPACE_END
 
@@ -868,20 +641,14 @@ CRYPTOPP_DLL_TEMPLATE_CLASS DL_PublicKeyImpl<DL_GroupParameters_EC<ECP> >;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PublicKeyImpl<DL_GroupParameters_EC<EC2N> >;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PublicKey_EC<ECP>;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PublicKey_EC<EC2N>;
-<<<<<<< HEAD
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PublicKey_ECGDSA<ECP>;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PublicKey_ECGDSA<EC2N>;
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PrivateKeyImpl<DL_GroupParameters_EC<ECP> >;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PrivateKeyImpl<DL_GroupParameters_EC<EC2N> >;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PrivateKey_EC<ECP>;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PrivateKey_EC<EC2N>;
-<<<<<<< HEAD
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PrivateKey_ECGDSA<ECP>;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PrivateKey_ECGDSA<EC2N>;
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_Algorithm_GDSA<ECP::Point>;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_Algorithm_GDSA<EC2N::Point>;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_PrivateKey_WithSignaturePairwiseConsistencyTest<DL_PrivateKey_EC<ECP>, ECDSA<ECP, SHA256> >;
@@ -889,11 +656,8 @@ CRYPTOPP_DLL_TEMPLATE_CLASS DL_PrivateKey_WithSignaturePairwiseConsistencyTest<D
 
 NAMESPACE_END
 
-<<<<<<< HEAD
 #if CRYPTOPP_MSC_VERSION
 # pragma warning(pop)
 #endif
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #endif

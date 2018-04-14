@@ -1,12 +1,7 @@
 // ttmac.h - written and placed in the public domain by Kevin Springle
 
-<<<<<<< HEAD
 /// \file ttmac.h
 /// \brief Classes for the TTMAC message authentication code
-=======
-//! \file ttmac.h
-//! \brief Classes for the TTMAC message authentication code
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_TTMAC_H
 #define CRYPTOPP_TTMAC_H
@@ -17,12 +12,7 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief TTMAC message authentication code information
-=======
-//! \class TTMAC_Base
-//! \brief TTMAC message authentication code information
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_NO_VTABLE TTMAC_Base : public FixedKeyLength<20>, public IteratedHash<word32, LittleEndian, 64, MessageAuthenticationCode>
 {
 public:
@@ -43,18 +33,10 @@ protected:
 	FixedSizeSecBlock<word32, 5> m_key;
 };
 
-<<<<<<< HEAD
 /// \brief Two-Track-MAC message authentication code
 /// \tparam T HashTransformation class
 /// \details 160-bit MAC with 160-bit key
 /// \sa MessageAuthenticationCode(), <a href="http://www.weidai.com/scan-mirror/mac.html#TTMAC">Two-Track-MAC</a>
-=======
-//! \class TTMAC
-//! \brief Two-Track-MAC message authentication code
-//! \tparam T HashTransformation class
-//! \details 160-bit MAC with 160-bit key
-//! \sa MessageAuthenticationCode(), <a href="http://www.weidai.com/scan-mirror/mac.html#TTMAC">Two-Track-MAC</a>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 DOCUMENTED_TYPEDEF(MessageAuthenticationCodeFinal<TTMAC_Base>, TTMAC)
 
 NAMESPACE_END

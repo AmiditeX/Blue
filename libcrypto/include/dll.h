@@ -1,15 +1,7 @@
-<<<<<<< HEAD
 // dll.h - originally written and placed in the public domain by Wei Dai
 
 /// \file dll.h
 /// \brief Functions and definitions required for building the FIPS-140 DLL on Windows
-=======
-// dll.h - written and placed in the public domain by Wei Dai
-
-//! \file
-//! \headerfile dll.h
-//! \brief Functions and definitions required for building the FIPS-140 DLL on Windows
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_DLL_H
 #define CRYPTOPP_DLL_H
@@ -69,21 +61,10 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 typedef void * (CRYPTOPP_API * PNew)(size_t);
 typedef void (CRYPTOPP_API * PDelete)(void *);
 typedef void (CRYPTOPP_API * PGetNewAndDelete)(PNew &, PDelete &);
 typedef std::new_handler (CRYPTOPP_API * PSetNewHandler)(std::new_handler);
-=======
-#if !(defined(_MSC_VER) && (_MSC_VER < 1300))
-using std::new_handler;
-#endif
-
-typedef void * (CRYPTOPP_API * PNew)(size_t);
-typedef void (CRYPTOPP_API * PDelete)(void *);
-typedef void (CRYPTOPP_API * PGetNewAndDelete)(PNew &, PDelete &);
-typedef new_handler (CRYPTOPP_API * PSetNewHandler)(new_handler);
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 typedef void (CRYPTOPP_API * PSetNewAndDelete)(PNew, PDelete, PSetNewHandler);
 
 NAMESPACE_END

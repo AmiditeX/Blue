@@ -1,15 +1,7 @@
-<<<<<<< HEAD
 // ec2n.h - originally written and placed in the public domain by Wei Dai
 
 /// \file ec2n.h
 /// \brief Classes for Elliptic Curves over binary fields
-=======
-// ec2n.h - written and placed in the public domain by Wei Dai
-
-//! \file
-//! \headerfile ec2n.h
-//! \brief Classes for Elliptic Curves over binary fields
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 
 #ifndef CRYPTOPP_EC2N_H
@@ -19,15 +11,11 @@
 #include "gf2n.h"
 #include "integer.h"
 #include "algebra.h"
-<<<<<<< HEAD
 #include "ecpoint.h"
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #include "eprecomp.h"
 #include "smartptr.h"
 #include "pubkey.h"
 
-<<<<<<< HEAD
 #if CRYPTOPP_MSC_VERSION
 # pragma warning(push)
 # pragma warning(disable: 4231 4275)
@@ -37,41 +25,12 @@ NAMESPACE_BEGIN(CryptoPP)
 
 /// \brief Elliptic Curve over GF(2^n)
 class CRYPTOPP_DLL EC2N : public AbstractGroup<EC2NPoint>, public EncodedPoint<EC2NPoint>
-=======
-NAMESPACE_BEGIN(CryptoPP)
-
-//! Elliptic Curve Point
-struct CRYPTOPP_DLL EC2NPoint
-{
-	EC2NPoint() : identity(true) {}
-	EC2NPoint(const PolynomialMod2 &x, const PolynomialMod2 &y)
-		: identity(false), x(x), y(y) {}
-
-	bool operator==(const EC2NPoint &t) const
-		{return (identity && t.identity) || (!identity && !t.identity && x==t.x && y==t.y);}
-	bool operator< (const EC2NPoint &t) const
-		{return identity ? !t.identity : (!t.identity && (x<t.x || (x==t.x && y<t.y)));}
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~EC2NPoint() {}
-#endif
-
-	bool identity;
-	PolynomialMod2 x, y;
-};
-
-CRYPTOPP_DLL_TEMPLATE_CLASS AbstractGroup<EC2NPoint>;
-
-//! Elliptic Curve over GF(2^n)
-class CRYPTOPP_DLL EC2N : public AbstractGroup<EC2NPoint>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 {
 public:
 	typedef GF2NP Field;
 	typedef Field::Element FieldElement;
 	typedef EC2NPoint Point;
 
-<<<<<<< HEAD
 	virtual ~EC2N() {}
 
 	/// \brief Construct an EC2N
@@ -91,16 +50,6 @@ public:
 
 	/// \brief Encode the fields fieldID and curve of the sequence ECParameters
 	/// \param bt BufferedTransformation derived object
-=======
-	EC2N() {}
-	EC2N(const Field &field, const Field::Element &a, const Field::Element &b)
-		: m_field(field), m_a(a), m_b(b) {}
-	// construct from BER encoded parameters
-	// this constructor will decode and extract the the fields fieldID and curve of the sequence ECParameters
-	EC2N(BufferedTransformation &bt);
-
-	// encode the fields fieldID and curve of the sequence ECParameters
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	void DEREncode(BufferedTransformation &bt) const;
 
 	bool Equal(const Point &P, const Point &Q) const;
@@ -137,13 +86,6 @@ public:
 	bool operator==(const EC2N &rhs) const
 		{return GetField() == rhs.GetField() && m_a == rhs.m_a && m_b == rhs.m_b;}
 
-<<<<<<< HEAD
-=======
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~EC2N() {}
-#endif
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 private:
 	clonable_ptr<Field> m_field;
 	FieldElement m_a, m_b;
@@ -153,7 +95,6 @@ private:
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_FixedBasePrecomputationImpl<EC2N::Point>;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_GroupPrecomputation<EC2N::Point>;
 
-<<<<<<< HEAD
 /// \brief Elliptic Curve precomputation
 /// \tparam EC elliptic curve field
 template <class EC> class EcPrecomputation;
@@ -161,27 +102,18 @@ template <class EC> class EcPrecomputation;
 /// \brief EC2N precomputation specialization
 /// \details Implementation of <tt>DL_GroupPrecomputation<EC2N::Point></tt>
 /// \sa DL_GroupPrecomputation
-=======
-template <class T> class EcPrecomputation;
-
-//! EC2N precomputation
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template<> class EcPrecomputation<EC2N> : public DL_GroupPrecomputation<EC2N::Point>
 {
 public:
 	typedef EC2N EllipticCurve;
 
-<<<<<<< HEAD
 	virtual ~EcPrecomputation() {}
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	// DL_GroupPrecomputation
 	const AbstractGroup<Element> & GetGroup() const {return m_ec;}
 	Element BERDecodeElement(BufferedTransformation &bt) const {return m_ec.BERDecodePoint(bt);}
 	void DEREncodeElement(BufferedTransformation &bt, const Element &v) const {m_ec.DEREncodePoint(bt, v, false);}
 
-<<<<<<< HEAD
 	/// \brief Set the elliptic curve
 	/// \param ec ECP derived class
 	/// \details SetCurve() is not inherited
@@ -192,27 +124,14 @@ public:
 	/// \details GetCurve() is not inherited
 	const EC2N & GetCurve() const {return m_ec;}
 
-=======
-	// non-inherited
-	void SetCurve(const EC2N &ec) {m_ec = ec;}
-	const EC2N & GetCurve() const {return m_ec;}
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~EcPrecomputation() {}
-#endif
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 private:
 	EC2N m_ec;
 };
 
 NAMESPACE_END
 
-<<<<<<< HEAD
 #if CRYPTOPP_MSC_VERSION
 # pragma warning(pop)
 #endif
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #endif

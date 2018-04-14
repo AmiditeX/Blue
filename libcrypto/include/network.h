@@ -50,28 +50,17 @@ private:
 	double GetCurTimeAndCleanUp();
 };
 
-<<<<<<< HEAD
 /// a Source class that can pump from a device for a specified amount of time.
-=======
-//! a Source class that can pump from a device for a specified amount of time.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_NO_VTABLE NonblockingSource : public AutoSignaling<Source>, public LimitedBandwidth
 {
 public:
 	NonblockingSource(BufferedTransformation *attachment)
 		: m_messageEndSent(false) , m_doPumpBlocked(false), m_blockedBySpeedLimit(false) {Detach(attachment);}
 
-<<<<<<< HEAD
 	///	\name NONBLOCKING SOURCE
 	//@{
 
 	/// pump up to maxSize bytes using at most maxTime milliseconds
-=======
-	//!	\name NONBLOCKING SOURCE
-	//@{
-
-	//! pump up to maxSize bytes using at most maxTime milliseconds
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	/*! If checkDelimiter is true, pump up to delimiter, which itself is not extracted or pumped. */
 	size_t GeneralPump2(lword &byteCount, bool blockingOutput=true, unsigned long maxTime=INFINITE_TIME, bool checkDelimiter=false, byte delimiter='\n');
 
@@ -100,21 +89,13 @@ private:
 	bool m_messageEndSent, m_doPumpBlocked, m_blockedBySpeedLimit;
 };
 
-<<<<<<< HEAD
 /// Network Receiver
-=======
-//! Network Receiver
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_NO_VTABLE NetworkReceiver : public Waitable
 {
 public:
 	virtual bool MustWaitToReceive() {return false;}
 	virtual bool MustWaitForResult() {return false;}
-<<<<<<< HEAD
 	/// receive data from network source, returns whether result is immediately available
-=======
-	//! receive data from network source, returns whether result is immediately available
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	virtual bool Receive(byte* buf, size_t bufLen) =0;
 	virtual unsigned int GetReceiveResult() =0;
 	virtual bool EofReceived() const =0;
@@ -127,7 +108,6 @@ public:
 	virtual size_t GetMaxBufferSize() const =0;
 	virtual size_t GetCurrentBufferSize() const =0;
 	virtual bool EofPending() const =0;
-<<<<<<< HEAD
 	/// compute the current speed of this sink in bytes per second
 	virtual float ComputeCurrentSpeed() =0;
 	/// get the maximum observed speed of this sink in bytes per second
@@ -135,15 +115,6 @@ public:
 };
 
 /// a Sink class that queues input and can flush to a device for a specified amount of time.
-=======
-	//! compute the current speed of this sink in bytes per second
-	virtual float ComputeCurrentSpeed() =0;
-	//! get the maximum observed speed of this sink in bytes per second
-	virtual float GetMaxObservedSpeed() const =0;
-};
-
-//! a Sink class that queues input and can flush to a device for a specified amount of time.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_NO_VTABLE NonblockingSink : public Sink, public NonblockingSinkInfo, public LimitedBandwidth
 {
 public:
@@ -151,11 +122,7 @@ public:
 
 	bool IsolatedFlush(bool hardFlush, bool blocking);
 
-<<<<<<< HEAD
 	/// flush to device for no more than maxTime milliseconds
-=======
-	//! flush to device for no more than maxTime milliseconds
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	/*! This function will repeatedly attempt to flush data to some device, until
 		the queue is empty, or a total of maxTime milliseconds have elapsed.
 		If maxTime == 0, at least one attempt will be made to flush some data, but
@@ -168,11 +135,7 @@ public:
 	lword TimedFlush(unsigned long maxTime, size_t targetSize = 0);
 
 	virtual void SetMaxBufferSize(size_t maxBufferSize) =0;
-<<<<<<< HEAD
 	/// set a bound which will cause sink to flush if exceeded by GetCurrentBufferSize()
-=======
-	//! set a bound which will cause sink to flush if exceeded by GetCurrentBufferSize()
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	virtual void SetAutoFlushBound(size_t bound) =0;
 
 protected:
@@ -184,11 +147,7 @@ private:
 	bool m_blockedBySpeedLimit;
 };
 
-<<<<<<< HEAD
 /// Network Sender
-=======
-//! Network Sender
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_NO_VTABLE NetworkSender : public Waitable
 {
 public:
@@ -201,11 +160,7 @@ public:
 	virtual bool EofSent() {return false;}	// implement if MustWaitForEof() == true
 };
 
-<<<<<<< HEAD
 /// Network Source
-=======
-//! Network Source
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_NO_VTABLE NetworkSource : public NonblockingSource
 {
 public:
@@ -228,11 +183,7 @@ private:
 	bool m_waitingForResult, m_outputBlocked;
 };
 
-<<<<<<< HEAD
 /// Network Sink
-=======
-//! Network Sink
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_NO_VTABLE NetworkSink : public NonblockingSink
 {
 public:
@@ -253,15 +204,9 @@ public:
 
 	bool EofPending() const { return m_eofState > EOF_NONE && m_eofState < EOF_DONE; }
 
-<<<<<<< HEAD
 	/// compute the current speed of this sink in bytes per second
 	float ComputeCurrentSpeed();
 	/// get the maximum observed speed of this sink in bytes per second
-=======
-	//! compute the current speed of this sink in bytes per second
-	float ComputeCurrentSpeed();
-	//! get the maximum observed speed of this sink in bytes per second
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	float GetMaxObservedSpeed() const;
 
 protected:

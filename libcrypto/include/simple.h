@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 // simple.h - originally written and placed in the public domain by Wei Dai
 
 /// \file simple.h
 /// \brief Classes providing basic library services.
-=======
-// simple.h - written and placed in the public domain by Wei Dai
-
-//! \file simple.h
-//! \brief Classes providing basic library services.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_SIMPLE_H
 #define CRYPTOPP_SIMPLE_H
@@ -25,16 +18,9 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief Base class for identifying alogorithm
 /// \tparam BASE base class from which to derive
 /// \tparam DERIVED class which to clone
-=======
-//! \class ClonableImpl
-//! \brief Base class for identifying alogorithm
-//! \tparam BASE base class from which to derive
-//! \tparam DERIVED class which to clone
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class DERIVED, class BASE>
 class CRYPTOPP_NO_VTABLE ClonableImpl : public BASE
 {
@@ -42,23 +28,14 @@ public:
 	Clonable * Clone() const {return new DERIVED(*static_cast<const DERIVED *>(this));}
 };
 
-<<<<<<< HEAD
 /// \brief Base class information
 /// \tparam BASE an Algorithm derived class
 /// \tparam ALGORITHM_INFO an Algorithm derived class
 /// \details AlgorithmImpl provides StaticAlgorithmName from the template parameter BASE
-=======
-//! \class AlgorithmImpl
-//! \brief Base class for identifying alogorithm
-//! \tparam BASE an Algorithm derived class
-//! \tparam ALGORITHM_INFO an Algorithm derived class
-//! \details AlgorithmImpl provides StaticAlgorithmName from the template parameter BASE
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class BASE, class ALGORITHM_INFO=BASE>
 class CRYPTOPP_NO_VTABLE AlgorithmImpl : public BASE
 {
 public:
-<<<<<<< HEAD
 	/// \brief The algorithm name
 	/// \returns the algorithm name
 	/// \details StaticAlgorithmName returns the algorithm's name as a static member function.
@@ -72,33 +49,19 @@ public:
 };
 
 /// \brief Exception thrown when an invalid key length is encountered
-=======
-	static std::string CRYPTOPP_API StaticAlgorithmName() {return ALGORITHM_INFO::StaticAlgorithmName();}
-	std::string AlgorithmName() const {return ALGORITHM_INFO::StaticAlgorithmName();}
-};
-
-//! \class InvalidKeyLength
-//! \brief Exception thrown when an invalid key length is encountered
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL InvalidKeyLength : public InvalidArgument
 {
 public:
 	explicit InvalidKeyLength(const std::string &algorithm, size_t length) : InvalidArgument(algorithm + ": " + IntToString(length) + " is not a valid key length") {}
 };
 
-<<<<<<< HEAD
 /// \brief Exception thrown when an invalid number of rounds is encountered
-=======
-//! \class InvalidRounds
-//! \brief Exception thrown when an invalid number of rounds is encountered
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL InvalidRounds : public InvalidArgument
 {
 public:
 	explicit InvalidRounds(const std::string &algorithm, unsigned int rounds) : InvalidArgument(algorithm + ": " + IntToString(rounds) + " is not a valid number of rounds") {}
 };
 
-<<<<<<< HEAD
 /// \brief Exception thrown when an invalid block size is encountered
 class CRYPTOPP_DLL InvalidBlockSize : public InvalidArgument
 {
@@ -114,22 +77,13 @@ public:
 };
 
 /// \brief Exception thrown when an invalid personalization string length is encountered
-=======
-//! \class InvalidPersonalizationLength
-//! \brief Exception thrown when an invalid personalization string length is encountered
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL InvalidPersonalizationLength : public InvalidArgument
 {
 public:
 	explicit InvalidPersonalizationLength(const std::string &algorithm, size_t length) : InvalidArgument(algorithm + ": " + IntToString(length) + " is not a valid salt length") {}
 };
 
-<<<<<<< HEAD
 /// \brief Exception thrown when an invalid salt length is encountered
-=======
-//! \class InvalidSaltLength
-//! \brief Exception thrown when an invalid salt length is encountered
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL InvalidSaltLength : public InvalidArgument
 {
 public:
@@ -138,14 +92,8 @@ public:
 
 // *****************************
 
-<<<<<<< HEAD
 /// \brief Base class for bufferless filters
 /// \tparam T the class or type
-=======
-//! \class Bufferless
-//! \brief Base class for bufferless filters
-//! \tparam T the class or type
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class CRYPTOPP_NO_VTABLE Bufferless : public T
 {
@@ -154,14 +102,8 @@ public:
 		{CRYPTOPP_UNUSED(hardFlush); CRYPTOPP_UNUSED(blocking); return false;}
 };
 
-<<<<<<< HEAD
 /// \brief Base class for unflushable filters
 /// \tparam T the class or type
-=======
-//! \class Unflushable
-//! \brief Base class for unflushable filters
-//! \tparam T the class or type
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class CRYPTOPP_NO_VTABLE Unflushable : public T
 {
@@ -185,16 +127,9 @@ protected:
 	virtual bool InputBufferIsEmpty() const {return false;}
 };
 
-<<<<<<< HEAD
 /// \brief Base class for input rejecting filters
 /// \tparam T the class or type
 /// \details T should be a BufferedTransformation derived class
-=======
-//! \class InputRejecting
-//! \brief Base class for input rejecting filters
-//! \tparam T the class or type
-//! \details T should be a BufferedTransformation derived class
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class CRYPTOPP_NO_VTABLE InputRejecting : public T
 {
@@ -202,7 +137,6 @@ public:
 	struct InputRejected : public NotImplemented
 		{InputRejected() : NotImplemented("BufferedTransformation: this object doesn't allow input") {}};
 
-<<<<<<< HEAD
 	///	\name INPUT
 	//@{
 
@@ -214,28 +148,11 @@ public:
 	/// \throws InputRejected
 	/// \returns the number of bytes that remain in the block (i.e., bytes not processed)
 	/// \details Internally, the default implementation throws InputRejected.
-=======
-	//!	\name INPUT
-	//@{
-
-	//! \brief Input a byte array for processing
-	//! \param inString the byte array to process
-	//! \param length the size of the string, in bytes
-	//! \param messageEnd means how many filters to signal MessageEnd() to, including this one
-	//! \param blocking specifies whether the object should block when processing input
-	//! \throws InputRejected
-	//! \returns the number of bytes that remain in the block (i.e., bytes not processed)
-	//! \details Internally, the default implmentation throws InputRejected.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	size_t Put2(const byte *inString, size_t length, int messageEnd, bool blocking)
 		{CRYPTOPP_UNUSED(inString); CRYPTOPP_UNUSED(length); CRYPTOPP_UNUSED(messageEnd); CRYPTOPP_UNUSED(blocking); throw InputRejected();}
 	//@}
 
-<<<<<<< HEAD
 	///	\name SIGNALS
-=======
-	//!	\name SIGNALS
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	//@{
 	bool IsolatedFlush(bool hardFlush, bool blocking)
 		{CRYPTOPP_UNUSED(hardFlush); CRYPTOPP_UNUSED(blocking); return false;}
@@ -248,20 +165,12 @@ public:
 	//@}
 };
 
-<<<<<<< HEAD
 /// \brief Interface for custom flush signals propagation
 /// \tparam T BufferedTransformation derived class
-=======
-//! \class CustomFlushPropagation
-//! \brief Provides interface for custom flush signals
-//! \tparam T the class or type
-//! \details T should be a BufferedTransformation derived class
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class CRYPTOPP_NO_VTABLE CustomFlushPropagation : public T
 {
 public:
-<<<<<<< HEAD
 	///	\name SIGNALS
 	//@{
 
@@ -281,11 +190,6 @@ public:
 	///   network in packets and compression state is preserved across packets, as in the SSH2 protocol.
 	virtual bool Flush(bool hardFlush, int propagation=-1, bool blocking=true) =0;
 
-=======
-	//!	\name SIGNALS
-	//@{
-	virtual bool Flush(bool hardFlush, int propagation=-1, bool blocking=true) =0;
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	//@}
 
 private:
@@ -293,20 +197,12 @@ private:
 		{CRYPTOPP_UNUSED(hardFlush); CRYPTOPP_UNUSED(blocking); CRYPTOPP_ASSERT(false); return false;}
 };
 
-<<<<<<< HEAD
 /// \brief Interface for custom flush signals
 /// \tparam T BufferedTransformation derived class
-=======
-//! \class CustomSignalPropagation
-//! \brief Provides interface for initialization of derived filters
-//! \tparam T the class or type
-//! \details T should be a BufferedTransformation derived class
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class CRYPTOPP_NO_VTABLE CustomSignalPropagation : public CustomFlushPropagation<T>
 {
 public:
-<<<<<<< HEAD
 	/// \brief Initialize or reinitialize this object, with signal propagation
 	/// \param parameters a set of NameValuePairs to initialize or reinitialize this object
 	/// \param propagation the number of attached transformations the Initialize() signal should be passed
@@ -315,8 +211,6 @@ public:
 	///   all possible combintations of configurable parameters.
 	/// \details propagation count includes this object. Setting propagation to <tt>1</tt> means this
 	///   object only. Setting propagation to <tt>-1</tt> means unlimited propagation.
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	virtual void Initialize(const NameValuePairs &parameters=g_nullNameValuePairs, int propagation=-1) =0;
 
 private:
@@ -324,23 +218,15 @@ private:
 		{CRYPTOPP_UNUSED(parameters); CRYPTOPP_ASSERT(false);}
 };
 
-<<<<<<< HEAD
 /// \brief Multiple channels support for custom signal processing
 /// \tparam T the class or type
 /// \details T should be a BufferedTransformation derived class
-=======
-//! \class Multichannel
-//! \brief Provides multiple channels support for custom flush signal processing
-//! \tparam T the class or type
-//! \details T should be a BufferedTransformation derived class
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class CRYPTOPP_NO_VTABLE Multichannel : public CustomFlushPropagation<T>
 {
 public:
 	bool Flush(bool hardFlush, int propagation=-1, bool blocking=true)
 		{return this->ChannelFlush(DEFAULT_CHANNEL, hardFlush, propagation, blocking);}
-<<<<<<< HEAD
 
 	/// \brief Marks the end of a series of messages, with signal propagation
 	/// \param propagation the number of attached transformations the  MessageSeriesEnd() signal should be passed
@@ -380,25 +266,13 @@ public:
 	/// \param messageEnd means how many filters to signal MessageEnd() to, including this one.
 	/// \param blocking specifies whether the object should block when processing input.
 	/// \details Internally, PutModifiable2() calls Put2().
-=======
-	bool MessageSeriesEnd(int propagation=-1, bool blocking=true)
-		{return this->ChannelMessageSeriesEnd(DEFAULT_CHANNEL, propagation, blocking);}
-	byte * CreatePutSpace(size_t &size)
-		{return this->ChannelCreatePutSpace(DEFAULT_CHANNEL, size);}
-	size_t Put2(const byte *inString, size_t length, int messageEnd, bool blocking)
-		{return this->ChannelPut2(DEFAULT_CHANNEL, inString, length, messageEnd, blocking);}
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	size_t PutModifiable2(byte *inString, size_t length, int messageEnd, bool blocking)
 		{return this->ChannelPutModifiable2(DEFAULT_CHANNEL, inString, length, messageEnd, blocking);}
 
 //	void ChannelMessageSeriesEnd(const std::string &channel, int propagation=-1)
 //		{PropagateMessageSeriesEnd(propagation, channel);}
 	byte * ChannelCreatePutSpace(const std::string &channel, size_t &size)
-<<<<<<< HEAD
 		{CRYPTOPP_UNUSED(channel); size = 0; return NULLPTR;}
-=======
-		{CRYPTOPP_UNUSED(channel); size = 0; return NULL;}
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	bool ChannelPutModifiable(const std::string &channel, byte *inString, size_t length)
 		{this->ChannelPut(channel, inString, length); return false;}
 
@@ -409,24 +283,14 @@ public:
 	virtual bool ChannelFlush(const std::string &channel, bool hardFlush, int propagation=-1, bool blocking=true) =0;
 };
 
-<<<<<<< HEAD
 /// \brief Provides auto signaling support
 /// \tparam T BufferedTransformation derived class
-=======
-//! \class AutoSignaling
-//! \brief Provides auto signaling support
-//! \tparam T the class or type
-//! \details T should be a BufferedTransformation derived class
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class CRYPTOPP_NO_VTABLE AutoSignaling : public T
 {
 public:
-<<<<<<< HEAD
 	/// \brief Construct an AutoSignaling
 	/// \param propagation the propagation count
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	AutoSignaling(int propagation=-1) : m_autoSignalPropagation(propagation) {}
 
 	void SetAutoSignalPropagation(int propagation)
@@ -438,22 +302,11 @@ private:
 	int m_autoSignalPropagation;
 };
 
-<<<<<<< HEAD
 /// \brief Acts as a Source for pre-existing, static data
 class CRYPTOPP_DLL CRYPTOPP_NO_VTABLE Store : public AutoSignaling<InputRejecting<BufferedTransformation> >
 {
 public:
 	/// \brief Construct a Store
-=======
-//! \class Store
-//! \brief Acts as a Source for pre-existing, static data
-//! \tparam T the class or type
-//! \details A BufferedTransformation that only contains pre-existing data as "output"
-class CRYPTOPP_DLL CRYPTOPP_NO_VTABLE Store : public AutoSignaling<InputRejecting<BufferedTransformation> >
-{
-public:
-	//! \brief Construct a Store
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	Store() : m_messageEnd(false) {}
 
 	void IsolatedInitialize(const NameValuePairs &parameters)
@@ -472,7 +325,6 @@ protected:
 	bool m_messageEnd;
 };
 
-<<<<<<< HEAD
 /// \brief Implementation of BufferedTransformation's attachment interface
 /// \details Sink is a cornerstone of the Pipeline trinitiy. Data flows from
 ///   Sources, through Filters, and then terminates in Sinks. The difference
@@ -482,18 +334,6 @@ protected:
 /// \details A Sink doesnot produce any retrievable output.
 /// \details See the discussion of BufferedTransformation in cryptlib.h for
 ///   more details.
-=======
-//! \class Sink
-//! \brief Implementation of BufferedTransformation's attachment interface
-//! \details Sink is a cornerstone of the Pipeline trinitiy. Data flows from
-//!   Sources, through Filters, and then terminates in Sinks. The difference
-//!   between a Source and Filter is a Source \a pumps data, while a Filter does
-//!   not. The difference between a Filter and a Sink is a Filter allows an
-//!   attached transformation, while a Sink does not.
-//! \details A Sink doesnot produce any retrievable output.
-//! \details See the discussion of BufferedTransformation in cryptlib.h for
-//!   more details.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL CRYPTOPP_NO_VTABLE Sink : public BufferedTransformation
 {
 public:
@@ -503,17 +343,9 @@ public:
 		{CRYPTOPP_UNUSED(target); CRYPTOPP_UNUSED(begin); CRYPTOPP_UNUSED(end); CRYPTOPP_UNUSED(channel); CRYPTOPP_UNUSED(blocking); return 0;}
 };
 
-<<<<<<< HEAD
 /// \brief Acts as an input discarding Filter or Sink
 /// \details The BitBucket discards all input and returns 0 to the caller
 ///   to indicate all data was processed.
-=======
-//! \class BitBucket
-//! \brief Acts as an input discarding Filter or Sink
-//! \tparam T the class or type
-//! \details The BitBucket discards all input and returns 0 to the caller
-//!   to indicate all data was processed.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL BitBucket : public Bufferless<Sink>
 {
 public:

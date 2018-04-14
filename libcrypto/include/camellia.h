@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 // camellia.h - originally written and placed in the public domain by Wei Dai
 
 /// \file camellia.h
 /// \brief Classes for the Camellia block cipher
-=======
-// camellia.h - written and placed in the public domain by Wei Dai
-
-//! \file camellia.h
-//! \brief Classes for the Cameliia block cipher
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_CAMELLIA_H
 #define CRYPTOPP_CAMELLIA_H
@@ -19,7 +12,6 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief Camellia block cipher information
 struct Camellia_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 16, 32, 8>
 {
@@ -28,18 +20,6 @@ struct Camellia_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 1
 
 /// \brief Camellia block cipher
 /// \sa <a href="http://www.cryptopp.com/wiki/Camellia">Camellia</a>
-=======
-//! \class Camellia_Info
-//! \brief Camellia block cipher information
-struct Camellia_Info : public FixedBlockSize<16>, public VariableKeyLength<16, 16, 32, 8>
-{
-	CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return "Camellia";}
-};
-
-//! \class Camellia
-//! \brief Camellia block cipher
-//! \sa <a href="http://www.weidai.com/scan-mirror/cs.html#Camellia">Camellia</a>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class Camellia : public Camellia_Info, public BlockCipherDocumentation
 {
 	class CRYPTOPP_NO_VTABLE Base : public BlockCipherImpl<Camellia_Info>

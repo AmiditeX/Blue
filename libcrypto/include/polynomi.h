@@ -1,25 +1,11 @@
-<<<<<<< HEAD
 // polynomi.h - originally written and placed in the public domain by Wei Dai
 
 /// \file polynomi.h
 /// \brief Classes for polynomial basis and operations
-=======
-// polynomi.h - written and placed in the public domain by Wei Dai
-
-//! \file
-//! \headerfile polynomi.h
-//! \brief Classes for polynomial basis and operations
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_POLYNOMI_H
 #define CRYPTOPP_POLYNOMI_H
 
-<<<<<<< HEAD
-=======
-/*! \file */
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #include "cryptlib.h"
 #include "secblock.h"
 #include "algebra.h"
@@ -30,35 +16,21 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// represents single-variable polynomials over arbitrary rings
-=======
-//! represents single-variable polynomials over arbitrary rings
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 /*!	\nosubgrouping */
 template <class T> class PolynomialOver
 {
 public:
-<<<<<<< HEAD
 	/// \name ENUMS, EXCEPTIONS, and TYPEDEFS
 	//@{
 		/// division by zero exception
-=======
-	//! \name ENUMS, EXCEPTIONS, and TYPEDEFS
-	//@{
-		//! division by zero exception
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		class DivideByZero : public Exception
 		{
 		public:
 			DivideByZero() : Exception(OTHER_ERROR, "PolynomialOver<T>: division by zero") {}
 		};
 
-<<<<<<< HEAD
 		/// specify the distribution for randomization functions
-=======
-		//! specify the distribution for randomization functions
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		class RandomizationParameter
 		{
 		public:
@@ -75,7 +47,6 @@ public:
 		typedef typename T::Element CoefficientType;
 	//@}
 
-<<<<<<< HEAD
 	/// \name CREATORS
 	//@{
 		/// creates the zero polynomial
@@ -110,47 +81,10 @@ public:
 		explicit PolynomialOver(BufferedTransformation &bt);
 
 		/// create a random PolynomialOver<T>
-=======
-	//! \name CREATORS
-	//@{
-		//! creates the zero polynomial
-		PolynomialOver() {}
-
-		//!
-		PolynomialOver(const Ring &ring, unsigned int count)
-			: m_coefficients((size_t)count, ring.Identity()) {}
-
-		//! copy constructor
-		PolynomialOver(const PolynomialOver<Ring> &t)
-			: m_coefficients(t.m_coefficients.size()) {*this = t;}
-
-		//! construct constant polynomial
-		PolynomialOver(const CoefficientType &element)
-			: m_coefficients(1, element) {}
-
-		//! construct polynomial with specified coefficients, starting from coefficient of x^0
-		template <typename Iterator> PolynomialOver(Iterator begin, Iterator end)
-			: m_coefficients(begin, end) {}
-
-		//! convert from string
-		PolynomialOver(const char *str, const Ring &ring) {FromStr(str, ring);}
-
-		//! convert from big-endian byte array
-		PolynomialOver(const byte *encodedPolynomialOver, unsigned int byteCount);
-
-		//! convert from Basic Encoding Rules encoded byte array
-		explicit PolynomialOver(const byte *BEREncodedPolynomialOver);
-
-		//! convert from BER encoded byte array stored in a BufferedTransformation object
-		explicit PolynomialOver(BufferedTransformation &bt);
-
-		//! create a random PolynomialOver<T>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		PolynomialOver(RandomNumberGenerator &rng, const RandomizationParameter &parameter, const Ring &ring)
 			{Randomize(rng, parameter, ring);}
 	//@}
 
-<<<<<<< HEAD
 	/// \name ACCESSORS
 	//@{
 		/// the zero polynomial will return a degree of -1
@@ -176,42 +110,11 @@ public:
 		void Negate(const Ring &ring);
 
 		///
-=======
-	//! \name ACCESSORS
-	//@{
-		//! the zero polynomial will return a degree of -1
-		int Degree(const Ring &ring) const {return int(CoefficientCount(ring))-1;}
-		//!
-		unsigned int CoefficientCount(const Ring &ring) const;
-		//! return coefficient for x^i
-		CoefficientType GetCoefficient(unsigned int i, const Ring &ring) const;
-	//@}
-
-	//! \name MANIPULATORS
-	//@{
-		//!
-		PolynomialOver<Ring>&  operator=(const PolynomialOver<Ring>& t);
-
-		//!
-		void Randomize(RandomNumberGenerator &rng, const RandomizationParameter &parameter, const Ring &ring);
-
-		//! set the coefficient for x^i to value
-		void SetCoefficient(unsigned int i, const CoefficientType &value, const Ring &ring);
-
-		//!
-		void Negate(const Ring &ring);
-
-		//!
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		void swap(PolynomialOver<Ring> &t);
 	//@}
 
 
-<<<<<<< HEAD
 	/// \name BASIC ARITHMETIC ON POLYNOMIALS
-=======
-	//! \name BASIC ARITHMETIC ON POLYNOMIALS
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	//@{
 		bool Equals(const PolynomialOver<Ring> &t, const Ring &ring) const;
 		bool IsZero(const Ring &ring) const {return CoefficientCount(ring)==0;}
@@ -229,15 +132,9 @@ public:
 		PolynomialOver<Ring>& Accumulate(const PolynomialOver<Ring>& t, const Ring &ring);
 		PolynomialOver<Ring>& Reduce(const PolynomialOver<Ring>& t, const Ring &ring);
 
-<<<<<<< HEAD
 		///
 		PolynomialOver<Ring> Doubled(const Ring &ring) const {return Plus(*this, ring);}
 		///
-=======
-		//!
-		PolynomialOver<Ring> Doubled(const Ring &ring) const {return Plus(*this, ring);}
-		//!
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		PolynomialOver<Ring> Squared(const Ring &ring) const {return Times(*this, ring);}
 
 		CoefficientType EvaluateAt(const CoefficientType &x, const Ring &ring) const;
@@ -245,19 +142,11 @@ public:
 		PolynomialOver<Ring>& ShiftLeft(unsigned int n, const Ring &ring);
 		PolynomialOver<Ring>& ShiftRight(unsigned int n, const Ring &ring);
 
-<<<<<<< HEAD
 		/// calculate r and q such that (a == d*q + r) && (0 <= degree of r < degree of d)
 		static void Divide(PolynomialOver<Ring> &r, PolynomialOver<Ring> &q, const PolynomialOver<Ring> &a, const PolynomialOver<Ring> &d, const Ring &ring);
 	//@}
 
 	/// \name INPUT/OUTPUT
-=======
-		//! calculate r and q such that (a == d*q + r) && (0 <= degree of r < degree of d)
-		static void Divide(PolynomialOver<Ring> &r, PolynomialOver<Ring> &q, const PolynomialOver<Ring> &a, const PolynomialOver<Ring> &d, const Ring &ring);
-	//@}
-
-	//! \name INPUT/OUTPUT
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	//@{
 		std::istream& Input(std::istream &in, const Ring &ring);
 		std::ostream& Output(std::ostream &out, const Ring &ring) const;
@@ -269,11 +158,7 @@ private:
 	std::vector<CoefficientType> m_coefficients;
 };
 
-<<<<<<< HEAD
 /// Polynomials over a fixed ring
-=======
-//! Polynomials over a fixed ring
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 /*! Having a fixed ring allows overloaded operators */
 template <class T, int instance> class PolynomialOverFixedRing : private PolynomialOver<T>
 {
@@ -286,26 +171,16 @@ public:
 	typedef typename B::DivideByZero DivideByZero;
 	typedef typename B::RandomizationParameter RandomizationParameter;
 
-<<<<<<< HEAD
 	/// \name CREATORS
 	//@{
 		/// creates the zero polynomial
 		PolynomialOverFixedRing(unsigned int count = 0) : B(ms_fixedRing, count) {}
 
 		/// copy constructor
-=======
-	//! \name CREATORS
-	//@{
-		//! creates the zero polynomial
-		PolynomialOverFixedRing(unsigned int count = 0) : B(ms_fixedRing, count) {}
-
-		//! copy constructor
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		PolynomialOverFixedRing(const ThisType &t) : B(t) {}
 
 		explicit PolynomialOverFixedRing(const B &t) : B(t) {}
 
-<<<<<<< HEAD
 		/// construct constant polynomial
 		PolynomialOverFixedRing(const CoefficientType &element) : B(element) {}
 
@@ -326,35 +201,12 @@ public:
 		explicit PolynomialOverFixedRing(BufferedTransformation &bt) : B(bt) {}
 
 		/// create a random PolynomialOverFixedRing
-=======
-		//! construct constant polynomial
-		PolynomialOverFixedRing(const CoefficientType &element) : B(element) {}
-
-		//! construct polynomial with specified coefficients, starting from coefficient of x^0
-		template <typename Iterator> PolynomialOverFixedRing(Iterator first, Iterator last)
-			: B(first, last) {}
-
-		//! convert from string
-		explicit PolynomialOverFixedRing(const char *str) : B(str, ms_fixedRing) {}
-
-		//! convert from big-endian byte array
-		PolynomialOverFixedRing(const byte *encodedPoly, unsigned int byteCount) : B(encodedPoly, byteCount) {}
-
-		//! convert from Basic Encoding Rules encoded byte array
-		explicit PolynomialOverFixedRing(const byte *BEREncodedPoly) : B(BEREncodedPoly) {}
-
-		//! convert from BER encoded byte array stored in a BufferedTransformation object
-		explicit PolynomialOverFixedRing(BufferedTransformation &bt) : B(bt) {}
-
-		//! create a random PolynomialOverFixedRing
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		PolynomialOverFixedRing(RandomNumberGenerator &rng, const RandomizationParameter &parameter) : B(rng, parameter, ms_fixedRing) {}
 
 		static const ThisType &Zero();
 		static const ThisType &One();
 	//@}
 
-<<<<<<< HEAD
 	/// \name ACCESSORS
 	//@{
 		/// the zero polynomial will return a degree of -1
@@ -394,53 +246,11 @@ public:
 		void Randomize(RandomNumberGenerator &rng, const RandomizationParameter &parameter) {B::Randomize(rng, parameter, ms_fixedRing);}
 
 		///
-=======
-	//! \name ACCESSORS
-	//@{
-		//! the zero polynomial will return a degree of -1
-		int Degree() const {return B::Degree(ms_fixedRing);}
-		//! degree + 1
-		unsigned int CoefficientCount() const {return B::CoefficientCount(ms_fixedRing);}
-		//! return coefficient for x^i
-		CoefficientType GetCoefficient(unsigned int i) const {return B::GetCoefficient(i, ms_fixedRing);}
-		//! return coefficient for x^i
-		CoefficientType operator[](unsigned int i) const {return B::GetCoefficient(i, ms_fixedRing);}
-	//@}
-
-	//! \name MANIPULATORS
-	//@{
-		//!
-		ThisType&  operator=(const ThisType& t) {B::operator=(t); return *this;}
-		//!
-		ThisType&  operator+=(const ThisType& t) {Accumulate(t, ms_fixedRing); return *this;}
-		//!
-		ThisType&  operator-=(const ThisType& t) {Reduce(t, ms_fixedRing); return *this;}
-		//!
-		ThisType&  operator*=(const ThisType& t) {return *this = *this*t;}
-		//!
-		ThisType&  operator/=(const ThisType& t) {return *this = *this/t;}
-		//!
-		ThisType&  operator%=(const ThisType& t) {return *this = *this%t;}
-
-		//!
-		ThisType&  operator<<=(unsigned int n) {ShiftLeft(n, ms_fixedRing); return *this;}
-		//!
-		ThisType&  operator>>=(unsigned int n) {ShiftRight(n, ms_fixedRing); return *this;}
-
-		//! set the coefficient for x^i to value
-		void SetCoefficient(unsigned int i, const CoefficientType &value) {B::SetCoefficient(i, value, ms_fixedRing);}
-
-		//!
-		void Randomize(RandomNumberGenerator &rng, const RandomizationParameter &parameter) {B::Randomize(rng, parameter, ms_fixedRing);}
-
-		//!
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		void Negate() {B::Negate(ms_fixedRing);}
 
 		void swap(ThisType &t) {B::swap(t);}
 	//@}
 
-<<<<<<< HEAD
 	/// \name UNARY OPERATORS
 	//@{
 		///
@@ -469,64 +279,21 @@ public:
 		///
 		ThisType Doubled() const {return ThisType(B::Doubled(ms_fixedRing));}
 		///
-=======
-	//! \name UNARY OPERATORS
-	//@{
-		//!
-		bool operator!() const {return CoefficientCount()==0;}
-		//!
-		ThisType operator+() const {return *this;}
-		//!
-		ThisType operator-() const {return ThisType(Inverse(ms_fixedRing));}
-	//@}
-
-	//! \name BINARY OPERATORS
-	//@{
-		//!
-		friend ThisType operator>>(ThisType a, unsigned int n)	{return ThisType(a>>=n);}
-		//!
-		friend ThisType operator<<(ThisType a, unsigned int n)	{return ThisType(a<<=n);}
-	//@}
-
-	//! \name OTHER ARITHMETIC FUNCTIONS
-	//@{
-		//!
-		ThisType MultiplicativeInverse() const {return ThisType(B::MultiplicativeInverse(ms_fixedRing));}
-		//!
-		bool IsUnit() const {return B::IsUnit(ms_fixedRing);}
-
-		//!
-		ThisType Doubled() const {return ThisType(B::Doubled(ms_fixedRing));}
-		//!
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		ThisType Squared() const {return ThisType(B::Squared(ms_fixedRing));}
 
 		CoefficientType EvaluateAt(const CoefficientType &x) const {return B::EvaluateAt(x, ms_fixedRing);}
 
-<<<<<<< HEAD
 		/// calculate r and q such that (a == d*q + r) && (0 <= r < abs(d))
-=======
-		//! calculate r and q such that (a == d*q + r) && (0 <= r < abs(d))
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		static void Divide(ThisType &r, ThisType &q, const ThisType &a, const ThisType &d)
 			{B::Divide(r, q, a, d, ms_fixedRing);}
 	//@}
 
-<<<<<<< HEAD
 	/// \name INPUT/OUTPUT
 	//@{
 		///
 		friend std::istream& operator>>(std::istream& in, ThisType &a)
 			{return a.Input(in, ms_fixedRing);}
 		///
-=======
-	//! \name INPUT/OUTPUT
-	//@{
-		//!
-		friend std::istream& operator>>(std::istream& in, ThisType &a)
-			{return a.Input(in, ms_fixedRing);}
-		//!
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 		friend std::ostream& operator<<(std::ostream& out, const ThisType &a)
 			{return a.Output(out, ms_fixedRing);}
 	//@}
@@ -543,11 +310,7 @@ private:
 	static const Ring ms_fixedRing;
 };
 
-<<<<<<< HEAD
 /// Ring of polynomials over another ring
-=======
-//! Ring of polynomials over another ring
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T> class RingOfPolynomialsOver : public AbstractEuclideanDomain<PolynomialOver<T> >
 {
 public:
@@ -637,24 +400,15 @@ void PrepareBulkPolynomialInterpolationAt(const Ring &ring, Element *v, const El
 template <class Ring, class Element>
 Element BulkPolynomialInterpolateAt(const Ring &ring, const Element y[], const Element v[], unsigned int n);
 
-<<<<<<< HEAD
 ///
 template <class T, int instance>
 inline bool operator==(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
 	{return a.Equals(b, a.ms_fixedRing);}
 ///
-=======
-//!
-template <class T, int instance>
-inline bool operator==(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
-	{return a.Equals(b, a.ms_fixedRing);}
-//!
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T, int instance>
 inline bool operator!=(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
 	{return !(a==b);}
 
-<<<<<<< HEAD
 ///
 template <class T, int instance>
 inline bool operator> (const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
@@ -668,26 +422,10 @@ template <class T, int instance>
 inline bool operator< (const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
 	{return a.Degree() < b.Degree();}
 ///
-=======
-//!
-template <class T, int instance>
-inline bool operator> (const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
-	{return a.Degree() > b.Degree();}
-//!
-template <class T, int instance>
-inline bool operator>=(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
-	{return a.Degree() >= b.Degree();}
-//!
-template <class T, int instance>
-inline bool operator< (const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
-	{return a.Degree() < b.Degree();}
-//!
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T, int instance>
 inline bool operator<=(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
 	{return a.Degree() <= b.Degree();}
 
-<<<<<<< HEAD
 ///
 template <class T, int instance>
 inline CryptoPP::PolynomialOverFixedRing<T, instance> operator+(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
@@ -705,25 +443,6 @@ template <class T, int instance>
 inline CryptoPP::PolynomialOverFixedRing<T, instance> operator/(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
 	{return CryptoPP::PolynomialOverFixedRing<T, instance>(a.DividedBy(b, a.ms_fixedRing));}
 ///
-=======
-//!
-template <class T, int instance>
-inline CryptoPP::PolynomialOverFixedRing<T, instance> operator+(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
-	{return CryptoPP::PolynomialOverFixedRing<T, instance>(a.Plus(b, a.ms_fixedRing));}
-//!
-template <class T, int instance>
-inline CryptoPP::PolynomialOverFixedRing<T, instance> operator-(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
-	{return CryptoPP::PolynomialOverFixedRing<T, instance>(a.Minus(b, a.ms_fixedRing));}
-//!
-template <class T, int instance>
-inline CryptoPP::PolynomialOverFixedRing<T, instance> operator*(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
-	{return CryptoPP::PolynomialOverFixedRing<T, instance>(a.Times(b, a.ms_fixedRing));}
-//!
-template <class T, int instance>
-inline CryptoPP::PolynomialOverFixedRing<T, instance> operator/(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
-	{return CryptoPP::PolynomialOverFixedRing<T, instance>(a.DividedBy(b, a.ms_fixedRing));}
-//!
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T, int instance>
 inline CryptoPP::PolynomialOverFixedRing<T, instance> operator%(const CryptoPP::PolynomialOverFixedRing<T, instance> &a, const CryptoPP::PolynomialOverFixedRing<T, instance> &b)
 	{return CryptoPP::PolynomialOverFixedRing<T, instance>(a.Modulo(b, a.ms_fixedRing));}

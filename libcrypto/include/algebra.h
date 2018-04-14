@@ -1,32 +1,19 @@
-<<<<<<< HEAD
 // algebra.h - originally written and placed in the public domain by Wei Dai
 
 /// \file algebra.h
 /// \brief Classes for performing mathematics over different fields
-=======
-// algebra.h - written and placed in the public domain by Wei Dai
-
-//! \file algebra.h
-//! \brief Classes for performing mathematics over different fields
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_ALGEBRA_H
 #define CRYPTOPP_ALGEBRA_H
 
 #include "config.h"
-<<<<<<< HEAD
 #include "integer.h"
 #include "misc.h"
-=======
-#include "misc.h"
-#include "integer.h"
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 NAMESPACE_BEGIN(CryptoPP)
 
 class Integer;
 
-<<<<<<< HEAD
 /// \brief Abstract group
 /// \tparam T element class or type
 /// \details <tt>const Element&</tt> returned by member functions are references
@@ -36,17 +23,6 @@ class Integer;
 ///   <pre>    abcd = group.Add(group.Add(a,b), group.Add(c,d));</pre>
 ///   But this should be fine:
 ///   <pre>    abcd = group.Add(a, group.Add(b, group.Add(c,d));</pre>
-=======
-//! \brief Abstract group
-//! \tparam T element class or type
-//! \details <tt>const Element&</tt> returned by member functions are references
-//!   to internal data members. Since each object may have only
-//!   one such data member for holding results, the following code
-//!   will produce incorrect results:
-//!   <pre>    abcd = group.Add(group.Add(a,b), group.Add(c,d));</pre>
-//!   But this should be fine:
-//!   <pre>    abcd = group.Add(a, group.Add(b, group.Add(c,d));</pre>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T> class CRYPTOPP_NO_VTABLE AbstractGroup
 {
 public:
@@ -54,7 +30,6 @@ public:
 
 	virtual ~AbstractGroup() {}
 
-<<<<<<< HEAD
 	/// \brief Compare two elements for equality
 	/// \param a first element
 	/// \param b second element
@@ -140,99 +115,11 @@ public:
 ///   <pre>    abcd = group.Add(group.Add(a,b), group.Add(c,d));</pre>
 ///   But this should be fine:
 ///   <pre>    abcd = group.Add(a, group.Add(b, group.Add(c,d));</pre>
-=======
-	//! \brief Compare two elements for equality
-	//! \param a first element
-	//! \param b second element
-	//! \returns true if the elements are equal, false otherwise
-	//! \details Equal() tests the elements for equality using <tt>a==b</tt>
-	virtual bool Equal(const Element &a, const Element &b) const =0;
-
-	//! \brief Provides the Identity element
-	//! \returns the Identity element
-	virtual const Element& Identity() const =0;
-
-	//! \brief Adds elements in the group
-	//! \param a first element
-	//! \param b second element
-	//! \returns the sum of <tt>a</tt> and <tt>b</tt>
-	virtual const Element& Add(const Element &a, const Element &b) const =0;
-
-	//! \brief Inverts the element in the group
-	//! \param a first element
-	//! \returns the inverse of the element
-	virtual const Element& Inverse(const Element &a) const =0;
-
-	//! \brief Determine if inversion is fast
-	//! \returns true if inversion is fast, false otherwise
-	virtual bool InversionIsFast() const {return false;}
-
-	//! \brief Doubles an element in the group
-	//! \param a the element
-	//! \returns the element doubled
-	virtual const Element& Double(const Element &a) const;
-
-	//! \brief Subtracts elements in the group
-	//! \param a first element
-	//! \param b second element
-	//! \returns the difference of <tt>a</tt> and <tt>b</tt>. The element <tt>a</tt> must provide a Subtract member function.
-	virtual const Element& Subtract(const Element &a, const Element &b) const;
-
-	//! \brief TODO
-	//! \param a first element
-	//! \param b second element
-	//! \returns TODO
-	virtual Element& Accumulate(Element &a, const Element &b) const;
-
-	//! \brief Reduces an element in the congruence class
-	//! \param a element to reduce
-	//! \param b the congruence class
-	//! \returns the reduced element
-	virtual Element& Reduce(Element &a, const Element &b) const;
-
-	//! \brief Performs a scalar multiplication
-	//! \param a multiplicand
-	//! \param e multiplier
-	//! \returns the product
-	virtual Element ScalarMultiply(const Element &a, const Integer &e) const;
-
-	//! \brief TODO
-	//! \param x first multiplicand
-	//! \param e1 the first multiplier
-	//! \param y second multiplicand
-	//! \param e2 the second multiplier
-	//! \returns TODO
-	virtual Element CascadeScalarMultiply(const Element &x, const Integer &e1, const Element &y, const Integer &e2) const;
-
-	//! \brief Multiplies a base to multiple exponents in a group
-	//! \param results an array of Elements
-	//! \param base the base to raise to the exponents
-	//! \param exponents an array of exponents
-	//! \param exponentsCount the number of exponents in the array
-	//! \details SimultaneousMultiply() multiplies the base to each exponent in the exponents array and stores the
-	//!   result at the respective position in the results array.
-	//! \details SimultaneousMultiply() must be implemented in a derived class.
-	//! \pre <tt>COUNTOF(results) == exponentsCount</tt>
-	//! \pre <tt>COUNTOF(exponents) == exponentsCount</tt>
-	virtual void SimultaneousMultiply(Element *results, const Element &base, const Integer *exponents, unsigned int exponentsCount) const;
-};
-
-//! \brief Abstract ring
-//! \tparam T element class or type
-//! \details <tt>const Element&</tt> returned by member functions are references
-//!   to internal data members. Since each object may have only
-//!   one such data member for holding results, the following code
-//!   will produce incorrect results:
-//!   <pre>    abcd = group.Add(group.Add(a,b), group.Add(c,d));</pre>
-//!   But this should be fine:
-//!   <pre>    abcd = group.Add(a, group.Add(b, group.Add(c,d));</pre>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T> class CRYPTOPP_NO_VTABLE AbstractRing : public AbstractGroup<T>
 {
 public:
 	typedef T Element;
 
-<<<<<<< HEAD
 	/// \brief Construct an AbstractRing
 	AbstractRing() {m_mg.m_pRing = this;}
 
@@ -304,79 +191,6 @@ public:
 
 	/// \brief Retrieves the multiplicative group
 	/// \returns the multiplicative group
-=======
-	//! \brief Construct an AbstractRing
-	AbstractRing() {m_mg.m_pRing = this;}
-
-	//! \brief Copy construct an AbstractRing
-	//! \param source other AbstractRing
-	AbstractRing(const AbstractRing &source)
-		{CRYPTOPP_UNUSED(source); m_mg.m_pRing = this;}
-
-	//! \brief Assign an AbstractRing
-	//! \param source other AbstractRing
-	AbstractRing& operator=(const AbstractRing &source)
-		{CRYPTOPP_UNUSED(source); return *this;}
-
-	//! \brief Determines whether an element is a unit in the group
-	//! \param a the element
-	//! \returns true if the element is a unit after reduction, false otherwise.
-	virtual bool IsUnit(const Element &a) const =0;
-
-	//! \brief Retrieves the multiplicative identity
-	//! \returns the multiplicative identity
-	virtual const Element& MultiplicativeIdentity() const =0;
-
-	//! \brief Multiplies elements in the group
-	//! \param a the multiplicand
-	//! \param b the multiplier
-	//! \returns the product of a and b
-	virtual const Element& Multiply(const Element &a, const Element &b) const =0;
-
-	//! \brief Calculate the multiplicative inverse of an element in the group
-	//! \param a the element
-	virtual const Element& MultiplicativeInverse(const Element &a) const =0;
-
-	//! \brief Square an element in the group
-	//! \param a the element
-	//! \returns the element squared
-	virtual const Element& Square(const Element &a) const;
-
-	//! \brief Divides elements in the group
-	//! \param a the dividend
-	//! \param b the divisor
-	//! \returns the quotient
-	virtual const Element& Divide(const Element &a, const Element &b) const;
-
-	//! \brief Raises a base to an exponent in the group
-	//! \param a the base
-	//! \param e the exponent
-	//! \returns the exponentiation
-	virtual Element Exponentiate(const Element &a, const Integer &e) const;
-
-	//! \brief TODO
-	//! \param x first element
-	//! \param e1 first exponent
-	//! \param y second element
-	//! \param e2 second exponent
-	//! \returns TODO
-	virtual Element CascadeExponentiate(const Element &x, const Integer &e1, const Element &y, const Integer &e2) const;
-
-	//! \brief Exponentiates a base to multiple exponents in the Ring
-	//! \param results an array of Elements
-	//! \param base the base to raise to the exponents
-	//! \param exponents an array of exponents
-	//! \param exponentsCount the number of exponents in the array
-	//! \details SimultaneousExponentiate() raises the base to each exponent in the exponents array and stores the
-	//!   result at the respective position in the results array.
-	//! \details SimultaneousExponentiate() must be implemented in a derived class.
-	//! \pre <tt>COUNTOF(results) == exponentsCount</tt>
-	//! \pre <tt>COUNTOF(exponents) == exponentsCount</tt>
-	virtual void SimultaneousExponentiate(Element *results, const Element &base, const Integer *exponents, unsigned int exponentsCount) const;
-
-	//! \brief Retrieves the multiplicative group
-	//! \returns the multiplicative group
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	virtual const AbstractGroup<T>& MultiplicativeGroup() const
 		{return m_mg;}
 
@@ -428,15 +242,9 @@ private:
 
 // ********************************************************
 
-<<<<<<< HEAD
 /// \brief Base and exponent
 /// \tparam T base class or type
 /// \tparam E exponent class or type
-=======
-//! \brief Base and exponent
-//! \tparam T base class or type
-//! \tparam T exponent class or type
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T, class E = Integer>
 struct BaseAndExponent
 {
@@ -456,7 +264,6 @@ template <class Element, class Iterator>
 
 // ********************************************************
 
-<<<<<<< HEAD
 /// \brief Abstract Euclidean domain
 /// \tparam T element class or type
 /// \details <tt>const Element&</tt> returned by member functions are references
@@ -466,23 +273,11 @@ template <class Element, class Iterator>
 ///   <pre>    abcd = group.Add(group.Add(a,b), group.Add(c,d));</pre>
 ///   But this should be fine:
 ///   <pre>    abcd = group.Add(a, group.Add(b, group.Add(c,d));</pre>
-=======
-//! \brief Abstract Euclidean domain
-//! \tparam T element class or type
-//! \details <tt>const Element&</tt> returned by member functions are references
-//!   to internal data members. Since each object may have only
-//!   one such data member for holding results, the following code
-//!   will produce incorrect results:
-//!   <pre>    abcd = group.Add(group.Add(a,b), group.Add(c,d));</pre>
-//!   But this should be fine:
-//!   <pre>    abcd = group.Add(a, group.Add(b, group.Add(c,d));</pre>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T> class CRYPTOPP_NO_VTABLE AbstractEuclideanDomain : public AbstractRing<T>
 {
 public:
 	typedef T Element;
 
-<<<<<<< HEAD
 	/// \brief Performs the division algorithm on two elements in the ring
 	/// \param r the remainder
 	/// \param q the quotient
@@ -500,25 +295,6 @@ public:
 	/// \param a the first element
 	/// \param b the second element
 	/// \returns the the greatest common denominator of a and b.
-=======
-	//! \brief Performs the division algorithm on two elements in the ring
-	//! \param r the remainder
-	//! \param q the quotient
-	//! \param a the dividend
-	//! \param d the divisor
-	virtual void DivisionAlgorithm(Element &r, Element &q, const Element &a, const Element &d) const =0;
-
-	//! \brief Performs a modular reduction in the ring
-	//! \param a the element
-	//! \param b the modulus
-	//! \returns the result of <tt>a%b</tt>.
-	virtual const Element& Mod(const Element &a, const Element &b) const =0;
-
-	//! \brief Calculates the greatest common denominator in the ring
-	//! \param a the first element
-	//! \param b the second element
-	//! \returns the the greatest common denominator of a and b.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	virtual const Element& Gcd(const Element &a, const Element &b) const;
 
 protected:
@@ -527,7 +303,6 @@ protected:
 
 // ********************************************************
 
-<<<<<<< HEAD
 /// \brief Euclidean domain
 /// \tparam T element class or type
 /// \details <tt>const Element&</tt> returned by member functions are references
@@ -537,17 +312,6 @@ protected:
 ///   <pre>    abcd = group.Add(group.Add(a,b), group.Add(c,d));</pre>
 ///   But this should be fine:
 ///   <pre>    abcd = group.Add(a, group.Add(b, group.Add(c,d));</pre>
-=======
-//! \brief Euclidean domain
-//! \tparam T element class or type
-//! \details <tt>const Element&</tt> returned by member functions are references
-//!   to internal data members. Since each object may have only
-//!   one such data member for holding results, the following code
-//!   will produce incorrect results:
-//!   <pre>    abcd = group.Add(group.Add(a,b), group.Add(c,d));</pre>
-//!   But this should be fine:
-//!   <pre>    abcd = group.Add(a, group.Add(b, group.Add(c,d));</pre>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T> class EuclideanDomainOf : public AbstractEuclideanDomain<T>
 {
 public:
@@ -610,7 +374,6 @@ private:
 	mutable Element result;
 };
 
-<<<<<<< HEAD
 /// \brief Quotient ring
 /// \tparam T element class or type
 /// \details <tt>const Element&</tt> returned by member functions are references
@@ -620,17 +383,6 @@ private:
 ///   <pre>    abcd = group.Add(group.Add(a,b), group.Add(c,d));</pre>
 ///   But this should be fine:
 ///   <pre>    abcd = group.Add(a, group.Add(b, group.Add(c,d));</pre>
-=======
-//! \brief Quotient ring
-//! \tparam T element class or type
-//! \details <tt>const Element&</tt> returned by member functions are references
-//!   to internal data members. Since each object may have only
-//!   one such data member for holding results, the following code
-//!   will produce incorrect results:
-//!   <pre>    abcd = group.Add(group.Add(a,b), group.Add(c,d));</pre>
-//!   But this should be fine:
-//!   <pre>    abcd = group.Add(a, group.Add(b, group.Add(c,d));</pre>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T> class QuotientRing : public AbstractRing<typename T::Element>
 {
 public:

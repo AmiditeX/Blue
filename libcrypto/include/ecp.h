@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 // ecp.h - originally written and placed in the public domain by Wei Dai
 
 /// \file ecp.h
 /// \brief Classes for Elliptic Curves over prime fields
-=======
-// ecp.h - written and placed in the public domain by Wei Dai
-
-//! \file ecp.h
-//! \brief Classes for Elliptic Curves over prime fields
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_ECP_H
 #define CRYPTOPP_ECP_H
@@ -17,15 +10,11 @@
 #include "integer.h"
 #include "algebra.h"
 #include "modarith.h"
-<<<<<<< HEAD
 #include "ecpoint.h"
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #include "eprecomp.h"
 #include "smartptr.h"
 #include "pubkey.h"
 
-<<<<<<< HEAD
 #if CRYPTOPP_MSC_VERSION
 # pragma warning(push)
 # pragma warning(disable: 4231 4275)
@@ -35,41 +24,12 @@ NAMESPACE_BEGIN(CryptoPP)
 
 /// \brief Elliptic Curve over GF(p), where p is prime
 class CRYPTOPP_DLL ECP : public AbstractGroup<ECPPoint>, public EncodedPoint<ECPPoint>
-=======
-NAMESPACE_BEGIN(CryptoPP)
-
-//! Elliptical Curve Point
-struct CRYPTOPP_DLL ECPPoint
-{
-	ECPPoint() : identity(true) {}
-	ECPPoint(const Integer &x, const Integer &y)
-		: identity(false), x(x), y(y) {}
-
-	bool operator==(const ECPPoint &t) const
-		{return (identity && t.identity) || (!identity && !t.identity && x==t.x && y==t.y);}
-	bool operator< (const ECPPoint &t) const
-		{return identity ? !t.identity : (!t.identity && (x<t.x || (x==t.x && y<t.y)));}
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~ECPPoint() {}
-#endif
-
-	bool identity;
-	Integer x, y;
-};
-
-CRYPTOPP_DLL_TEMPLATE_CLASS AbstractGroup<ECPPoint>;
-
-//! Elliptic Curve over GF(p), where p is prime
-class CRYPTOPP_DLL ECP : public AbstractGroup<ECPPoint>
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 {
 public:
 	typedef ModularArithmetic Field;
 	typedef Integer FieldElement;
 	typedef ECPPoint Point;
 
-<<<<<<< HEAD
 	virtual ~ECP() {}
 
 	/// \brief Construct an ECP
@@ -95,17 +55,6 @@ public:
 
 	/// \brief Encode the fields fieldID and curve of the sequence ECParameters
 	/// \param bt BufferedTransformation derived object
-=======
-	ECP() {}
-	ECP(const ECP &ecp, bool convertToMontgomeryRepresentation = false);
-	ECP(const Integer &modulus, const FieldElement &a, const FieldElement &b)
-		: m_fieldPtr(new Field(modulus)), m_a(a.IsNegative() ? modulus+a : a), m_b(b) {}
-	// construct from BER encoded parameters
-	// this constructor will decode and extract the the fields fieldID and curve of the sequence ECParameters
-	ECP(BufferedTransformation &bt);
-
-	// encode the fields fieldID and curve of the sequence ECParameters
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	void DEREncode(BufferedTransformation &bt) const;
 
 	bool Equal(const Point &P, const Point &Q) const;
@@ -145,13 +94,6 @@ public:
 	bool operator==(const ECP &rhs) const
 		{return GetField() == rhs.GetField() && m_a == rhs.m_a && m_b == rhs.m_b;}
 
-<<<<<<< HEAD
-=======
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~ECP() {}
-#endif
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 private:
 	clonable_ptr<Field> m_fieldPtr;
 	FieldElement m_a, m_b;
@@ -161,7 +103,6 @@ private:
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_FixedBasePrecomputationImpl<ECP::Point>;
 CRYPTOPP_DLL_TEMPLATE_CLASS DL_GroupPrecomputation<ECP::Point>;
 
-<<<<<<< HEAD
 /// \brief Elliptic Curve precomputation
 /// \tparam EC elliptic curve field
 template <class EC> class EcPrecomputation;
@@ -170,21 +111,13 @@ template <class EC> class EcPrecomputation;
 /// \details Implementation of <tt>DL_GroupPrecomputation<ECP::Point></tt> with input and output
 ///   conversions for Montgomery modular multiplication.
 /// \sa DL_GroupPrecomputation, ModularArithmetic, MontgomeryRepresentation
-=======
-template <class T> class EcPrecomputation;
-
-//! ECP precomputation
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template<> class EcPrecomputation<ECP> : public DL_GroupPrecomputation<ECP::Point>
 {
 public:
 	typedef ECP EllipticCurve;
 
-<<<<<<< HEAD
 	virtual ~EcPrecomputation() {}
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	// DL_GroupPrecomputation
 	bool NeedConversions() const {return true;}
 	Element ConvertIn(const Element &P) const
@@ -195,44 +128,28 @@ public:
 	Element BERDecodeElement(BufferedTransformation &bt) const {return m_ec->BERDecodePoint(bt);}
 	void DEREncodeElement(BufferedTransformation &bt, const Element &v) const {m_ec->DEREncodePoint(bt, v, false);}
 
-<<<<<<< HEAD
 	/// \brief Set the elliptic curve
 	/// \param ec ECP derived class
 	/// \details SetCurve() is not inherited
-=======
-	// non-inherited
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	void SetCurve(const ECP &ec)
 	{
 		m_ec.reset(new ECP(ec, true));
 		m_ecOriginal = ec;
 	}
-<<<<<<< HEAD
 
 	/// \brief Get the elliptic curve
 	/// \returns ECP curve
 	/// \details GetCurve() is not inherited
 	const ECP & GetCurve() const {return *m_ecOriginal;}
 
-=======
-	const ECP & GetCurve() const {return *m_ecOriginal;}
-
-#ifndef CRYPTOPP_MAINTAIN_BACKWARDS_COMPATIBILITY_562
-	virtual ~EcPrecomputation() {}
-#endif
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 private:
 	value_ptr<ECP> m_ec, m_ecOriginal;
 };
 
 NAMESPACE_END
 
-<<<<<<< HEAD
 #if CRYPTOPP_MSC_VERSION
 # pragma warning(pop)
 #endif
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #endif

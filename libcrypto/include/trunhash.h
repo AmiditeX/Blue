@@ -18,11 +18,7 @@ public:
 		{CRYPTOPP_UNUSED(digest);CRYPTOPP_UNUSED(digestLength);return true;}
 };
 
-<<<<<<< HEAD
 /// construct new HashModule with smaller DigestSize() from existing one
-=======
-//! construct new HashModule with smaller DigestSize() from existing one
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class T>
 class TruncatedHashTemplate : public HashTransformation
 {

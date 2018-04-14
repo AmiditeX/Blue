@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 // wake.h - originally written and placed in the public domain by Wei Dai
 
 /// \file wake.h
 /// \brief Classes for WAKE stream cipher
-=======
-// wake.h - written and placed in the public domain by Wei Dai
-
-//! \file wake.h
-//! \brief Classes for WAKE stream cipher
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #ifndef CRYPTOPP_WAKE_H
 #define CRYPTOPP_WAKE_H
@@ -19,7 +12,6 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief WAKE stream cipher information
 /// \tparam B Endianness of the stream cipher
 /// \since Crypto++ 1.0
@@ -27,15 +19,6 @@ template <class B = BigEndian>
 struct WAKE_OFB_Info : public FixedKeyLength<32>
 {
 	CRYPTOPP_STATIC_CONSTEXPR const char* StaticAlgorithmName() {return B::ToEnum() == LITTLE_ENDIAN_ORDER ? "WAKE-OFB-LE" : "WAKE-OFB-BE";}
-=======
-//! \class WAKE_OFB_Info
-//! \brief WAKE stream cipher information
-//! \tparam B Endianess of the stream cipher
-template <class B = BigEndian>
-struct WAKE_OFB_Info : public FixedKeyLength<32>
-{
-	CRYPTOPP_CONSTEXPR static const char *StaticAlgorithmName() {return B::ToEnum() == LITTLE_ENDIAN_ORDER ? "WAKE-OFB-LE" : "WAKE-OFB-BE";}
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 };
 
 class CRYPTOPP_NO_VTABLE WAKE_Base
@@ -48,15 +31,9 @@ protected:
 	word32 r3, r4, r5, r6;
 };
 
-<<<<<<< HEAD
 /// \brief WAKE stream cipher operation
 /// \tparam B Endianness of the stream cipher
 /// \since Crypto++ 1.0
-=======
-//! \class WAKE_Policy
-//! \brief WAKE stream cipher operation
-//! \tparam B Endianess of the stream cipher
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class B = BigEndian>
 class CRYPTOPP_NO_VTABLE WAKE_Policy : public AdditiveCipherConcretePolicy<word32, 1, 64>, protected WAKE_Base
 {
@@ -67,15 +44,9 @@ protected:
 	bool CipherIsRandomAccess() const {return false;}
 };
 
-<<<<<<< HEAD
 /// \brief WAKE stream cipher
 /// \tparam B Endianness of the stream cipher
 /// \since Crypto++ 1.0
-=======
-//! \class WAKE_OFB
-//! \brief WAKE stream cipher
-//! \tparam B Endianess of the stream cipher
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 template <class B = BigEndian>
 struct WAKE_OFB : public WAKE_OFB_Info<B>, public SymmetricCipherDocumentation
 {

@@ -8,11 +8,7 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \since Crypto++ 1.0
-=======
-//! _
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class LowFirstBitReader
 {
 public:
@@ -33,12 +29,8 @@ private:
 
 struct CodeLessThan;
 
-<<<<<<< HEAD
 /// \brief Huffman Decoder
 /// \since Crypto++ 1.0
-=======
-//! Huffman Decoder
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class HuffmanDecoder
 {
 public:
@@ -92,13 +84,8 @@ private:
 	mutable std::vector<LookupEntry, AllocatorWithCleanup<LookupEntry> > m_cache;
 };
 
-<<<<<<< HEAD
 /// \brief DEFLATE decompressor (RFC 1951)
 /// \since Crypto++ 1.0
-=======
-//! DEFLATE (RFC 1951) decompressor
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class Inflator : public AutoSignaling<Filter>
 {
 public:
@@ -108,7 +95,6 @@ public:
 		Err(ErrorType e, const std::string &s)
 			: Exception(e, s) {}
 	};
-<<<<<<< HEAD
 	/// \brief Exception thrown when a truncated stream is encountered
 	class UnexpectedEndErr : public Err {public: UnexpectedEndErr() : Err(INVALID_DATA_FORMAT, "Inflator: unexpected end of compressed block") {}};
 	/// \brief Exception thrown when a bad block is encountered
@@ -121,16 +107,6 @@ public:
 	/// \param repeat decompress multiple compressed streams in series
 	/// \param autoSignalPropagation 0 to turn off MessageEnd signal
 	Inflator(BufferedTransformation *attachment = NULLPTR, bool repeat = false, int autoSignalPropagation = -1);
-=======
-	class UnexpectedEndErr : public Err {public: UnexpectedEndErr() : Err(INVALID_DATA_FORMAT, "Inflator: unexpected end of compressed block") {}};
-	class BadBlockErr : public Err {public: BadBlockErr() : Err(INVALID_DATA_FORMAT, "Inflator: error in compressed block") {}};
-
-	//! \brief RFC 1951 Decompressor
-	//! \param attachment the filter's attached transformation
-	//! \param repeat decompress multiple compressed streams in series
-	//! \param autoSignalPropagation 0 to turn off MessageEnd signal
-	Inflator(BufferedTransformation *attachment = NULL, bool repeat = false, int autoSignalPropagation = -1);
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 	void IsolatedInitialize(const NameValuePairs &parameters);
 	size_t Put2(const byte *inString, size_t length, int messageEnd, bool blocking);
@@ -157,19 +133,11 @@ private:
 	void OutputString(const byte *string, size_t length);
 	void OutputPast(unsigned int length, unsigned int distance);
 
-<<<<<<< HEAD
 	void CreateFixedDistanceDecoder();
 	void CreateFixedLiteralDecoder();
 
 	const HuffmanDecoder& GetLiteralDecoder();
 	const HuffmanDecoder& GetDistanceDecoder();
-=======
-	static const HuffmanDecoder *FixedLiteralDecoder();
-	static const HuffmanDecoder *FixedDistanceDecoder();
-
-	const HuffmanDecoder& GetLiteralDecoder() const;
-	const HuffmanDecoder& GetDistanceDecoder() const;
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 	enum State {PRE_STREAM, WAIT_HEADER, DECODING_BODY, POST_STREAM, AFTER_END};
 	State m_state;
@@ -180,10 +148,7 @@ private:
 	NextDecode m_nextDecode;
 	unsigned int m_literal, m_distance;	// for LENGTH_BITS or DISTANCE_BITS
 	HuffmanDecoder m_dynamicLiteralDecoder, m_dynamicDistanceDecoder;
-<<<<<<< HEAD
 	member_ptr<HuffmanDecoder> m_fixedLiteralDecoder, m_fixedDistanceDecoder;
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	LowFirstBitReader m_reader;
 	SecByteBlock m_window;
 	size_t m_current, m_lastFlush;

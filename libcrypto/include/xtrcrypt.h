@@ -1,15 +1,9 @@
 #ifndef CRYPTOPP_XTRCRYPT_H
 #define CRYPTOPP_XTRCRYPT_H
 
-<<<<<<< HEAD
 /// \file
 /// \brief XTR public key system
 /// \sa  "The XTR public key system" by Arjen K. Lenstra and Eric R. Verheul
-=======
-/** \file
-	"The XTR public key system" by Arjen K. Lenstra and Eric R. Verheul
-*/
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 
 #include "cryptlib.h"
 #include "xtr.h"
@@ -17,12 +11,7 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief XTR-DH with key validation
-=======
-//! XTR-DH with key validation
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class XTR_DH : public SimpleKeyAgreementDomain, public CryptoParameters
 {
 	typedef XTR_DH ThisClass;

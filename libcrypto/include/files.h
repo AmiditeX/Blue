@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 // files.h - originally written and placed in the public domain by Wei Dai
 
 /// \file files.h
 /// \brief Classes providing file-based library services
 /// \since Crypto++ 1.0
 
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 #ifndef CRYPTOPP_FILES_H
 #define CRYPTOPP_FILES_H
 
@@ -20,25 +17,17 @@
 
 NAMESPACE_BEGIN(CryptoPP)
 
-<<<<<<< HEAD
 /// \brief Implementation of Store interface
 /// \details file-based implementation of Store interface
 class CRYPTOPP_DLL FileStore : public Store, private FilterPutSpaceHelper, public NotCopyable
 {
 public:
 	/// \brief Exception thrown when file-based error is encountered
-=======
-//! file-based implementation of Store interface
-class CRYPTOPP_DLL FileStore : public Store, private FilterPutSpaceHelper, public NotCopyable
-{
-public:
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	class Err : public Exception
 	{
 	public:
 		Err(const std::string &s) : Exception(IO_ERROR, s) {}
 	};
-<<<<<<< HEAD
 	/// \brief Exception thrown when file-based open error is encountered
 	class OpenErr : public Err {public: OpenErr(const std::string &filename) : Err("FileStore: error opening file for reading: " + filename) {}};
 	/// \brief Exception thrown when file-based read error is encountered
@@ -61,23 +50,10 @@ public:
 	/// \brief Construct a FileStore
 	/// \param filename the Unicode name of the file to open
 	/// \details On non-Windows OS, this function assumes that setlocale() has been called.
-=======
-	class OpenErr : public Err {public: OpenErr(const std::string &filename) : Err("FileStore: error opening file for reading: " + filename) {}};
-	class ReadErr : public Err {public: ReadErr() : Err("FileStore: error reading file") {}};
-
-	FileStore() : m_stream(NULL), m_space(NULL), m_len(0), m_waiting(0) {}
-	FileStore(std::istream &in) : m_stream(NULL), m_space(NULL), m_len(0), m_waiting(0)
-		{StoreInitialize(MakeParameters(Name::InputStreamPointer(), &in));}
-	FileStore(const char *filename) : m_stream(NULL), m_space(NULL), m_len(0), m_waiting(0)
-		{StoreInitialize(MakeParameters(Name::InputFileName(), filename ? filename : ""));}
-#if defined(CRYPTOPP_UNIX_AVAILABLE) || _MSC_VER >= 1400
-	//! specify file with Unicode name. On non-Windows OS, this function assumes that setlocale() has been called.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	FileStore(const wchar_t *filename)
 		{StoreInitialize(MakeParameters(Name::InputFileNameWide(), filename));}
 #endif
 
-<<<<<<< HEAD
 	/// \brief Retrieves the internal stream
 	/// \returns the internal stream pointer
 	std::istream* GetStream() {return m_stream;}
@@ -86,10 +62,6 @@ public:
 	/// \returns the internal stream pointer
 	const std::istream* GetStream() const {return m_stream;}
 
-=======
-	std::istream* GetStream() {return m_stream;}
-
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	lword MaxRetrievable() const;
 	size_t TransferTo2(BufferedTransformation &target, lword &transferBytes, const std::string &channel=DEFAULT_CHANNEL, bool blocking=true);
 	size_t CopyRangeTo2(BufferedTransformation &target, lword &begin, lword end=LWORD_MAX, const std::string &channel=DEFAULT_CHANNEL, bool blocking=true) const;
@@ -105,12 +77,8 @@ private:
 	bool m_waiting;
 };
 
-<<<<<<< HEAD
 /// \brief Implementation of Store interface
 /// \details file-based implementation of Store interface
-=======
-//! file-based implementation of Source interface
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 class CRYPTOPP_DLL FileSource : public SourceTemplate<FileStore>
 {
 public:
@@ -118,7 +86,6 @@ public:
 	typedef FileStore::OpenErr OpenErr;
 	typedef FileStore::ReadErr ReadErr;
 
-<<<<<<< HEAD
 	/// \brief Construct a FileSource
 	FileSource(BufferedTransformation *attachment = NULLPTR)
 		: SourceTemplate<FileStore>(attachment) {}
@@ -160,33 +127,11 @@ class CRYPTOPP_DLL FileSink : public Sink, public NotCopyable
 {
 public:
 	/// \brief Exception thrown when file-based error is encountered
-=======
-	FileSource(BufferedTransformation *attachment = NULL)
-		: SourceTemplate<FileStore>(attachment) {}
-	FileSource(std::istream &in, bool pumpAll, BufferedTransformation *attachment = NULL)
-		: SourceTemplate<FileStore>(attachment) {SourceInitialize(pumpAll, MakeParameters(Name::InputStreamPointer(), &in));}
-	FileSource(const char *filename, bool pumpAll, BufferedTransformation *attachment = NULL, bool binary=true)
-		: SourceTemplate<FileStore>(attachment) {SourceInitialize(pumpAll, MakeParameters(Name::InputFileName(), filename)(Name::InputBinaryMode(), binary));}
-#if defined(CRYPTOPP_UNIX_AVAILABLE) || _MSC_VER >= 1400
-	//! specify file with Unicode name. On non-Windows OS, this function assumes that setlocale() has been called.
-	FileSource(const wchar_t *filename, bool pumpAll, BufferedTransformation *attachment = NULL, bool binary=true)
-		: SourceTemplate<FileStore>(attachment) {SourceInitialize(pumpAll, MakeParameters(Name::InputFileNameWide(), filename)(Name::InputBinaryMode(), binary));}
-#endif
-
-	std::istream* GetStream() {return m_store.GetStream();}
-};
-
-//! file-based implementation of Sink interface
-class CRYPTOPP_DLL FileSink : public Sink, public NotCopyable
-{
-public:
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	class Err : public Exception
 	{
 	public:
 		Err(const std::string &s) : Exception(IO_ERROR, s) {}
 	};
-<<<<<<< HEAD
 	/// \brief Exception thrown when file-based open error is encountered
 	class OpenErr : public Err {public: OpenErr(const std::string &filename) : Err("FileSink: error opening file for writing: " + filename) {}};
 	/// \brief Exception thrown when file-based write error is encountered
@@ -210,27 +155,12 @@ public:
 	/// \brief Construct a FileSink
 	/// \param filename the Unicode name of the file to open
 	/// \details On non-Windows OS, this function assumes that setlocale() has been called.
-=======
-	class OpenErr : public Err {public: OpenErr(const std::string &filename) : Err("FileSink: error opening file for writing: " + filename) {}};
-	class WriteErr : public Err {public: WriteErr() : Err("FileSink: error writing file") {}};
-
-	FileSink() : m_stream(NULL) {}
-	FileSink(std::ostream &out)
-		{IsolatedInitialize(MakeParameters(Name::OutputStreamPointer(), &out));}
-	FileSink(const char *filename, bool binary=true)
-		{IsolatedInitialize(MakeParameters(Name::OutputFileName(), filename)(Name::OutputBinaryMode(), binary));}
-#if defined(CRYPTOPP_UNIX_AVAILABLE) || _MSC_VER >= 1400
-	//! specify file with Unicode name. On non-Windows OS, this function assumes that setlocale() has been called.
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	FileSink(const wchar_t *filename, bool binary=true)
 		{IsolatedInitialize(MakeParameters(Name::OutputFileNameWide(), filename)(Name::OutputBinaryMode(), binary));}
 #endif
 
-<<<<<<< HEAD
 	/// \brief Retrieves the internal stream
 	/// \returns the internal stream pointer
-=======
->>>>>>> ed2c7340b8810ff6b77e11e1c946a083c3bfae56
 	std::ostream* GetStream() {return m_stream;}
 
 	void IsolatedInitialize(const NameValuePairs &parameters);
