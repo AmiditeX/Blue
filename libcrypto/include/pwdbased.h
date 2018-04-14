@@ -13,6 +13,7 @@
 #include "integer.h"
 #include "argnames.h"
 #include "hmac.h"
+#include "algparam.h"
 
 NAMESPACE_BEGIN(CryptoPP)
 

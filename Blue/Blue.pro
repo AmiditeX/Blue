@@ -8,6 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+CONFIG += c++14
 TARGET = Blue
 TEMPLATE = app
 
@@ -66,22 +67,14 @@ FORMS    += mainwindow.ui \
 #SPDLOG LINKAGE
 INCLUDEPATH += $$PWD/../spdlog-master/include
 
-#LINUX CRYPTOPP LINKAGE
-unix:!macx: LIBS += -L$$PWD/../libcrypto/lib/ -lcryptopplnx
-
+#CRYPTOPP INCLUDE
 INCLUDEPATH += $$PWD/../libcrypto/include
 DEPENDPATH += $$PWD/../libcrypto/include
 
-unix:!macx: PRE_TARGETDEPS += $$PWD/../libcrypto/lib/libcryptopplnx.a
+#LINUX CRYPTOPP LINKAGE
+unix:!macx: LIBS += -L$$PWD/../libcrypto/lib/lnx/ -lcryptopplnx
+unix:!macx: PRE_TARGETDEPS += $$PWD/../libcrypto/lib/lnx/libcryptopplnx.a
 
 #WINDOWS CRYPTOPP LINKAGE
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../libcrypto/lib/release/ -lcryptopp
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../libcrypto/lib/debug/ -lcryptopp
-
-INCLUDEPATH += $$PWD/../libcrypto/include
-DEPENDPATH += $$PWD/../libcrypto/include
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../libcrypto/lib/release/libcryptopp.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../libcrypto/lib/debug/libcryptopp.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../libcrypto/lib/release/cryptopp.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../libcrypto/lib/debug/cryptopp.lib
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../libcrypto/lib/w32/ -lcryptopp
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../libcrypto/lib/w32/ -lcryptopp
