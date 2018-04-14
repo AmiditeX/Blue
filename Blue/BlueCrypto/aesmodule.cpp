@@ -12,6 +12,8 @@
 #include "BlueCrypto/qiodevicesink.h"
 #include "BlueCrypto/qiodevicesource.h"
 
+#include <QDebug>
+
 using namespace CryptoPP;
 
 AESModule::AESModule()
@@ -71,6 +73,7 @@ QByteArray AESModule::decryptBinary(const QByteArray &binaryToDecrypt, const QBy
     QByteArraySource(binaryToDecrypt, true, new StringSink(encryptedData));
     std::string data = encryptedData.substr(0, encryptedData.length() - TAG_SIZE);
     std::string tag = encryptedData.substr(encryptedData.length() - TAG_SIZE);
+    qWarning() << QByteArray(data.data()).toHex() << " " << QByteArray(tag.data()).toHex();
 
     //Create the decryption object and set parameters
     EAX<AES>::Decryption decryptionObject;
