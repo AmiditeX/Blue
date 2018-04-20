@@ -18,12 +18,15 @@ BlueDatabase::BlueDatabase(const DBParameters &param)
 
     _dbData.DBDecrypted = QJsonDocument(); //Remove useless data to spare memory
 
+
+    ///DEBUG
     addContainer();
     addContainer();
     addContainer();
 
     _containerList[0]->addItem("DBNameField");
     _containerList[0]->addItem("DBOtpItem");
+    ///DEBUG
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,6 +65,11 @@ std::shared_ptr<DBContainers> BlueDatabase::addContainer()
 void BlueDatabase::removeContainer(std::shared_ptr<DBContainers> ptr)
 {
     _containerList.erase(std::remove(_containerList.begin(), _containerList.end(), ptr));
+}
+
+std::vector<std::shared_ptr<DBContainers>> BlueDatabase::returnContainerList()
+{
+    return _containerList;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

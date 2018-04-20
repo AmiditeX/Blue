@@ -26,6 +26,9 @@ public:
     std::shared_ptr<AbstractDataBaseItem> addItem(const QString &ID);
     void removeItem(std::shared_ptr<AbstractDataBaseItem> ptr);
 
+    //Return
+    std::vector<std::shared_ptr<AbstractDataBaseItem>> returnItemList();
+
 protected:
     std::shared_ptr<AbstractDataBaseItem> createItem(const QString &ID);
     std::shared_ptr<AbstractDataBaseItem> createItem(const QString &ID, const QJsonObject &doc);

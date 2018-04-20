@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "abstractdbwidget.h"
+#include "DBElements/abstractdatabaseitem.h"
 
 namespace Ui {
 class DBWEmailField;
@@ -13,12 +14,12 @@ class DBWEmailField : public QWidget, public AbstractDBWidget
     Q_OBJECT
 
 public:
-    explicit DBWEmailField(QWidget *parent = 0);
+    explicit DBWEmailField(std::shared_ptr<AbstractDataBaseItem> item);
     ~DBWEmailField();
 
 private:
     Ui::DBWEmailField *ui;
-
+    std::shared_ptr<AbstractDataBaseItem> _item;
 };
 
 #endif // DBWEMAILFIELD_H

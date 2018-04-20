@@ -24,7 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
         qWarning() << AESModule::integrityCheck();
 
         BlueDBManager *manager = new BlueDBManager();
-        manager->createNewDatabase("Testdb.txt", "password", 0, 10);
+        manager->createNewDatabase("Testdb.txt", "password", 0, 1);
+        connect(manager, SIGNAL(createSignal(std::shared_ptr<BlueWidget>)), this, SLOT(displayWidget(std::shared_ptr<BlueWidget>)));
         manager->writeDatabaseObject();
         qWarning() << "Milli " << timer.elapsed();
     }
@@ -58,6 +59,12 @@ void MainWindow::read(DBParameters param)
     qWarning() << param.DBDecrypted;
     qWarning() << param.DBKeySalt;
     qWarning() << param.DBIterations;
+}
+
+void MainWindow::displayWidget(std::shared_ptr<BlueWidget>)
+{
+
+
 }
 
 MainWindow::~MainWindow()

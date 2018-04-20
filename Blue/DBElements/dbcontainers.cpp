@@ -59,6 +59,11 @@ void DBContainers::removeItem(std::shared_ptr<AbstractDataBaseItem> ptr)
     _itemList.erase(std::remove(_itemList.begin(), _itemList.end(), ptr));
 }
 
+std::vector<std::shared_ptr<AbstractDataBaseItem>> DBContainers::returnItemList()
+{
+    return _itemList;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                           PUBLIC                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

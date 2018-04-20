@@ -18,6 +18,8 @@ public:
 
     std::shared_ptr<DBContainers> addContainer();
     void removeContainer(std::shared_ptr<DBContainers> ptr);
+    std::vector<std::shared_ptr<DBContainers>> returnContainerList();
+
 
 private:
     DBParameters _dbData;

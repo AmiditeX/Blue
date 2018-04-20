@@ -1,9 +1,7 @@
 #include "dbwotpitem.h"
 #include "ui_dbwotpitem.h"
 
-DBWOtpItem::DBWOtpItem(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::DBWOtpItem)
+DBWOtpItem::DBWOtpItem(std::shared_ptr<AbstractDataBaseItem> item) : ui(new Ui::DBWOtpItem),_item(item)
 {
     ui->setupUi(this);
 }

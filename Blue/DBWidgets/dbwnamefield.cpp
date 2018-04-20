@@ -1,9 +1,7 @@
 #include "dbwnamefield.h"
 #include "ui_dbwnamefield.h"
 
-DBWNameField::DBWNameField(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::DBWNameField)
+DBWNameField::DBWNameField(std::shared_ptr<AbstractDataBaseItem> item) : ui(new Ui::DBWNameField), _item(item)
 {
     ui->setupUi(this);
 }

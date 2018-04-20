@@ -30,7 +30,7 @@ void BlueDBManager::createDatabaseObject(const QString &path, const QString &com
     readDatabase(path, compositeKey);
 }
 
-//Save the current database managed by the Manager to a file
+//Save the current database managed by the manager to a file
 void BlueDBManager::writeDatabaseObject()
 {
     writeDatabase(*_database);
@@ -61,11 +61,16 @@ void BlueDBManager::createNewDatabase(const QString &path, const QString &compos
 void BlueDBManager::databaseRead(DBParameters dbParam)
 {
     //Create a new database
-    std::shared_ptr<BlueDatabase> dbPointer = std::make_shared<BlueDatabase>(dbParam);
+    _database = std::make_shared<BlueDatabase>(dbParam);
 
-    //Store the database in a list containing all the currently opened DB
-    _database = dbPointer;
+    //Create a new widget and emit finish signal
+    _widget = std::make_shared<BlueWidget>(_database);
+    emit createSignal(_widget);
+
+    //Return IO to normal state
     _canIoOperate = true;
+
+    //Debug TODO REMOVE
     qWarning() << "READ";
 }
 

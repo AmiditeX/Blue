@@ -6,6 +6,7 @@
 #include <vector>
 #include "BlueCrypto/blueiointerface.h"
 #include "bluedatabase.h"
+#include "bluewidget.h"
 
 class BlueDBManager : public QObject
 {
@@ -36,8 +37,14 @@ signals:
     void startWriting(const QString &filePath, const QJsonDocument jsonDoc, const QString &compositeKey,
                       int iterations, int stretchTime);
 
+    void createSignal(std::shared_ptr<BlueWidget> newDatabase);
+    void writtenSignal();
+    void errorSignal(QString errorString);
+    void decryptionErrSignal(QString errorString);
+
 private:
     std::shared_ptr<BlueDatabase> _database;
+    std::shared_ptr<BlueWidget> _widget;
     QMutex _fileMutex;
     bool _canIoOperate = true;
 

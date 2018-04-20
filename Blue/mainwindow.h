@@ -19,6 +19,7 @@ public:
     ~MainWindow();
 
 public slots:
+    void displayWidget(std::shared_ptr<BlueWidget>);
 
     void error(QString err);
     void write();
