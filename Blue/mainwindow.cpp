@@ -7,7 +7,7 @@
 #include "BlueCrypto/blueiointerface.h"
 #include "DBMainComponents/bluedbmanager.h"
 #include <iostream>
-
+#include <QPushButton>
 
 #include <QElapsedTimer> //to remove
 
@@ -17,28 +17,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //Set UI up
+    ui->buttonColor_1->setVisible(false);
+    ui->buttonColor_2->setVisible(false);
+    ui->buttonColor_3->setVisible(false);
+    ui->databaseTab->tabBar()->hide();
+
+    //UI connects
+    QObject::connect(ui->buttonOpen, SIGNAL(clicked(bool)), this, SLOT(switchButtonStatus()));
+    QObject::connect(ui->buttonCreate, SIGNAL(clicked(bool)), this, SLOT(switchButtonStatus()));
+    QObject::connect(ui->buttonSettings, SIGNAL(clicked(bool)), this, SLOT(switchButtonStatus()));
+
     for(int i = 0; i < 1; i++)
     {
         QElapsedTimer timer;
-              timer.start();
+        timer.start();
         qWarning() << AESModule::integrityCheck();
 
-        BlueDBManager *manager = new BlueDBManager();
+        manager = new BlueDBManager();
+        connect(manager, SIGNAL(createSignal(BlueWidget*)), this, SLOT(displayWidget(BlueWidget*)));
         manager->createNewDatabase("Testdb.txt", "password", 0, 1);
-        connect(manager, SIGNAL(createSignal(std::shared_ptr<BlueWidget>)), this, SLOT(displayWidget(std::shared_ptr<BlueWidget>)));
-        manager->writeDatabaseObject();
+        //manager->writeDatabaseObject();
         qWarning() << "Milli " << timer.elapsed();
     }
-
-    /*QJsonObject finalObject; //Prepare the file with the database and its metadata
-    finalObject.insert("DBField", "HELLO"); //Add the encrypted database
-    QJsonDocument finalDoc(finalObject);
-
-    connect(&i, SIGNAL(readCompleted(DBParameters)), this, SLOT(read(DBParameters)));
-    connect(&i, SIGNAL(writeCompleted()), this, SLOT(write()));
-    connect(&i, SIGNAL(errorSignal(QString)), this, SLOT(error(QString)));
-    i.writeFile("encryptedmessage.txt", finalDoc, "Password", 1500, 0);*/
-
 }
 
 void MainWindow::error(QString err)
@@ -61,10 +63,39 @@ void MainWindow::read(DBParameters param)
     qWarning() << param.DBIterations;
 }
 
-void MainWindow::displayWidget(std::shared_ptr<BlueWidget>)
+void MainWindow::displayWidget(BlueWidget *w)
 {
+    qWarning() << "Displaying w";
 
+    manager->writeDatabaseObject();
+    ui->databaseTab->addTab(w, "BAR");
+}
 
+//Beautifulness UI related SLOTS
+
+//Uncheck mainbuttons when one of them is checked
+void MainWindow::switchButtonStatus()
+{
+    QPushButton *sender = qobject_cast<QPushButton*>(QObject::sender()); //Retrieve SIGNAL sender
+
+    if(ui->buttonOpen == sender)
+    {
+        //buttonOpen checked, uncheck all others
+        ui->buttonCreate->setChecked(false);
+        ui->buttonSettings->setChecked(false);
+    }
+    else if(ui->buttonCreate == sender)
+    {
+        //buttonCreate checked, uncheck all others
+        ui->buttonOpen->setChecked(false);
+        ui->buttonSettings->setChecked(false);
+    }
+    else if(ui->buttonSettings == sender)
+    {
+        //buttonSettings checked, uncheck all others
+        ui->buttonOpen->setChecked(false);
+        ui->buttonCreate->setChecked(false);
+    }
 }
 
 MainWindow::~MainWindow()

@@ -14,7 +14,7 @@ class DBWNameField : public QWidget, public AbstractDBWidget
     Q_OBJECT
 
 public:
-    explicit DBWNameField(std::shared_ptr<AbstractDataBaseItem> item);
+    explicit DBWNameField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item);
     ~DBWNameField();
 
 private:

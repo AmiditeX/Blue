@@ -1,7 +1,10 @@
 #include "dbwcontainers.h"
 #include "ui_dbwcontainers.h"
 
-DBWContainers::DBWContainers(std::shared_ptr<DBContainers> containerPointer) : ui(new Ui::DBWContainers), _dbContainer(containerPointer)
+#include <QDebug>
+
+DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> containerPointer) : QWidget(parent),
+    ui(new Ui::DBWContainers), _dbContainer(containerPointer)
 {
     ui->setupUi(this);
 
@@ -14,23 +17,27 @@ DBWContainers::DBWContainers(std::shared_ptr<DBContainers> containerPointer) : u
     }
 }
 
-std::shared_ptr<AbstractDBWidget> DBWContainers::createItem(const QString &ID, std::shared_ptr<AbstractDataBaseItem> item)
+AbstractDBWidget* DBWContainers::createItem(const QString &ID, std::shared_ptr<AbstractDataBaseItem> item)
 {
     if(ID == "DBEmailField")
     {
-        return std::make_shared<DBWEmailField>(item);
+        qWarning() << "1";
+        return new DBWEmailField(this, item);
     }
     else if(ID == "DBNameField")
     {
-        return std::make_shared<DBWNameField>(item);
+        qWarning() << "2";
+        return new DBWNameField(this, item);
     }
     else if(ID == "DBOtpItem")
     {
-        return std::make_shared<DBWOtpItem>(item);
+        qWarning() << "3";
+        return new DBWOtpItem(this, item);
     }
     else if(ID == "DBPasswordField")
     {
-        return std::make_shared<DBWPasswordField>(item);
+        qWarning() << "4";
+        return new DBWPasswordField(this, item);
     }
     else
     {
@@ -41,4 +48,5 @@ std::shared_ptr<AbstractDBWidget> DBWContainers::createItem(const QString &ID, s
 DBWContainers::~DBWContainers()
 {
     delete ui;
+    qWarning() << "DBWContainers destructor called";
 }

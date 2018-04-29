@@ -14,7 +14,7 @@ class DBWPasswordField : public QWidget, public AbstractDBWidget
     Q_OBJECT
 
 public:
-    explicit DBWPasswordField(std::shared_ptr<AbstractDataBaseItem> item);
+    explicit DBWPasswordField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item);
     ~DBWPasswordField();
 
 private:

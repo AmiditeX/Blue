@@ -19,17 +19,17 @@ class DBWContainers : public QWidget, public AbstractDBWidget
     Q_OBJECT
 
 public:
-    explicit DBWContainers(std::shared_ptr<DBContainers> containerPointer);
+    explicit DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> containerPointer);
     ~DBWContainers();
 
 protected:
-    std::shared_ptr<AbstractDBWidget> createItem(const QString &ID, std::shared_ptr<AbstractDataBaseItem> item);
+   AbstractDBWidget* createItem(const QString &ID, std::shared_ptr<AbstractDataBaseItem> item);
 
 private:
     Ui::DBWContainers *ui;
 
     std::shared_ptr<DBContainers> _dbContainer;
-    std::vector<std::shared_ptr<AbstractDBWidget>> _widgetList;
+    std::vector<AbstractDBWidget*> _widgetList;
 
 };
 

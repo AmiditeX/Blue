@@ -24,7 +24,7 @@ private:
     Ui::BlueWidget *ui;
 
     std::shared_ptr<BlueDatabase> _dataBase;
-    std::vector<std::shared_ptr<DBWContainers>> _containers;
+    std::vector<DBWContainers*> _containers;
 
 };
 

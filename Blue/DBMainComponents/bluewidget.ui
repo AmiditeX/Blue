@@ -6,19 +6,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1180</width>
+    <width>1080</width>
     <height>750</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(34, 35, 40);</string>
+  </property>
   <widget class="QListWidget" name="containerList">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>970</width>
+     <width>830</width>
      <height>750</height>
     </rect>
    </property>
@@ -32,10 +35,127 @@
   <widget class="QListView" name="propertyList">
    <property name="geometry">
     <rect>
+     <x>840</x>
+     <y>34</y>
+     <width>241</width>
+     <height>317</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>840</x>
+     <y>0</y>
+     <width>131</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(68, 158, 241);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(93, 127, 247);
+}</string>
+   </property>
+   <property name="text">
+    <string>Add container</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>840</x>
+     <y>360</y>
+     <width>131</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(68, 158, 241);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(93, 127, 247);
+}</string>
+   </property>
+   <property name="text">
+    <string>Add Item</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>980</x>
+     <y>360</y>
+     <width>101</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(239, 41, 41);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(164, 0, 0);
+}</string>
+   </property>
+   <property name="text">
+    <string>Remove</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_4">
+   <property name="geometry">
+    <rect>
      <x>980</x>
      <y>0</y>
-     <width>200</width>
-     <height>750</height>
+     <width>101</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(239, 41, 41);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(164, 0, 0);
+}</string>
+   </property>
+   <property name="text">
+    <string>Remove</string>
+   </property>
+  </widget>
+  <widget class="QListView" name="propertyList_2">
+   <property name="geometry">
+    <rect>
+     <x>840</x>
+     <y>394</y>
+     <width>241</width>
+     <height>361</height>
     </rect>
    </property>
    <property name="frameShape">

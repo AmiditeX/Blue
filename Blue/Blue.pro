@@ -64,6 +64,8 @@ FORMS    += mainwindow.ui \
     DBWidgets/dbwpasswordfield.ui \
     DBMainComponents/bluewidget.ui
 
+TRANSLATIONS += blue_fr.ts
+
 #SPDLOG LINKAGE
 INCLUDEPATH += $$PWD/../spdlog-master/include
 

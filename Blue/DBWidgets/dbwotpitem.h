@@ -14,7 +14,7 @@ class DBWOtpItem : public QWidget, public AbstractDBWidget
     Q_OBJECT
 
 public:
-    explicit DBWOtpItem(std::shared_ptr<AbstractDataBaseItem> item);
+    explicit DBWOtpItem(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item);
     ~DBWOtpItem();
 
 private:

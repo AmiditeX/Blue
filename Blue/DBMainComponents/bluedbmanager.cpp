@@ -17,7 +17,8 @@ BlueDBManager::BlueDBManager()
 
 BlueDBManager::~BlueDBManager()
 {
-
+    qWarning() << "BlueDBManager destructor called";
+    _widget->deleteLater();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +65,7 @@ void BlueDBManager::databaseRead(DBParameters dbParam)
     _database = std::make_shared<BlueDatabase>(dbParam);
 
     //Create a new widget and emit finish signal
-    _widget = std::make_shared<BlueWidget>(_database);
+    _widget = new BlueWidget(_database);
     emit createSignal(_widget);
 
     //Return IO to normal state
@@ -78,7 +79,6 @@ void BlueDBManager::databaseWritten()
 {
     _canIoOperate = true;
     qWarning() << "database has been written";
-    readDatabase("Testdb.txt", "password");
 }
 
 void BlueDBManager::failedDecryption(QString errorString)

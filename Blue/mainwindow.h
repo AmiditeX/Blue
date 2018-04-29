@@ -19,14 +19,19 @@ public:
     ~MainWindow();
 
 public slots:
-    void displayWidget(std::shared_ptr<BlueWidget>);
+    void displayWidget(BlueWidget *w);
 
     void error(QString err);
     void write();
     void read(DBParameters param);
 
+private slots:
+    //Beautifulness UI related SLOTS
+    void switchButtonStatus();
+
 private:
     Ui::MainWindow *ui;
+    BlueDBManager *manager;
 };
 
 #endif // MAINWINDOW_H

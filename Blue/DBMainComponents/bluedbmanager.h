@@ -16,7 +16,7 @@ public:
     BlueDBManager();
     ~BlueDBManager();
 
-    //Creating and deletin databases
+    //Creating and deleting databases
     void createDatabaseObject(const QString &path, const QString &compositeKey);
     void writeDatabaseObject();
     void createNewDatabase(const QString &path, const QString &compositeKey, const int iterations, const int stretchtime);
@@ -37,14 +37,14 @@ signals:
     void startWriting(const QString &filePath, const QJsonDocument jsonDoc, const QString &compositeKey,
                       int iterations, int stretchTime);
 
-    void createSignal(std::shared_ptr<BlueWidget> newDatabase);
+    void createSignal(BlueWidget *newDatabase);
     void writtenSignal();
     void errorSignal(QString errorString);
     void decryptionErrSignal(QString errorString);
 
 private:
     std::shared_ptr<BlueDatabase> _database;
-    std::shared_ptr<BlueWidget> _widget;
+    BlueWidget *_widget = nullptr;
     QMutex _fileMutex;
     bool _canIoOperate = true;
 

@@ -14,7 +14,7 @@ class DBWEmailField : public QWidget, public AbstractDBWidget
     Q_OBJECT
 
 public:
-    explicit DBWEmailField(std::shared_ptr<AbstractDataBaseItem> item);
+    explicit DBWEmailField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item);
     ~DBWEmailField();
 
 private:
