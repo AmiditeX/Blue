@@ -33,7 +33,11 @@ SOURCES += main.cpp\
     DBWidgets/dbwnamefield.cpp \
     DBWidgets/dbwotpitem.cpp \
     DBWidgets/dbwpasswordfield.cpp \
-    DBMainComponents/bluewidget.cpp
+    DBMainComponents/bluewidget.cpp \
+    MainwindowWidgets/databasebutton.cpp \
+    bluemanager.cpp \
+    MainwindowWidgets/bluedialog.cpp \
+    MainwindowWidgets/databaseopener.cpp
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
@@ -54,7 +58,11 @@ HEADERS  += mainwindow.h \
     DBWidgets/dbwnamefield.h \
     DBWidgets/dbwotpitem.h \
     DBWidgets/dbwpasswordfield.h \
-    DBMainComponents/bluewidget.h
+    DBMainComponents/bluewidget.h \
+    MainwindowWidgets/databasebutton.h \
+    bluemanager.h \
+    MainwindowWidgets/bluedialog.h \
+    MainwindowWidgets/databaseopener.h
 
 FORMS    += mainwindow.ui \
     DBWidgets/dbwcontainers.ui \
@@ -62,7 +70,10 @@ FORMS    += mainwindow.ui \
     DBWidgets/dbwnamefield.ui \
     DBWidgets/dbwotpitem.ui \
     DBWidgets/dbwpasswordfield.ui \
-    DBMainComponents/bluewidget.ui
+    DBMainComponents/bluewidget.ui \
+    MainwindowWidgets/databasebutton.ui \
+    MainwindowWidgets/bluedialog.ui \
+    MainwindowWidgets/databaseopener.ui
 
 TRANSLATIONS += blue_fr.ts
 

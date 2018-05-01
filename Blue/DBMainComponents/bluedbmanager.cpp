@@ -29,6 +29,7 @@ BlueDBManager::~BlueDBManager()
 void BlueDBManager::createDatabaseObject(const QString &path, const QString &compositeKey)
 {
     readDatabase(path, compositeKey);
+    _path = path;
 }
 
 //Save the current database managed by the manager to a file
@@ -46,6 +47,8 @@ void BlueDBManager::createNewDatabase(const QString &path, const QString &compos
     {
         error("Failed to create a new file");
     }
+
+    _path = path;
 
     //Set settings to the database
     DBParameters parameters;
@@ -89,6 +92,16 @@ void BlueDBManager::failedDecryption(QString errorString)
 void BlueDBManager::error(QString errorString)
 {
     qWarning() << "FATAL ERROR" << errorString;
+}
+
+BlueWidget* BlueDBManager::returnWidget()
+{
+    return _widget;
+}
+
+QString BlueDBManager::getPath()
+{
+    return _path;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

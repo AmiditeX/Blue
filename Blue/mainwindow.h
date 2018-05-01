@@ -2,7 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFileDialog>
+#include <QMouseEvent>
 #include "BlueCrypto/aesmodule.h"
+#include "MainwindowWidgets/bluedialog.h"
 #include "DBMainComponents/bluedbmanager.h"
 #include "BlueCrypto/blueiointerface.h"
 
@@ -18,16 +21,29 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-public slots:
-    void displayWidget(BlueWidget *w);
+    //BlueManager connects
+    void displayGeneralError(const QString &err);
 
-    void error(QString err);
-    void write();
-    void read(DBParameters param);
+public slots:
+    //Database related SLOTS
+    void openDatabase();
+
 
 private slots:
     //Beautifulness UI related SLOTS
     void switchButtonStatus();
+
+    //Database related SLOTS
+    void loadDatabase(const QUrl &url);
+
+
+
+    void displayWidget(BlueWidget *w);
+    void error(QString err);
+    void write();
+    void read(DBParameters param);
+
+protected:
 
 private:
     Ui::MainWindow *ui;

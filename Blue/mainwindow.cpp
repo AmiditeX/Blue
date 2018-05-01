@@ -1,15 +1,12 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QDebug>
-#include "BlueCrypto/blueiointerface.h"
-#include "DBMainComponents/bluedbmanager.h"
 #include <iostream>
 #include <QPushButton>
-
-#include <QElapsedTimer> //to remove
+#include <QMessageBox>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -29,18 +26,61 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->buttonCreate, SIGNAL(clicked(bool)), this, SLOT(switchButtonStatus()));
     QObject::connect(ui->buttonSettings, SIGNAL(clicked(bool)), this, SLOT(switchButtonStatus()));
 
-    for(int i = 0; i < 1; i++)
-    {
-        QElapsedTimer timer;
-        timer.start();
-        qWarning() << AESModule::integrityCheck();
+    QObject::connect(ui->buttonOpen, SIGNAL(clicked(bool)), this, SLOT(openDatabase()));
+}
 
-        manager = new BlueDBManager();
-        connect(manager, SIGNAL(createSignal(BlueWidget*)), this, SLOT(displayWidget(BlueWidget*)));
-        manager->createNewDatabase("Testdb.txt", "password", 0, 1);
-        //manager->writeDatabaseObject();
-        qWarning() << "Milli " << timer.elapsed();
-    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///                                                          PUBLIC                                                                  //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void MainWindow::displayGeneralError(const QString &err)
+{
+    BlueDialog *dialog = new BlueDialog();
+    QObject::connect(this, SIGNAL(destroyed(QObject*)), dialog, SLOT(deleteLater()));
+    QObject::connect(dialog, SIGNAL(closeClicked()), dialog, SLOT(deleteLater()));
+    QObject::connect(dialog, SIGNAL(okClicked()), dialog, SLOT(deleteLater()));
+
+    dialog->setTitle(tr("Error"));
+    dialog->setMessage(err);
+    dialog->show();
+    dialog->activateWindow();
+}
+
+
+
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///                                                          PUBLIC                                                                  //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///                                                       PUBLIC SLOTS                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Select the database file to load it afterwards
+void MainWindow::openDatabase()
+{
+    QFileDialog *dialog = new QFileDialog(this, tr("Select the database file"), QDir::currentPath(), "*.blue");
+    dialog->setVisible(true); //Display the dialog for the user to select the file
+
+    //Delete the dialog when the URL was retrieved or dialog closed
+    QObject::connect(dialog, SIGNAL(urlSelected(QUrl)), dialog, SLOT(deleteLater()));
+
+    //Return database path to loadDatabse()
+    QObject::connect(dialog, SIGNAL(urlSelected(QUrl)), this, SLOT(loadDatabase(QUrl)));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///                                                       PUBLIC SLOTS                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Open a database given its path, handle UI to display database buttons
+void MainWindow::loadDatabase(const QUrl &url)
+{
+    qWarning() << url.path();
 }
 
 void MainWindow::error(QString err)
@@ -78,27 +118,39 @@ void MainWindow::switchButtonStatus()
 {
     QPushButton *sender = qobject_cast<QPushButton*>(QObject::sender()); //Retrieve SIGNAL sender
 
+    //Hide all the blue square selectors
+    ui->buttonColor_1->setVisible(false);
+    ui->buttonColor_2->setVisible(false);
+    ui->buttonColor_3->setVisible(false);
+
     if(ui->buttonOpen == sender)
     {
         //buttonOpen checked, uncheck all others
         ui->buttonCreate->setChecked(false);
         ui->buttonSettings->setChecked(false);
+
+        ui->buttonColor_1->setVisible(true);
     }
     else if(ui->buttonCreate == sender)
     {
         //buttonCreate checked, uncheck all others
         ui->buttonOpen->setChecked(false);
         ui->buttonSettings->setChecked(false);
+
+        ui->buttonColor_2->setVisible(true);
     }
     else if(ui->buttonSettings == sender)
     {
         //buttonSettings checked, uncheck all others
         ui->buttonOpen->setChecked(false);
         ui->buttonCreate->setChecked(false);
+
+        ui->buttonColor_3->setVisible(true);
     }
 }
 
 MainWindow::~MainWindow()
 {
+    qWarning() << "DELETING MAINWINDOW";
     delete ui;
 }

@@ -1,13 +1,8 @@
-#include "mainwindow.h"
-#include "spdlog/spdlog.h"
 #include <QApplication>
-
-#include <QDebug>
-#include "BlueCrypto/blueiointerface.h"
-#include "BlueCrypto/aesmodule.h"
-#include "DBMainComponents/bluedbmanager.h"
-#include <iostream>
 #include <cryptlib.h>
+#include <iostream>
+#include "spdlog/spdlog.h"
+#include "bluemanager.h"
 
 using namespace std;
 using namespace CryptoPP;
@@ -15,6 +10,7 @@ using namespace CryptoPP;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
     try
     {
         // Create basic file logger (not rotated)
@@ -25,7 +21,6 @@ int main(int argc, char *argv[])
         spdlog::get("LOGGER")->info("");
         spdlog::set_pattern("[%d/%m/%Y %H:%M:%S.%e] [%l] %v");
         spdlog::get("LOGGER")->flush();
-        qDebug() << "2";
     }
     catch (const spdlog::spdlog_ex &ex)
     {
@@ -35,8 +30,8 @@ int main(int argc, char *argv[])
     qsrand(time(NULL));
     qRegisterMetaType<DBParameters>("DBParameters");
 
-    MainWindow w;
-    w.show();
+    //Manager handles connection between UI and rest of the code
+    BlueManager manager;
 
     return a.exec();
 }

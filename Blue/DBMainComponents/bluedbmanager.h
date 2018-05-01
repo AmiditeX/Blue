@@ -20,6 +20,8 @@ public:
     void createDatabaseObject(const QString &path, const QString &compositeKey);
     void writeDatabaseObject();
     void createNewDatabase(const QString &path, const QString &compositeKey, const int iterations, const int stretchtime);
+    BlueWidget* returnWidget();
+    QString getPath();
     
 protected:
     //IO Functions using multiple threads
@@ -47,6 +49,7 @@ private:
     BlueWidget *_widget = nullptr;
     QMutex _fileMutex;
     bool _canIoOperate = true;
+    QString _path;
 
 };
 

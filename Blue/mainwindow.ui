@@ -17,32 +17,6 @@
    <string notr="true">background-color: rgb(44, 44, 52);</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>0</y>
-      <width>83</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton
-{
-border:0px;
-background-color: rgb(68, 158, 241);
-color: rgb(255, 255, 255);
-font-weight: bold
-}
-
-QPushButton::pressed {
-background-color: rgb(93, 127, 247);
-}</string>
-    </property>
-    <property name="text">
-     <string>Add</string>
-    </property>
-   </widget>
    <widget class="QTabWidget" name="databaseTab">
     <property name="geometry">
      <rect>
@@ -95,11 +69,7 @@ background-color: rgb(34, 35, 40);
 color: rgb(255, 255, 255);
 font-weight: bold
 }
-
-QPushButton::pressed {
-border-right: 5px;
-border-right-color:red;
-}</string>
+</string>
     </property>
     <property name="text">
      <string>Open database</string>
@@ -172,11 +142,6 @@ border:0px;
 background-color: rgb(34, 35, 40);
 color: rgb(255, 255, 255);
 font-weight: bold
-}
-
-QPushButton::pressed {
-border-right: 5px;
-border-right-color:red;
 }</string>
     </property>
     <property name="text">
@@ -202,11 +167,6 @@ border:0px;
 background-color: rgb(34, 35, 40);
 color: rgb(255, 255, 255);
 font-weight: bold
-}
-
-QPushButton::pressed {
-border-right: 5px;
-border-right-color:red;
 }</string>
     </property>
     <property name="text">
@@ -216,15 +176,31 @@ border-right-color:red;
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>180</y>
+      <width>221</width>
+      <height>571</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustToContents</enum>
+    </property>
+   </widget>
    <zorder>buttonSettings</zorder>
    <zorder>buttonCreate</zorder>
-   <zorder>pushButton</zorder>
    <zorder>databaseTab</zorder>
    <zorder>sideColor</zorder>
    <zorder>buttonOpen</zorder>
    <zorder>buttonColor_1</zorder>
    <zorder>buttonColor_2</zorder>
    <zorder>buttonColor_3</zorder>
+   <zorder>listWidget</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
@@ -246,54 +222,5 @@ border-right-color:red;
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonOpen</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>buttonColor_1</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>93</x>
-     <y>84</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>215</x>
-     <y>84</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonCreate</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>buttonColor_2</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>106</x>
-     <y>120</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>219</x>
-     <y>134</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonSettings</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>buttonColor_3</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>93</x>
-     <y>172</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>223</x>
-     <y>183</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

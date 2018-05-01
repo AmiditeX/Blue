@@ -141,7 +141,7 @@ bool AESModule::integrityCheck()
 
     //"Test vectors from http://web.cs.ucdavis.edu/~rogaway/papers/eax.pdf"
     //"The following EAX-AES128 test vectors were graciously provided by Jack Lloyd. They were later verified by Brian Gladman."
-    results.append(testVectorVerify(QStringLiteral(""),
+    results.append(testVectorVerify(QStringLiteral("1"),
                                     QStringLiteral("233952DEE4D5ED5F9B9C6D6FF80FF478"),
                                     QStringLiteral("62EC67F9C3A4A407FCB2A8C49031A8B3"),
                                     QStringLiteral("6BFB914FD07EAE6B"),
@@ -341,7 +341,7 @@ bool AESModule::randomCheck(QStringList &logs)
     QString authenticatedData = generateRandomString();
     QByteArray initializationVector = generateIV();
     QByteArray salt = generateSalt();
-    QByteArray privateKey = derivateKey(randomPassword.toUtf8(), salt, (qrand() % 10000) + 1, 0).derivedKey;
+    QByteArray privateKey = derivateKey(randomPassword.toUtf8(), salt, (qrand() % 1000) + 1, 0).derivedKey;
     QByteArray encrypted, decrypted;
     bool first = false , second = false, third = false, fourth = false, fifth = false;
 
@@ -353,6 +353,7 @@ bool AESModule::randomCheck(QStringList &logs)
     {
         logs.append("Encryption of random data has failed, integrity check failed");
         logs.append(QString("Test failed with RDATA(%1) RPASSWORD(%2), RADATA(%3)").arg(randomString, randomPassword, authenticatedData));
+        logs.append(QString("Error returned : %1").arg(QString::fromStdString(e.what())));
         return false;
     }
 
@@ -375,7 +376,7 @@ bool AESModule::randomCheck(QStringList &logs)
             first = false;
         }
     }
-    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in a normal way, test failed
+    catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &e) //Decryption failed in an abnormal way, test failed
     {
         logs.append(QString("1ST Sub-Test has failed : failed to decrypt : %1").arg(e.what()));
         first = false;
