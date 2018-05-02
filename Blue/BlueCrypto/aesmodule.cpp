@@ -141,7 +141,7 @@ bool AESModule::integrityCheck()
 
     //"Test vectors from http://web.cs.ucdavis.edu/~rogaway/papers/eax.pdf"
     //"The following EAX-AES128 test vectors were graciously provided by Jack Lloyd. They were later verified by Brian Gladman."
-    results.append(testVectorVerify(QStringLiteral("1"),
+    results.append(testVectorVerify(QStringLiteral(""),
                                     QStringLiteral("233952DEE4D5ED5F9B9C6D6FF80FF478"),
                                     QStringLiteral("62EC67F9C3A4A407FCB2A8C49031A8B3"),
                                     QStringLiteral("6BFB914FD07EAE6B"),

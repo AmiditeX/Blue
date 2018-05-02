@@ -37,7 +37,9 @@ SOURCES += main.cpp\
     MainwindowWidgets/databasebutton.cpp \
     bluemanager.cpp \
     MainwindowWidgets/bluedialog.cpp \
-    MainwindowWidgets/databaseopener.cpp
+    MainwindowWidgets/databaseopener.cpp \
+    MainwindowWidgets/customshadoweffect.cpp \
+    MainwindowWidgets/databasecreator.cpp
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
@@ -62,7 +64,9 @@ HEADERS  += mainwindow.h \
     MainwindowWidgets/databasebutton.h \
     bluemanager.h \
     MainwindowWidgets/bluedialog.h \
-    MainwindowWidgets/databaseopener.h
+    MainwindowWidgets/databaseopener.h \
+    MainwindowWidgets/customshadoweffect.h \
+    MainwindowWidgets/databasecreator.h
 
 FORMS    += mainwindow.ui \
     DBWidgets/dbwcontainers.ui \
@@ -73,7 +77,8 @@ FORMS    += mainwindow.ui \
     DBMainComponents/bluewidget.ui \
     MainwindowWidgets/databasebutton.ui \
     MainwindowWidgets/bluedialog.ui \
-    MainwindowWidgets/databaseopener.ui
+    MainwindowWidgets/databaseopener.ui \
+    MainwindowWidgets/databasecreator.ui
 
 TRANSLATIONS += blue_fr.ts
 

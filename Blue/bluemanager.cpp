@@ -13,8 +13,9 @@ BlueManager::BlueManager()
         window->displayGeneralError("An error occured while testing the cryptographic module. Decryption/encryption is flawed."
                                     "\nCorrect execution of the program is impossible. Error logs written to \"logs.txt\""
                                     "\nFatal error, terminating.");
-        window->setEnabled(false);
     }
+
+    QObject::connect(window, SIGNAL(openingRequest(QString,QString)), this, SLOT(openDatabase(QString,QString)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,14 +23,14 @@ BlueManager::BlueManager()
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Open a new database by creating a DatabaseManager and loading up the UI
-void BlueManager::openDatabase(const QUrl &path)
+void BlueManager::openDatabase(QString masterKey, QString filePath)
 {
     //Check if DB not already open
     for(unsigned int i = 0; i < _dbManagerList.size(); i++)
     {
-        if(_dbManagerList[i]->getPath() == path.path())
+        if(_dbManagerList[i]->getPath() == filePath)
         {
-            window->displayGeneralError("This database is already opened.");
+            window->displayGeneralError(tr("This database is already opened"));
             return;
         }
     }
@@ -39,7 +40,7 @@ void BlueManager::openDatabase(const QUrl &path)
     _dbManagerList.push_back(dbManager);
 
     QObject::connect(dbManager.get(), SIGNAL(createSignal(BlueWidget*)), window, SLOT(displayWidget(BlueWidget*)));
-    manager->createNewDatabase("Testdb.txt", "password", 0, 1);
+    dbManager->createDatabaseObject(filePath, masterKey);
 }
 
 /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

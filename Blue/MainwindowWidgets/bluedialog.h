@@ -2,13 +2,14 @@
 #define BLUEDIALOG_H
 
 #include <QWidget>
+#include <QDialog>
 #include <QMouseEvent>
 
 namespace Ui {
 class BlueDialog;
 }
 
-class BlueDialog : public QWidget
+class BlueDialog : public QDialog
 {
     Q_OBJECT
 

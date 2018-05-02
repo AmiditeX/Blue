@@ -27,6 +27,19 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->buttonSettings, SIGNAL(clicked(bool)), this, SLOT(switchButtonStatus()));
 
     QObject::connect(ui->buttonOpen, SIGNAL(clicked(bool)), this, SLOT(openDatabase()));
+
+    //Database Opener
+    opener = new DatabaseOpener(this);
+    QObject::connect(opener, SIGNAL(openPressed()), this, SLOT(openerReturn()));
+    QObject::connect(opener, SIGNAL(closePressed()), this, SLOT(openerClose()));
+    QObject::connect(opener, SIGNAL(closePressed()), opener, SLOT(clear()));
+    opener->setVisible(false);
+    CustomShadowEffect *bodyShadow = new CustomShadowEffect(this);
+    bodyShadow->setBlurRadius(50.0);
+    bodyShadow->setDistance(10.0);
+    bodyShadow->setColor(QColor(0, 0, 0, 150));
+    opener->setGraphicsEffect(bodyShadow);
+    opener->move(260, 30);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::displayGeneralError(const QString &err)
 {
-    BlueDialog *dialog = new BlueDialog();
+    BlueDialog *dialog = new BlueDialog(this);
     QObject::connect(this, SIGNAL(destroyed(QObject*)), dialog, SLOT(deleteLater()));
     QObject::connect(dialog, SIGNAL(closeClicked()), dialog, SLOT(deleteLater()));
     QObject::connect(dialog, SIGNAL(okClicked()), dialog, SLOT(deleteLater()));
@@ -43,12 +56,11 @@ void MainWindow::displayGeneralError(const QString &err)
     dialog->setTitle(tr("Error"));
     dialog->setMessage(err);
     dialog->show();
-    dialog->activateWindow();
 }
 
 
 
-/// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                          PUBLIC                                                                  //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -63,14 +75,50 @@ void MainWindow::displayGeneralError(const QString &err)
 //Select the database file to load it afterwards
 void MainWindow::openDatabase()
 {
-    QFileDialog *dialog = new QFileDialog(this, tr("Select the database file"), QDir::currentPath(), "*.blue");
-    dialog->setVisible(true); //Display the dialog for the user to select the file
+    opener->setVisible(true);
+}
 
-    //Delete the dialog when the URL was retrieved or dialog closed
-    QObject::connect(dialog, SIGNAL(urlSelected(QUrl)), dialog, SLOT(deleteLater()));
+void MainWindow::openerClose()
+{
+    opener->setVisible(false);
+}
 
-    //Return database path to loadDatabse()
-    QObject::connect(dialog, SIGNAL(urlSelected(QUrl)), this, SLOT(loadDatabase(QUrl)));
+//Called when a DatabaseOpener has to return DB settings
+void MainWindow::openerReturn()
+{
+    DatabaseOpener *opener = qobject_cast<DatabaseOpener*>(sender());
+    //If a key path was returned, check for validity and open it
+    if(!opener->getFilePath().isEmpty() && !opener->getMaster().isEmpty())
+    {
+        QDir dir;
+        if(!dir.exists(opener->getFilePath()))
+        {
+            displayGeneralError(tr("The database file provided doesn't exist"));
+            return;
+        }
+
+        if(!dir.exists(opener->getKey()))
+        {
+            displayGeneralError(tr("The key file provided doesn't exist"));
+            return;
+        }
+    }
+    else
+    {
+        displayGeneralError(tr("Fill all the fields (Path to database, master password)"));
+        return;
+    }
+
+    QFile keyFile(opener->getKey());
+    if(!keyFile.open(QFile::ReadOnly))
+    {
+        displayGeneralError(tr("Couldn't open key file"));
+        return;
+    }
+
+    QString key = keyFile.readAll();
+
+    emit openingRequest(opener->getMaster() + key, opener->getFilePath());
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -17,7 +17,7 @@ public:
 signals:
 
 public slots:
-    void openDatabase(const QUrl &path);
+    void openDatabase(QString masterKey, QString filePath);
 
 private:
     MainWindow *window = nullptr;

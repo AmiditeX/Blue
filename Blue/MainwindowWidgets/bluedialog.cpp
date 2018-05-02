@@ -2,7 +2,7 @@
 #include "ui_bluedialog.h"
 
 BlueDialog::BlueDialog(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::BlueDialog)
 {
     ui->setupUi(this);

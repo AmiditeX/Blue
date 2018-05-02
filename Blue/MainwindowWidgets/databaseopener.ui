@@ -1,21 +1,572 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>DatabaseOpener</class>
- <widget name="DatabaseOpener" class="QWidget">
+ <widget class="QWidget" name="DatabaseOpener">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1080</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(44, 44, 52);</string>
+  </property>
+  <widget class="QPushButton" name="ok">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>420</y>
+     <width>111</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(68, 158, 241);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(93, 127, 247);
+}</string>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>270</y>
+     <width>571</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(34, 35, 40);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="lineWidth">
+    <number>1</number>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="close">
+   <property name="geometry">
+    <rect>
+     <x>710</x>
+     <y>420</y>
+     <width>101</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(239, 41, 41);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(164, 0, 0);
+}</string>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="database">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>290</y>
+     <width>471</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(238, 238, 236);
+color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>10000</number>
+   </property>
+   <property name="placeholderText">
+    <string>Path of the database..</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="master">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>330</y>
+     <width>471</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(238, 238, 236);
+color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>10000</number>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+   <property name="placeholderText">
+    <string>Master password..</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="openDatabase">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>290</y>
+     <width>71</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(68, 158, 241);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(93, 127, 247);
+}</string>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="key">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>370</y>
+     <width>471</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(238, 238, 236);
+color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>10000</number>
+   </property>
+   <property name="placeholderText">
+    <string>Path to the key file..</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="openKey">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>370</y>
+     <width>71</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(68, 158, 241);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(93, 127, 247);
+}</string>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="see">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>330</y>
+     <width>71</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(173, 127, 168);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::checked {
+background-color: rgb(92, 53, 102);
+}</string>
+   </property>
+   <property name="text">
+    <string>See</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>220</y>
+     <width>141</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(68, 158, 241);
+color: rgb(238, 238, 236);
+font: 75 22pt &quot;DejaVu Sans&quot;;
+font-weight: bold</string>
+   </property>
+   <property name="text">
+    <string>   Blue</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>220</y>
+     <width>431</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+font: 16pt &quot;DejaVu Sans&quot;;
+background-color: rgb(20, 20, 20);</string>
+   </property>
+   <property name="text">
+    <string>                     Open database</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="openKey_2">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>520</y>
+     <width>71</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(68, 158, 241);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(93, 127, 247);
+}</string>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="master_2">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>480</y>
+     <width>471</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(238, 238, 236);
+color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>10000</number>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+   <property name="placeholderText">
+    <string>Master password..</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>370</y>
+     <width>141</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(68, 158, 241);
+color: rgb(238, 238, 236);
+font: 75 22pt &quot;DejaVu Sans&quot;;
+font-weight: bold</string>
+   </property>
+   <property name="text">
+    <string>   Blue</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ok_2">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>570</y>
+     <width>111</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(68, 158, 241);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(93, 127, 247);
+}</string>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="close_2">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>570</y>
+     <width>101</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(239, 41, 41);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(164, 0, 0);
+}</string>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="key_2">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>520</y>
+     <width>471</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(238, 238, 236);
+color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>10000</number>
+   </property>
+   <property name="placeholderText">
+    <string>Path to the key file..</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="openDatabase_2">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>440</y>
+     <width>71</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(68, 158, 241);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(93, 127, 247);
+}</string>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="see_2">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>480</y>
+     <width>71</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(173, 127, 168);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::checked {
+background-color: rgb(92, 53, 102);
+}</string>
+   </property>
+   <property name="text">
+    <string>See</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>370</y>
+     <width>431</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+font: 16pt &quot;DejaVu Sans&quot;;
+background-color: rgb(20, 20, 20);</string>
+   </property>
+   <property name="text">
+    <string>                     Open database</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="database_2">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>440</y>
+     <width>471</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(238, 238, 236);
+color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>10000</number>
+   </property>
+   <property name="placeholderText">
+    <string>Path of the database..</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>420</y>
+     <width>571</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(34, 35, 40);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="lineWidth">
+    <number>1</number>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>ok</zorder>
+  <zorder>close</zorder>
+  <zorder>database</zorder>
+  <zorder>master</zorder>
+  <zorder>openDatabase</zorder>
+  <zorder>key</zorder>
+  <zorder>openKey</zorder>
+  <zorder>see</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+  <zorder>openKey_2</zorder>
+  <zorder>master_2</zorder>
+  <zorder>label_4</zorder>
+  <zorder>ok_2</zorder>
+  <zorder>close_2</zorder>
+  <zorder>key_2</zorder>
+  <zorder>openDatabase_2</zorder>
+  <zorder>see_2</zorder>
+  <zorder>label_5</zorder>
+  <zorder>database_2</zorder>
+  <zorder>label_6</zorder>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>
