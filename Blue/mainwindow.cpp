@@ -8,12 +8,17 @@
 #include <QPushButton>
 #include <QMessageBox>
 
+#include "MainwindowWidgets/passwordcreator.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    PasswordCreator *password = new PasswordCreator();
+    password->show();//DEBUG
 
     //Set UI up
     ui->buttonColor_1->setVisible(false);

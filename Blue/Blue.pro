@@ -15,12 +15,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
+    bluemanager.cpp \
     BlueCrypto/aesmodule.cpp \
     BlueCrypto/blueiointerface.cpp \
     BlueCrypto/qiodevicesink.cpp \
     BlueCrypto/qiodevicesource.cpp \
     DBMainComponents/bluedatabase.cpp \
     DBMainComponents/bluedbmanager.cpp \
+    DBMainComponents/bluewidget.cpp \
     DBElements/abstractdatabaseitem.cpp \
     DBElements/dbpasswordfield.cpp \
     DBElements/dbnamefield.cpp \
@@ -33,13 +35,22 @@ SOURCES += main.cpp\
     DBWidgets/dbwnamefield.cpp \
     DBWidgets/dbwotpitem.cpp \
     DBWidgets/dbwpasswordfield.cpp \
-    DBMainComponents/bluewidget.cpp \
     MainwindowWidgets/databasebutton.cpp \
-    bluemanager.cpp \
     MainwindowWidgets/bluedialog.cpp \
     MainwindowWidgets/databaseopener.cpp \
     MainwindowWidgets/customshadoweffect.cpp \
-    MainwindowWidgets/databasecreator.cpp
+    MainwindowWidgets/databasecreator.cpp \
+    MainwindowWidgets/passwordcreator.cpp \
+    Tools/zxcppvbn/adjacency_graphs.cpp \
+    Tools/zxcppvbn/frequency_lists.cpp \
+    Tools/zxcppvbn/init.cpp \
+    Tools/zxcppvbn/matching.cpp \
+    Tools/zxcppvbn/scoring.cpp \
+    Tools/zxcppvbn/tools/tinf/adler32.c \
+    Tools/zxcppvbn/tools/tinf/crc32.c \
+    Tools/zxcppvbn/tools/tinf/tinfgzip.c \
+    Tools/zxcppvbn/tools/tinf/tinflate.c \
+    Tools/zxcppvbn/tools/tinf/tinfzlib.c
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
@@ -48,6 +59,7 @@ HEADERS  += mainwindow.h \
     BlueCrypto/qiodevicesource.h \
     DBMainComponents/bluedatabase.h \
     DBMainComponents/bluedbmanager.h \
+    DBMainComponents/bluewidget.h \
     DBElements/abstractdatabaseitem.h \
     DBElements/dbpasswordfield.h \
     DBElements/dbnamefield.h \
@@ -60,13 +72,13 @@ HEADERS  += mainwindow.h \
     DBWidgets/dbwnamefield.h \
     DBWidgets/dbwotpitem.h \
     DBWidgets/dbwpasswordfield.h \
-    DBMainComponents/bluewidget.h \
-    MainwindowWidgets/databasebutton.h \
-    bluemanager.h \
     MainwindowWidgets/bluedialog.h \
     MainwindowWidgets/databaseopener.h \
     MainwindowWidgets/customshadoweffect.h \
-    MainwindowWidgets/databasecreator.h
+    MainwindowWidgets/databasecreator.h \
+    MainwindowWidgets/databasebutton.h \
+    MainwindowWidgets/passwordcreator.h \
+    bluemanager.h
 
 FORMS    += mainwindow.ui \
     DBWidgets/dbwcontainers.ui \
@@ -78,7 +90,8 @@ FORMS    += mainwindow.ui \
     MainwindowWidgets/databasebutton.ui \
     MainwindowWidgets/bluedialog.ui \
     MainwindowWidgets/databaseopener.ui \
-    MainwindowWidgets/databasecreator.ui
+    MainwindowWidgets/databasecreator.ui \
+    MainwindowWidgets/passwordcreator.ui
 
 TRANSLATIONS += blue_fr.ts
 
