@@ -50,7 +50,8 @@ SOURCES += main.cpp\
     Tools/zxcppvbn/tools/tinf/crc32.c \
     Tools/zxcppvbn/tools/tinf/tinfgzip.c \
     Tools/zxcppvbn/tools/tinf/tinflate.c \
-    Tools/zxcppvbn/tools/tinf/tinfzlib.c
+    Tools/zxcppvbn/tools/tinf/tinfzlib.c \
+    Tools/diceware/diceware.cpp
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
@@ -78,7 +79,9 @@ HEADERS  += mainwindow.h \
     MainwindowWidgets/databasecreator.h \
     MainwindowWidgets/databasebutton.h \
     MainwindowWidgets/passwordcreator.h \
-    bluemanager.h
+    bluemanager.h \
+    Tools/diceware/wordlist.h \
+    Tools/diceware/diceware.h
 
 FORMS    += mainwindow.ui \
     DBWidgets/dbwcontainers.ui \
@@ -111,3 +114,6 @@ unix:!macx: PRE_TARGETDEPS += $$PWD/../libcrypto/lib/lnx/libcryptopp.a
 #WINDOWS CRYPTOPP LINKAGE
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../libcrypto/lib/w32/ -lcryptopp
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../libcrypto/lib/w32/ -lcryptopp
+
+DISTFILES += \
+    Tools/diceware/LICENSE.md

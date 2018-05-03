@@ -19,6 +19,13 @@ public:
 public slots:
     void evaluateSubject(QString subject);
     void switchEcho(bool isChecked);
+    void switchGeneratorVisibility(bool visible);
+    void uncheckAll(bool checked);
+
+    void generatePassword();
+
+protected:
+    QString generateRandomString(const QString &chars, int length);
 
 private:
     Ui::PasswordCreator *ui;
