@@ -1,8 +1,9 @@
 #ifndef PASSWORDCREATOR_H
 #define PASSWORDCREATOR_H
-#include "Tools/zxcppvbn/zxcppvbn.hpp"
 
 #include <QWidget>
+#include "Tools/zxcppvbn/zxcppvbn.hpp"
+#include "Tools/diceware/diceware.h"
 
 namespace Ui {
 class PasswordCreator;
@@ -16,6 +17,8 @@ public:
     explicit PasswordCreator(QWidget *parent = 0);
     ~PasswordCreator();
 
+    QString returnPassword();
+
 public slots:
     void evaluateSubject(QString subject);
     void switchEcho(bool isChecked);
@@ -23,6 +26,10 @@ public slots:
     void uncheckAll(bool checked);
 
     void generatePassword();
+    void generatePassphrase();
+
+signals:
+    void sizeChanged(bool expanded);
 
 protected:
     QString generateRandomString(const QString &chars, int length);

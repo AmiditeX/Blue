@@ -8,17 +8,11 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-#include "MainwindowWidgets/passwordcreator.h"
-
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    PasswordCreator *password = new PasswordCreator();
-    password->show();//DEBUG
 
     //Set UI up
     ui->buttonColor_1->setVisible(false);
@@ -32,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->buttonSettings, SIGNAL(clicked(bool)), this, SLOT(switchButtonStatus()));
 
     QObject::connect(ui->buttonOpen, SIGNAL(clicked(bool)), this, SLOT(openDatabase()));
+    QObject::connect(ui->buttonCreate, SIGNAL(clicked(bool)), this, SLOT(createDatabase()));
+
 
     //Database Opener
     opener = new DatabaseOpener(this);
@@ -39,13 +35,24 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(opener, SIGNAL(closePressed()), this, SLOT(openerClose()));
     QObject::connect(opener, SIGNAL(closePressed()), opener, SLOT(clear()));
     opener->setVisible(false);
-    CustomShadowEffect *bodyShadow = new CustomShadowEffect(this);
-    bodyShadow->setBlurRadius(50.0);
-    bodyShadow->setDistance(10.0);
-    bodyShadow->setColor(QColor(0, 0, 0, 150));
-    opener->setGraphicsEffect(bodyShadow);
     opener->move(260, 30);
+
+    creator = new DatabaseCreator(this);
+    QObject::connect(creator, SIGNAL(createPressed()), this, SLOT(creatorReturn()));
+    QObject::connect(creator, SIGNAL(closedPressed()), this, SLOT(creatorClose()));
+    creator->setVisible(false);
+    creator->move(260, 30);
+
 }
+
+MainWindow::~MainWindow()
+{
+    qWarning() << "DELETING MAINWINDOW";
+    delete ui;
+    delete opener;
+    delete creator;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                          PUBLIC                                                                  //
@@ -80,6 +87,7 @@ void MainWindow::displayGeneralError(const QString &err)
 //Select the database file to load it afterwards
 void MainWindow::openDatabase()
 {
+    creator->setVisible(false);
     opener->setVisible(true);
 }
 
@@ -124,6 +132,14 @@ void MainWindow::openerReturn()
     QString key = keyFile.readAll();
 
     emit openingRequest(opener->getMaster() + key, opener->getFilePath());
+}
+
+
+//UI to create a new database
+void MainWindow::createDatabase()
+{
+    opener->setVisible(false);
+    creator->setVisible(true);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,10 +216,4 @@ void MainWindow::switchButtonStatus()
 
         ui->buttonColor_3->setVisible(true);
     }
-}
-
-MainWindow::~MainWindow()
-{
-    qWarning() << "DELETING MAINWINDOW";
-    delete ui;
 }

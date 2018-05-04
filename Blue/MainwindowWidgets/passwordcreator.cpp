@@ -1,8 +1,7 @@
-#include "passwordcreator.h"
-#include "ui_passwordcreator.h"
-
 #include <iostream>
 #include <sstream>
+#include "passwordcreator.h"
+#include "ui_passwordcreator.h"
 
 PasswordCreator::PasswordCreator(QWidget *parent) :
     QWidget(parent),
@@ -15,9 +14,16 @@ PasswordCreator::PasswordCreator(QWidget *parent) :
     QObject::connect(ui->generate, SIGNAL(toggled(bool)), this, SLOT(switchGeneratorVisibility(bool)));
     QObject::connect(ui->genPassword, SIGNAL(clicked(bool)), this, SLOT(generatePassword()));
     QObject::connect(ui->genCustom, SIGNAL(toggled(bool)), this, SLOT(uncheckAll(bool)));
+    QObject::connect(ui->genPassphrase, SIGNAL(clicked(bool)), this, SLOT(generatePassphrase()));
 
     setGeometry(x(), y(), 569, 101);
 }
+
+PasswordCreator::~PasswordCreator()
+{
+    delete ui;
+}
+
 
 //Evaluate the entropy of the password
 void PasswordCreator::evaluateSubject(QString subject)
@@ -101,10 +107,12 @@ void PasswordCreator::switchGeneratorVisibility(bool visible)
     if(visible)
     {
         setGeometry(x(), y(), 569, 282);
+        emit sizeChanged(true);
     }
     else
     {
         setGeometry(x(), y(), 569, 101);
+        emit sizeChanged(false);
     }
 }
 
@@ -146,6 +154,12 @@ void PasswordCreator::generatePassword()
     ui->password->setText(generateRandomString(possibleCharacters, ui->genLength->value()));
 }
 
+void PasswordCreator::generatePassphrase()
+{
+     diceWarePassword diceString =  GenPass(ui->wordCount->value(), false);
+     ui->password->setText(QString::fromStdString(diceString));
+}
+
 //Return a random string of random and maximum length of 32
 QString PasswordCreator::generateRandomString(const QString &chars, int length)
 {
@@ -162,7 +176,7 @@ QString PasswordCreator::generateRandomString(const QString &chars, int length)
     return randomString;
 }
 
-PasswordCreator::~PasswordCreator()
+QString PasswordCreator::returnPassword()
 {
-    delete ui;
+    return ui->password->text();
 }

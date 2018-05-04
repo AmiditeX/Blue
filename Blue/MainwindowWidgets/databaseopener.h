@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QFileDialog>
+#include "MainwindowWidgets/customshadoweffect.h"
 
 namespace Ui {
 class DatabaseOpener;
@@ -36,6 +37,7 @@ signals:
 
 private:
     Ui::DatabaseOpener *ui;
+    CustomShadowEffect *bodyShadow = nullptr;
 };
 
 #endif // DATABASEOPENER_H

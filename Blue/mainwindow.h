@@ -10,6 +10,7 @@
 #include "BlueCrypto/blueiointerface.h"
 #include "MainwindowWidgets/databaseopener.h"
 #include "MainwindowWidgets/customshadoweffect.h"
+#include "MainwindowWidgets/databasecreator.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,8 +31,11 @@ public slots:
     //Database related SLOTS
     void openDatabase();
     void openerReturn();
-    void openerClose()
-;
+    void openerClose();
+
+    void createDatabase();
+
+
 signals:
     void openingRequest(QString masterKey, QString filePath);
 
@@ -55,8 +59,9 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-    BlueDBManager *manager;
-    DatabaseOpener *opener;
+    BlueDBManager *manager = nullptr;
+    DatabaseOpener *opener = nullptr;
+    DatabaseCreator *creator = nullptr;
 };
 
 #endif // MAINWINDOW_H

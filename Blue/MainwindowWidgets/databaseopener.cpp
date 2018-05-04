@@ -14,6 +14,13 @@ DatabaseOpener::DatabaseOpener(QWidget *parent) :
 
     QObject::connect(ui->openDatabase, SIGNAL(clicked(bool)), this, SLOT(openDbSelector()));
     QObject::connect(ui->openKey, SIGNAL(clicked(bool)), this, SLOT(openKeySelector()));
+
+    //Shadow effect
+    bodyShadow = new CustomShadowEffect(this);
+    bodyShadow->setBlurRadius(50.0);
+    bodyShadow->setDistance(10.0);
+    bodyShadow->setColor(QColor(0, 0, 0, 150));
+    setGraphicsEffect(bodyShadow);
 }
 
 //Switch the echo mode of the password field
@@ -88,4 +95,5 @@ void DatabaseOpener::clear()
 DatabaseOpener::~DatabaseOpener()
 {
     delete ui;
+    delete bodyShadow;
 }
