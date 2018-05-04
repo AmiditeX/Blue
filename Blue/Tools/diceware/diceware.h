@@ -14,6 +14,7 @@
 #include <iostream>
 #include <random>
 #include <ctime>
+#include <chrono>
 
 
 
@@ -32,13 +33,13 @@ typedef string diceWarePassword;
 
 //Diceroll Struct
 struct DICEROLL{
-    
+
     diceValue dice_one;
     diceValue dice_two;
     diceValue dice_three;
     diceValue dice_four;
     diceValue dice_five;
-    
+
 };
 
 //Functions
@@ -47,7 +48,6 @@ DICEROLL DRoll(DICEROLL);
 diceWordIndex IndexValue(DICEROLL);
 diceWareWord GetWord(diceWordIndex);
 diceWarePassword GenPass(diceWordCount, debugInfo);
-
 
 
 
