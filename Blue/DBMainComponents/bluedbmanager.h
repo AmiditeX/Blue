@@ -39,7 +39,7 @@ signals:
     void startWriting(const QString &filePath, const QJsonDocument jsonDoc, const QString &compositeKey,
                       int iterations, int stretchTime);
 
-    void createSignal(BlueWidget *newDatabase);
+    void createSignal(BlueWidget *newDatabase, const QString &path);
     void writtenSignal();
     void errorSignal(QString errorString);
     void decryptionErrSignal(QString errorString);

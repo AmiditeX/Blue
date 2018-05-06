@@ -176,20 +176,35 @@ font-weight: bold
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListWidget" name="listDatabase">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>180</y>
-      <width>221</width>
-      <height>571</height>
+      <y>190</y>
+      <width>230</width>
+      <height>561</height>
      </rect>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
     </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
     <property name="sizeAdjustPolicy">
      <enum>QAbstractScrollArea::AdjustToContents</enum>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <property name="showDropIndicator" stdset="0">
+     <bool>false</bool>
+    </property>
+    <property name="defaultDropAction">
+     <enum>Qt::IgnoreAction</enum>
+    </property>
+    <property name="resizeMode">
+     <enum>QListView::Adjust</enum>
     </property>
    </widget>
    <zorder>buttonSettings</zorder>
@@ -200,7 +215,7 @@ font-weight: bold
    <zorder>buttonColor_1</zorder>
    <zorder>buttonColor_2</zorder>
    <zorder>buttonColor_3</zorder>
-   <zorder>listWidget</zorder>
+   <zorder>listDatabase</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">

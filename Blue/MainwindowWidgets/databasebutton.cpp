@@ -8,24 +8,21 @@ DatabaseButton::DatabaseButton(QWidget *parent) :
     ui->setupUi(this);
 
     //UI connects
-    QObject::connect(ui->databaseButton, SIGNAL(clicked(bool)), this, SLOT(buttonStatus()));
+    QObject::connect(ui->databaseButton, SIGNAL(toggled(bool)), this, SIGNAL(dropMenu(bool)));
 
     //Default geometry doesn't contain the dropdown menu
-    setGeometry(ui->databaseButton->geometry());
+    //setGeometry(QRect(0, 0, ui->databaseButton->width() + ui->buttonColor_1->width(), ui->databaseButton->height()));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                       PUBLIC SLOTS                                                               //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Drop the menu for settings and deletion
-void DatabaseButton::dropMenu()
+//Resize event, emit signal
+void DatabaseButton::resizeEvent(QResizeEvent *event)
 {
-    QPropertyAnimation animation(this, "geometry");
-    animation.setDuration(800);
-    animation.setStartValue(this->geometry());
-    animation.setEndValue(QRect(0, 0, 230, 150));
-    animation.start();
+    (void) event;
+    emit sizeChanged();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,18 +34,6 @@ void DatabaseButton::dropMenu()
 ///                                                       PRIVATE SLOTS                                                              //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Switch the blue square status
-void DatabaseButton::buttonStatus()
-{
-    if(ui->buttonColor_1->isVisible())
-    {
-        ui->buttonColor_1->setVisible(false);
-    }
-    else
-    {
-        ui->buttonColor_1->setVisible(true);
-    }
-}
 
 /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                       PRIVATE SLOTS                                                              //

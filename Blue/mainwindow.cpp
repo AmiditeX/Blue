@@ -38,11 +38,10 @@ MainWindow::MainWindow(QWidget *parent) :
     opener->move(260, 30);
 
     creator = new DatabaseCreator(this);
-    QObject::connect(creator, SIGNAL(createPressed()), this, SLOT(creatorReturn()));
-    QObject::connect(creator, SIGNAL(closedPressed()), this, SLOT(creatorClose()));
+    QObject::connect(creator, SIGNAL(okPressed()), this, SLOT(creatorReturn()));
+    QObject::connect(creator, SIGNAL(closePressed()), this, SLOT(creatorClose()));
     creator->setVisible(false);
     creator->move(260, 30);
-
 }
 
 MainWindow::~MainWindow()
@@ -87,6 +86,7 @@ void MainWindow::displayGeneralError(const QString &err)
 //Select the database file to load it afterwards
 void MainWindow::openDatabase()
 {
+    ui->databaseTab->setHidden(true);
     creator->setVisible(false);
     opener->setVisible(true);
 }
@@ -110,7 +110,7 @@ void MainWindow::openerReturn()
             return;
         }
 
-        if(!dir.exists(opener->getKey()))
+        if(!dir.exists(opener->getKey()) && !opener->getKey().isEmpty())
         {
             displayGeneralError(tr("The key file provided doesn't exist"));
             return;
@@ -122,35 +122,80 @@ void MainWindow::openerReturn()
         return;
     }
 
-    QFile keyFile(opener->getKey());
-    if(!keyFile.open(QFile::ReadOnly))
-    {
-        displayGeneralError(tr("Couldn't open key file"));
-        return;
-    }
-
-    QString key = keyFile.readAll();
-
-    emit openingRequest(opener->getMaster() + key, opener->getFilePath());
+    emit openingRequest(opener->getMaster(), opener->getFilePath(), opener->getKey());
+    opener->clear();
+    openerClose();
 }
 
 
 //UI to create a new database
 void MainWindow::createDatabase()
 {
+    ui->databaseTab->setHidden(true);
     opener->setVisible(false);
     creator->setVisible(true);
+}
+
+//Pass settings to BlueManager, check for errors
+void MainWindow::creatorReturn()
+{
+    DatabaseCreator::DatabaseParam params = creator->returnParams();
+    if(params.dbPath.isEmpty()) //Error if file not provided, password not provided
+    { displayGeneralError(tr("The path to the database wasn't provided")); return; }
+
+    if(params.password.isEmpty())
+    { displayGeneralError(tr("The password of the database wasn't provided")); return; }
+
+    QDir dir; //Error if keyfile doesn't exist and if field isn't empty
+    if(!dir.exists(params.keyPath) && !params.keyPath.isEmpty())
+    {  displayGeneralError(tr("The key file doesn't exist")); return; }
+
+    emit(createRequest(params));
+    creatorClose();
+}
+
+//Close the creator UI
+void MainWindow::creatorClose()
+{
+    creator->clear();
+    creator->setVisible(false);
+}
+
+//Display the menu widget and the main database widget
+void MainWindow::displayWidget(BlueWidget *w, const QString &path)
+{
+    //Add mainwidget
+    ui->databaseTab->addTab(w, path);
+    ui->databaseTab->setCurrentWidget(w);
+    creatorClose();
+    openerClose();
+    ui->databaseTab->setVisible(true);
+
+    DatabaseButton *button = new DatabaseButton(this);
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setSizeHint(QSize(button->width(), 150));
+
+    connect(button, &DatabaseButton::dropMenu, [=](bool drop){
+        QPropertyAnimation *animation = new QPropertyAnimation(button, "geometry");
+        animation->setDuration(100);
+        animation->setStartValue(button->geometry());
+        if(drop) {animation->setEndValue(QRect(0, 0, button->width(), 50));}
+        else {animation->setEndValue(QRect(0, 0, button->width(), 150));}
+        animation->start(QAbstractAnimation::DeleteWhenStopped);
+    });
+
+    connect(button, &DatabaseButton::sizeChanged, [=](){
+        item->setSizeHint(QSize(button->width(), button->height()));
+    });
+
+    ui->listDatabase->addItem(item);
+    ui->listDatabase->setItemWidget(item, button);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                       PUBLIC SLOTS                                                               //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Open a database given its path, handle UI to display database buttons
-void MainWindow::loadDatabase(const QUrl &url)
-{
-    qWarning() << url.path();
-}
 
 void MainWindow::error(QString err)
 {
@@ -170,14 +215,6 @@ void MainWindow::read(DBParameters param)
     qWarning() << param.DBDecrypted;
     qWarning() << param.DBKeySalt;
     qWarning() << param.DBIterations;
-}
-
-void MainWindow::displayWidget(BlueWidget *w)
-{
-    qWarning() << "Displaying w";
-
-    manager->writeDatabaseObject();
-    ui->databaseTab->addTab(w, "BAR");
 }
 
 //Beautifulness UI related SLOTS

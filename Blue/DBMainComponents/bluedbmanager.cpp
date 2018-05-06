@@ -1,5 +1,4 @@
 #include "bluedbmanager.h"
-
 #include <QObject>
 #include <QThread>
 #include <QJsonDocument>
@@ -18,7 +17,6 @@ BlueDBManager::BlueDBManager()
 BlueDBManager::~BlueDBManager()
 {
     qWarning() << "BlueDBManager destructor called";
-    _widget->deleteLater();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,10 +64,9 @@ void BlueDBManager::databaseRead(DBParameters dbParam)
 {
     //Create a new database
     _database = std::make_shared<BlueDatabase>(dbParam);
-
     //Create a new widget and emit finish signal
     _widget = new BlueWidget(_database);
-    emit createSignal(_widget);
+    emit createSignal(_widget, _path);
 
     //Return IO to normal state
     _canIoOperate = true;

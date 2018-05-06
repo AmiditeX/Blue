@@ -2,7 +2,6 @@
 #define DATABASEBUTTON_H
 
 #include <QWidget>
-#include <QPropertyAnimation>
 
 namespace Ui {
 class DatabaseButton;
@@ -14,13 +13,17 @@ class DatabaseButton : public QWidget
 
 public:
     explicit DatabaseButton(QWidget *parent = 0);
+    void resizeEvent(QResizeEvent *event);
     ~DatabaseButton();
 
 public slots:
-    void dropMenu();
+
+signals:
+    void dropMenu(bool drop);
+    void sizeChanged();
 
 private slots:
-    void buttonStatus();
+
 
 private:
     Ui::DatabaseButton *ui;

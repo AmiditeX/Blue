@@ -176,6 +176,13 @@ QString PasswordCreator::generateRandomString(const QString &chars, int length)
     return randomString;
 }
 
+void PasswordCreator::clear()
+{
+    ui->password->clear();
+    ui->wordCount->setValue(4);
+    ui->genLength->setValue(32);
+}
+
 QString PasswordCreator::returnPassword()
 {
     return ui->password->text();

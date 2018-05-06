@@ -24,10 +24,7 @@ public slots:
     QString getKey();
 
     void openDbSelector();
-    void retrieveDbUrl(const QUrl &url);
-
     void openKeySelector();
-    void retrieveKeyUrl(const QUrl &url);
 
     void clear();
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>230</width>
-    <height>150</height>
+    <height>149</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>201</width>
+     <width>231</width>
      <height>50</height>
     </rect>
    </property>
@@ -31,7 +31,9 @@
 border:0px;
 background-color: rgb(34, 35, 40);
 color: rgb(255, 255, 255);
-font-weight: bold
+font-weight: bold;
+border-top:5px;
+border-top-color: rgb(255, 255, 255);
 }
 
 QPushButton::pressed {
@@ -40,6 +42,9 @@ border-right: 5px;
    </property>
    <property name="text">
     <string>_DatabaseNameHolder</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="settingsButton">
@@ -91,23 +96,7 @@ border-right: 5px;
 }</string>
    </property>
    <property name="text">
-    <string>Delete database</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="buttonColor_1">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>0</y>
-     <width>30</width>
-     <height>50</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(68, 158, 241);</string>
-   </property>
-   <property name="text">
-    <string/>
+    <string>Close</string>
    </property>
   </widget>
  </widget>

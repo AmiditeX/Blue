@@ -2,6 +2,8 @@
 #define BLUEMANAGER_H
 
 #include <QObject>
+#include <QCryptographicHash>
+#include "BlueCrypto/aesmodule.h"
 #include "DBMainComponents/bluedbmanager.h"
 #include "BlueCrypto/blueiointerface.h"
 #include "mainwindow.h"
@@ -17,7 +19,8 @@ public:
 signals:
 
 public slots:
-    void openDatabase(QString masterKey, QString filePath);
+    void openDatabase(QString masterKey, QString filePath, QString keyPath);
+    void createDatabase(DatabaseCreator::DatabaseParam parameters);
 
 private:
     MainWindow *window = nullptr;

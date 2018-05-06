@@ -14,6 +14,10 @@ class DatabaseCreator : public QWidget
 {
     Q_OBJECT
 
+public:
+    explicit DatabaseCreator(QWidget *parent = 0);
+    ~DatabaseCreator();
+
     struct DatabaseParam
     {
         QString dbPath;
@@ -23,11 +27,8 @@ class DatabaseCreator : public QWidget
         int stretchTime;
     };
 
-public:
-    explicit DatabaseCreator(QWidget *parent = 0);
-    ~DatabaseCreator();
-
     DatabaseParam returnParams();
+    void clear();
 
 public slots:
     void openDbSelector();

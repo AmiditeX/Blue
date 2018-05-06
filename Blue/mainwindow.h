@@ -4,13 +4,14 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QMouseEvent>
-#include "BlueCrypto/aesmodule.h"
-#include "MainwindowWidgets/bluedialog.h"
+#include <QListWidget>
+#include <QPropertyAnimation>
 #include "DBMainComponents/bluedbmanager.h"
-#include "BlueCrypto/blueiointerface.h"
+#include "MainwindowWidgets/bluedialog.h"
 #include "MainwindowWidgets/databaseopener.h"
 #include "MainwindowWidgets/customshadoweffect.h"
 #include "MainwindowWidgets/databasecreator.h"
+#include "MainwindowWidgets/databasebutton.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,34 +33,28 @@ public slots:
     void openDatabase();
     void openerReturn();
     void openerClose();
-
     void createDatabase();
+    void creatorReturn();
+    void creatorClose();
 
-
-signals:
-    void openingRequest(QString masterKey, QString filePath);
-
-
-private slots:
     //Beautifulness UI related SLOTS
     void switchButtonStatus();
 
     //Database related SLOTS
-    void loadDatabase(const QUrl &url);
-
-
-
-    void displayWidget(BlueWidget *w);
+    void displayWidget(BlueWidget *w, const QString &path);
     void error(QString err);
     void write();
     void read(DBParameters param);
+
+signals:
+    void openingRequest(QString masterKey, QString filePath, QString keyPath);
+    void createRequest(DatabaseCreator::DatabaseParam parameters);
 
 protected:
 
 
 private:
     Ui::MainWindow *ui;
-    BlueDBManager *manager = nullptr;
     DatabaseOpener *opener = nullptr;
     DatabaseCreator *creator = nullptr;
 };

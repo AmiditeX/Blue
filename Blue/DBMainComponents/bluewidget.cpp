@@ -14,6 +14,7 @@ BlueWidget::BlueWidget(std::shared_ptr<BlueDatabase> databasePointer) : ui(new U
     {
         _containers.push_back(new DBWContainers(this, containerList.at(i)));
     }
+    qWarning() << _dataBase.get();
 }
 
 BlueWidget::~BlueWidget()

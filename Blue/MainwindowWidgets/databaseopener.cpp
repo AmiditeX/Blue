@@ -53,36 +53,14 @@ QString DatabaseOpener::getMaster()
 
 void DatabaseOpener::openDbSelector()
 {
-    QFileDialog *dialog = new QFileDialog(this, tr("Select the database file"), QDir::currentPath(), "*.blue");
-    dialog->setVisible(true); //Display the dialog for the user to select the file
-
-    //Delete the dialog when the URL was retrieved or dialog closed
-    QObject::connect(dialog, SIGNAL(urlSelected(QUrl)), dialog, SLOT(deleteLater()));
-
-    //Return database path to loadDatabse()
-    QObject::connect(dialog, SIGNAL(urlSelected(QUrl)), this, SLOT(retrieveDbUrl(QUrl)));
-}
-
-void DatabaseOpener::retrieveDbUrl(const QUrl &url)
-{
-    ui->database->setText(url.path());
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Select the database file"), QDir::currentPath(), "*.blue");
+    ui->database->setText(fileName);
 }
 
 void DatabaseOpener::openKeySelector()
 {
-    QFileDialog *dialog = new QFileDialog(this, tr("Select the key file"), QDir::currentPath(), "*.bluekey");
-    dialog->setVisible(true); //Display the dialog for the user to select the file
-
-    //Delete the dialog when the URL was retrieved or dialog closed
-    QObject::connect(dialog, SIGNAL(urlSelected(QUrl)), dialog, SLOT(deleteLater()));
-
-    //Return database path to loadDatabse()
-    QObject::connect(dialog, SIGNAL(urlSelected(QUrl)), this, SLOT(retrieveKeyUrl(QUrl)));
-}
-
-void DatabaseOpener::retrieveKeyUrl(const QUrl &url)
-{
-    ui->key->setText(url.path());
+   QString fileName = QFileDialog::getOpenFileName(this, tr("Select the key file"), QDir::currentPath(), "*");
+   ui->key->setText(fileName);
 }
 
 void DatabaseOpener::clear()

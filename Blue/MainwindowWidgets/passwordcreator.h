@@ -18,6 +18,7 @@ public:
     ~PasswordCreator();
 
     QString returnPassword();
+    void clear();
 
 public slots:
     void evaluateSubject(QString subject);

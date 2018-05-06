@@ -72,6 +72,15 @@ DatabaseCreator::DatabaseParam DatabaseCreator::returnParams()
     return returnObject;
 }
 
+void DatabaseCreator::clear()
+{
+    ui->database->clear();
+    ui->key->clear();
+    ui->iterationTime->setValue(0);
+    ui->stretchTime->setValue(2);
+    creator->clear();
+}
+
 DatabaseCreator::~DatabaseCreator()
 {
     delete ui;
