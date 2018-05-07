@@ -69,8 +69,6 @@ void MainWindow::displayGeneralError(const QString &err)
     dialog->show();
 }
 
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                          PUBLIC                                                                  //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,30 +162,44 @@ void MainWindow::creatorClose()
 //Display the menu widget and the main database widget
 void MainWindow::displayWidget(BlueWidget *w, const QString &path)
 {
-    //Add mainwidget
+    //Add to mainwidget
     ui->databaseTab->addTab(w, path);
     ui->databaseTab->setCurrentWidget(w);
     creatorClose();
     openerClose();
     ui->databaseTab->setVisible(true);
 
-    DatabaseButton *button = new DatabaseButton(this);
-    QListWidgetItem *item = new QListWidgetItem();
+    QListWidgetItem *item = new QListWidgetItem(); //Button has a pointer on item for deletion
+    DatabaseButton *button = new DatabaseButton(this, w, item);
     item->setSizeHint(QSize(button->width(), 150));
 
+    //Connect to remove from QListWidget and emit signal to close the database
+    connect(button, &DatabaseButton::closeButtonClicked, [=](){
+        QListWidgetItem *i = button->returnItem();
+        ui->listDatabase->removeItemWidget(i); //Remove from sidebar
+        delete i; //Remove i completly from the list (see QT doc)
+        ui->databaseTab->removeTab(ui->databaseTab->indexOf(button->getWidget()));
+        w->deleteLater();
+        ui->databaseTab->setHidden(true);
+        emit closeRequest(button->getWidget()); //Ask manager to terminate the database
+    });
+
+    //Connect for the drop animation
     connect(button, &DatabaseButton::dropMenu, [=](bool drop){
         QPropertyAnimation *animation = new QPropertyAnimation(button, "geometry");
         animation->setDuration(100);
         animation->setStartValue(button->geometry());
-        if(drop) {animation->setEndValue(QRect(0, 0, button->width(), 50));}
-        else {animation->setEndValue(QRect(0, 0, button->width(), 150));}
+        if(drop) {animation->setEndValue(QRect(0, 0, button->width(), 55));}
+        else {animation->setEndValue(QRect(0, 0, button->width(), 200));}
         animation->start(QAbstractAnimation::DeleteWhenStopped);
     });
 
+    //Connect for the drop animation
     connect(button, &DatabaseButton::sizeChanged, [=](){
         item->setSizeHint(QSize(button->width(), button->height()));
     });
 
+    //Add to sidebar
     ui->listDatabase->addItem(item);
     ui->listDatabase->setItemWidget(item, button);
 }

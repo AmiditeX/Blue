@@ -4,11 +4,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
+#include <QThread>
 #include <filters.h>
 #include "BlueCrypto/aesmodule.h"
-
-#include <QDebug>
-#include <QThread>
 
 BlueIOInterface::BlueIOInterface(QMutex *mutex)
 {
@@ -58,6 +56,7 @@ void BlueIOInterface::writeFile(const QString &filePath, const QJsonDocument jso
         file.write(qCompress(finalDoc.toBinaryData(), 9));
         file.close();
 
+        _fileMutex->unlock();
         //Emit completion signal
         emit writeCompleted();
     }
@@ -85,7 +84,6 @@ void BlueIOInterface::readFile(const QString &filePath, const QString &composite
 
         QJsonDocument doc = QJsonDocument::fromBinaryData(wrappedData);
         QJsonObject jsonObject = doc.object(); //Recover JSON encapsulating object
-        qWarning() << jsonObject;
 
         QByteArray DBField = QByteArray::fromBase64(jsonObject.value("DBField").toString().toUtf8()); //Recover encrypted database
         QByteArray DBInitVector = QByteArray::fromBase64(jsonObject.value("DBInitVector").toString().toUtf8()); //Recover initialization vector
@@ -105,6 +103,8 @@ void BlueIOInterface::readFile(const QString &filePath, const QString &composite
         QByteArray decryptedData = qUncompress(AESModule::decryptBinary(DBField, aData, derivedKey, DBInitVector));
 
         DBParameters returnObject{QJsonDocument::fromBinaryData(decryptedData), DBInitVector, DBKeySalt, DBIterations, DBStretchTime, compositeKey, filePath};
+
+        _fileMutex->unlock();
         emit readCompleted(returnObject); //Return decrypted database + database parameters
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &exception) //Decryption failed (bad composite key, tampered file..)

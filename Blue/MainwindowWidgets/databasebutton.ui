@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>230</width>
-    <height>149</height>
+    <height>205</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>5</y>
      <width>231</width>
      <height>50</height>
     </rect>
@@ -33,11 +33,6 @@ background-color: rgb(34, 35, 40);
 color: rgb(255, 255, 255);
 font-weight: bold;
 border-top:5px;
-border-top-color: rgb(255, 255, 255);
-}
-
-QPushButton::pressed {
-border-right: 5px;
 }</string>
    </property>
    <property name="text">
@@ -46,12 +41,15 @@ border-right: 5px;
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="settingsButton">
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>100</y>
+     <y>155</y>
      <width>180</width>
      <height>50</height>
     </rect>
@@ -77,7 +75,7 @@ border-right: 5px;
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>50</y>
+     <y>55</y>
      <width>180</width>
      <height>50</height>
     </rect>
@@ -97,6 +95,48 @@ border-right: 5px;
    </property>
    <property name="text">
     <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="dashBoard">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>105</y>
+     <width>180</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(34, 35, 40);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+border-right: 5px;
+}</string>
+   </property>
+   <property name="text">
+    <string>Dashboard</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>230</width>
+     <height>5</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(68, 158, 241);</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

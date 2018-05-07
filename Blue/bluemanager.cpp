@@ -19,6 +19,7 @@ BlueManager::BlueManager()
 
     QObject::connect(window, SIGNAL(openingRequest(QString,QString,QString)), this, SLOT(openDatabase(QString,QString,QString)));
     QObject::connect(window, SIGNAL(createRequest(DatabaseCreator::DatabaseParam)), this, SLOT(createDatabase(DatabaseCreator::DatabaseParam)));
+    QObject::connect(window, SIGNAL(closeRequest(BlueWidget*)), this, SLOT(closeDatabase(BlueWidget*)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,8 +54,8 @@ void BlueManager::openDatabase(QString masterKey, QString filePath, QString keyP
     }
     else { compositeKey = masterKey; }
 
-            qWarning() << "OPEN KEY " << compositeKey;
     QObject::connect(dbManager.get(), SIGNAL(createSignal(BlueWidget*, QString)), window, SLOT(displayWidget(BlueWidget*, QString)));
+    QObject::connect(dbManager.get(), SIGNAL(writtenSignal()), this, SLOT(terminateDatabase()));
     dbManager->createDatabaseObject(filePath, compositeKey);
 }
 
@@ -65,6 +66,7 @@ void BlueManager::createDatabase(DatabaseCreator::DatabaseParam parameters)
     std::shared_ptr<BlueDBManager> dbManager = std::make_shared<BlueDBManager>();
     _dbManagerList.push_back(dbManager);
     QObject::connect(dbManager.get(), SIGNAL(createSignal(BlueWidget*, QString)), window, SLOT(displayWidget(BlueWidget*, QString)));
+    QObject::connect(dbManager.get(), SIGNAL(writtenSignal()), this, SLOT(terminateDatabase()));
 
     QString compositeKey; //Compute the compositekey with keyfile (if provided) and password
     if(!parameters.keyPath.isEmpty())
@@ -80,12 +82,61 @@ void BlueManager::createDatabase(DatabaseCreator::DatabaseParam parameters)
     if(parameters.iterations > 0) //Iterations override the stretchtime
     { parameters.stretchTime = 0; }
 
-            qWarning() << "CREATE KEY " << compositeKey;
     dbManager->createNewDatabase(parameters.dbPath, compositeKey, parameters.iterations, parameters.stretchTime);
     dbManager->writeDatabaseObject();
 }
 
-/// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Connect the DatabaseManager to its ending slot
+void BlueManager::closeDatabase(BlueWidget *w)
+{
+    for(unsigned int i = 0; i < _dbManagerList.size(); i++)
+    {
+        if(_dbManagerList[i]->returnWidget() == w)
+        {
+            if(_dbManagerList[i]->isIoOperate()) //Database is not already being written
+            {
+                _dbManagerList[i]->setDeletionStatus(true); //Mark database as deletetable
+                _dbManagerList[i]->writeDatabaseObject(); //Send a write signal for final saving
+            }
+            else //Database already getting written, needing to write it a last time
+            {
+                _dbManagerList[i]->setFinalSave(true); //Mark it as needing a last time save
+            }
+            return;
+        }
+    }
+}
+
+//Called everytime the database is written, if it is marked as deleted, it is removed
+void BlueManager::terminateDatabase()
+{
+    BlueDBManager* manager = qobject_cast<BlueDBManager*>(sender());
+    std::shared_ptr<BlueDBManager> dbManager;
+
+    for(unsigned int i = 0; i < _dbManagerList.size(); i++)
+    {
+        if(_dbManagerList[i].get() == manager)
+        {
+            dbManager = _dbManagerList[i];
+        }
+    }
+
+    if(dbManager->isDeletionReady()) //This database has already been written for its last time and is ready to die
+    {
+        qWarning() << dbManager->isDeletionReady() << dbManager->isFinalSave() << dbManager->isIoOperate();
+        _dbManagerList.erase(std::remove(_dbManagerList.begin(), _dbManagerList.end(), dbManager), _dbManagerList.end()); //Remove DBManager, ending its life, farewell
+        return;
+    }
+
+    if(dbManager->isFinalSave()) //This database has yet to be written for its last time, mark it as dying
+    {
+        dbManager->setDeletionStatus(true);
+        dbManager->writeDatabaseObject();
+        return;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                       PUBLIC SLOTS                                                               //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

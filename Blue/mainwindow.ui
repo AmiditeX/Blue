@@ -180,10 +180,20 @@ font-weight: bold
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>190</y>
+      <y>180</y>
       <width>230</width>
-      <height>561</height>
+      <height>571</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QListWidget::item
+{
+    background-color: rgb(44, 44, 52); 
+}
+QListWidget::item:selected
+{
+    background-color: rgb(44, 44, 52);
+}</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>

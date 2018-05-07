@@ -22,6 +22,11 @@ public:
     void createNewDatabase(const QString &path, const QString &compositeKey, const int iterations, const int stretchtime);
     BlueWidget* returnWidget();
     QString getPath();
+    void setDeletionStatus(bool status);
+    bool isDeletionReady();
+    bool isIoOperate();
+    void setFinalSave(bool finalSave);
+    bool isFinalSave();
     
 protected:
     //IO Functions using multiple threads
@@ -50,6 +55,8 @@ private:
     QMutex _fileMutex;
     bool _canIoOperate = true;
     QString _path;
+    bool _isDeletionReady = false;
+    bool _finalSave = false;
 
 };
 

@@ -50,6 +50,8 @@ signals:
     void openingRequest(QString masterKey, QString filePath, QString keyPath);
     void createRequest(DatabaseCreator::DatabaseParam parameters);
 
+    void closeRequest(BlueWidget *w);
+
 protected:
 
 

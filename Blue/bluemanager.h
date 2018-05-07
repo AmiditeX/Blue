@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QCryptographicHash>
+#include <algorithm>
 #include "BlueCrypto/aesmodule.h"
 #include "DBMainComponents/bluedbmanager.h"
 #include "BlueCrypto/blueiointerface.h"
@@ -21,6 +22,8 @@ signals:
 public slots:
     void openDatabase(QString masterKey, QString filePath, QString keyPath);
     void createDatabase(DatabaseCreator::DatabaseParam parameters);
+    void closeDatabase(BlueWidget *w);
+    void terminateDatabase();
 
 private:
     MainWindow *window = nullptr;

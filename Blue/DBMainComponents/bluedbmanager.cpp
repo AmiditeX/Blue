@@ -78,6 +78,7 @@ void BlueDBManager::databaseRead(DBParameters dbParam)
 void BlueDBManager::databaseWritten()
 {
     _canIoOperate = true;
+    emit writtenSignal();
     qWarning() << "database has been written";
 }
 
@@ -99,6 +100,31 @@ BlueWidget* BlueDBManager::returnWidget()
 QString BlueDBManager::getPath()
 {
     return _path;
+}
+
+void BlueDBManager::setDeletionStatus(bool status)
+{
+    _isDeletionReady = status;
+}
+
+bool BlueDBManager::isDeletionReady()
+{
+    return _isDeletionReady;
+}
+
+bool BlueDBManager::isIoOperate()
+{
+    return _canIoOperate;
+}
+
+void BlueDBManager::setFinalSave(bool finalSave)
+{
+    _finalSave = finalSave;
+}
+
+bool BlueDBManager::isFinalSave()
+{
+    return _finalSave;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
