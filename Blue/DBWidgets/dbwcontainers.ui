@@ -6,13 +6,114 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>830</width>
+    <height>447</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(44, 44, 52);</string>
+  </property>
+  <widget class="QPushButton" name="containerButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>831</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(68, 158, 241);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(93, 127, 247);
+}</string>
+   </property>
+   <property name="text">
+    <string>__ContainerNameHolder</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QListView" name="listView">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>50</y>
+     <width>830</width>
+     <height>391</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="close">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>10</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(85, 87, 83);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(46, 52, 54);
+}</string>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="edit">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>10</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(85, 87, 83);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(46, 52, 54);
+}</string>
+   </property>
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </widget>
+  <zorder>listView</zorder>
+  <zorder>containerButton</zorder>
+  <zorder>close</zorder>
+  <zorder>edit</zorder>
  </widget>
  <resources/>
  <connections/>

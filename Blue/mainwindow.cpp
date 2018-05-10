@@ -34,14 +34,23 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(opener, SIGNAL(openPressed()), this, SLOT(openerReturn()));
     QObject::connect(opener, SIGNAL(closePressed()), this, SLOT(openerClose()));
     QObject::connect(opener, SIGNAL(closePressed()), opener, SLOT(clear()));
-    opener->setVisible(false);
+    opener->setVisible(true);
     opener->move(260, 30);
 
+    //Database Creator
     creator = new DatabaseCreator(this);
     QObject::connect(creator, SIGNAL(okPressed()), this, SLOT(creatorReturn()));
     QObject::connect(creator, SIGNAL(closePressed()), this, SLOT(creatorClose()));
     creator->setVisible(false);
     creator->move(260, 30);
+
+    //Database settings modifier
+    settings = new DatabaseSettings(this);
+    QObject::connect(settings, SIGNAL(okPressed()), this, SLOT(settingsReturn()));
+    QObject::connect(settings, SIGNAL(closePressed()), this, SLOT(settingsClose()));
+    settings->setVisible(false);
+    settings->move(260, 30);
+
 }
 
 MainWindow::~MainWindow()
@@ -87,6 +96,7 @@ void MainWindow::openDatabase()
     ui->databaseTab->setHidden(true);
     creator->setVisible(false);
     opener->setVisible(true);
+    settings->setVisible(false);
 }
 
 void MainWindow::openerClose()
@@ -131,6 +141,7 @@ void MainWindow::createDatabase()
 {
     ui->databaseTab->setHidden(true);
     opener->setVisible(false);
+    settings->setVisible(false);
     creator->setVisible(true);
 }
 
@@ -159,6 +170,32 @@ void MainWindow::creatorClose()
     creator->setVisible(false);
 }
 
+//Called when settings were confirmed
+void MainWindow::settingsReturn()
+{
+    DatabaseSettings::DatabaseParam params = settings->returnParams();
+    if(params.dbPath.isEmpty()) //Error if file not provided, password not provided
+    { displayGeneralError(tr("The path to the database wasn't provided")); return; }
+
+    if(params.password.isEmpty())
+    { displayGeneralError(tr("The password of the database wasn't provided")); return; }
+
+    QDir dir; //Error if keyfile doesn't exist and if field isn't empty
+    if(!dir.exists(params.keyPath) && !params.keyPath.isEmpty())
+    {  displayGeneralError(tr("The key file doesn't exist")); return; }
+
+    BlueWidget *w = settings->getCurrentDatabase();
+    emit settingsChanged(w, settings->returnParams());
+    settings->clear();
+    settings->setVisible(false);
+}
+
+void MainWindow::settingsClose()
+{
+    settings->clear();
+    settings->setVisible(false);
+}
+
 //Display the menu widget and the main database widget
 void MainWindow::displayWidget(BlueWidget *w, const QString &path)
 {
@@ -167,21 +204,23 @@ void MainWindow::displayWidget(BlueWidget *w, const QString &path)
     ui->databaseTab->setCurrentWidget(w);
     creatorClose();
     openerClose();
+    settingsClose();
     ui->databaseTab->setVisible(true);
 
-    QListWidgetItem *item = new QListWidgetItem(); //Button has a pointer on item for deletion
-    DatabaseButton *button = new DatabaseButton(this, w, item);
-    item->setSizeHint(QSize(button->width(), 150));
+    //Sidebar management
+    QListWidgetItem *item = new QListWidgetItem();
+    DatabaseButton *button = new DatabaseButton(this, w, item); //Button has a pointer on item for deletion
+    item->setSizeHint(QSize(button->width(), 50));
 
     //Connect to remove from QListWidget and emit signal to close the database
     connect(button, &DatabaseButton::closeButtonClicked, [=](){
         QListWidgetItem *i = button->returnItem();
         ui->listDatabase->removeItemWidget(i); //Remove from sidebar
-        delete i; //Remove i completly from the list (see QT doc)
+        delete i; //Remove i completely from the list (see QT doc)
         ui->databaseTab->removeTab(ui->databaseTab->indexOf(button->getWidget()));
-        w->deleteLater();
         ui->databaseTab->setHidden(true);
-        emit closeRequest(button->getWidget()); //Ask manager to terminate the database
+        emit closeRequest(button->getWidget()); //Tell manager to terminate the database
+        w->deleteLater();
     });
 
     //Connect for the drop animation
@@ -190,13 +229,37 @@ void MainWindow::displayWidget(BlueWidget *w, const QString &path)
         animation->setDuration(100);
         animation->setStartValue(button->geometry());
         if(drop) {animation->setEndValue(QRect(0, 0, button->width(), 55));}
-        else {animation->setEndValue(QRect(0, 0, button->width(), 200));}
+        else {animation->setEndValue(QRect(0, 0, button->width(), 205));}
         animation->start(QAbstractAnimation::DeleteWhenStopped);
     });
 
     //Connect for the drop animation
     connect(button, &DatabaseButton::sizeChanged, [=](){
         item->setSizeHint(QSize(button->width(), button->height()));
+    });
+
+    //Connect to display widget
+    connect(button, &DatabaseButton::databaseButtonClicked, [=](){
+        ui->databaseTab->setCurrentIndex(ui->databaseTab->indexOf(button->getWidget()));
+        ui->databaseTab->setVisible(true);
+        creator->setVisible(false);
+        opener->setVisible(false);
+        settings->setVisible(false);
+    });
+
+    //Connect to settings
+    connect(button, &DatabaseButton::settingsButtonClicked, [=](){
+        ui->databaseTab->setVisible(false);
+        creator->setVisible(false);
+        opener->setVisible(false);
+        settings->setVisible(true);
+
+        DBParameters parameters = button->getWidget()->returnParam();
+        if(parameters.DBStretchTime > 0)
+            parameters.DBIterations = 0;
+        DatabaseSettings::DatabaseParam param{parameters.DBPath, "", "", parameters.DBIterations, parameters.DBStretchTime};
+        settings->setParams(param);
+        settings->setCurrentDatabase(button->getWidget());
     });
 
     //Add to sidebar

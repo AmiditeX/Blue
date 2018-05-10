@@ -19,6 +19,7 @@ class BlueIOInterface : public QObject
 
 public:
     BlueIOInterface(QMutex *mutex);
+    ~BlueIOInterface();
 
 public slots:
     //Encrypt database, add the metadata and write it to a file

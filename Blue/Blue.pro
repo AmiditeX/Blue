@@ -51,7 +51,9 @@ SOURCES += main.cpp\
     Tools/zxcppvbn/tools/tinf/tinfgzip.c \
     Tools/zxcppvbn/tools/tinf/tinflate.c \
     Tools/zxcppvbn/tools/tinf/tinfzlib.c \
-    Tools/diceware/diceware.cpp
+    Tools/diceware/diceware.cpp \
+    MainwindowWidgets/databasesettings.cpp \
+    MainwindowWidgets/containercreator.cpp
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
@@ -81,7 +83,9 @@ HEADERS  += mainwindow.h \
     MainwindowWidgets/passwordcreator.h \
     bluemanager.h \
     Tools/diceware/wordlist.h \
-    Tools/diceware/diceware.h
+    Tools/diceware/diceware.h \
+    MainwindowWidgets/databasesettings.h \
+    MainwindowWidgets/containercreator.h
 
 FORMS    += mainwindow.ui \
     DBWidgets/dbwcontainers.ui \
@@ -94,7 +98,9 @@ FORMS    += mainwindow.ui \
     MainwindowWidgets/bluedialog.ui \
     MainwindowWidgets/databaseopener.ui \
     MainwindowWidgets/databasecreator.ui \
-    MainwindowWidgets/passwordcreator.ui
+    MainwindowWidgets/passwordcreator.ui \
+    MainwindowWidgets/databasesettings.ui \
+    MainwindowWidgets/containercreator.ui
 
 TRANSLATIONS += blue_fr.ts
 

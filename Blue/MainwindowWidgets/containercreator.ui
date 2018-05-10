@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ContainerCreator</class>
+ <widget class="QWidget" name="ContainerCreator">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>352</width>
+    <height>177</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(34, 35, 40);</string>
+  </property>
+  <widget class="QLabel" name="colorLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(59, 118, 239);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="colorSelector">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>50</y>
+     <width>201</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(117, 80, 123);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(92, 53, 102);
+}</string>
+   </property>
+   <property name="text">
+    <string>Background color</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="containerTitle">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>331</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(238, 238, 236);
+color: rgb(0, 0, 0);
+border-radius:0px</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>200</number>
+   </property>
+   <property name="placeholderText">
+    <string>Title..</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="colorSelectorText">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>90</y>
+     <width>201</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(117, 80, 123);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(92, 53, 102);
+}</string>
+   </property>
+   <property name="text">
+    <string>Text color</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="colorLabel2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>90</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="close">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>140</y>
+     <width>201</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(239, 41, 41);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(164, 0, 0);
+}</string>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ok">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>140</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(68, 158, 241);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(93, 127, 247);
+}</string>
+   </property>
+   <property name="text">
+    <string>Create</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -7,6 +7,7 @@
 #include "BlueCrypto/blueiointerface.h"
 #include "bluedatabase.h"
 #include "bluewidget.h"
+#include "spdlog/spdlog.h"
 
 class BlueDBManager : public QObject
 {
@@ -27,6 +28,7 @@ public:
     bool isIoOperate();
     void setFinalSave(bool finalSave);
     bool isFinalSave();
+    void changeParameters(const DBParameters &param);
     
 protected:
     //IO Functions using multiple threads

@@ -29,6 +29,16 @@ public:
     //Return
     std::vector<std::shared_ptr<AbstractDataBaseItem>> returnItemList();
 
+    //Special tags
+    QString getTitle();
+    void setTitle(const QString &title);
+
+    QString getColor();
+    void setColor(const QString &color);
+
+    QString getTextColor();
+    void setTextColor(const QString &color);
+
 protected:
     std::shared_ptr<AbstractDataBaseItem> createItem(const QString &ID);
     std::shared_ptr<AbstractDataBaseItem> createItem(const QString &ID, const QJsonObject &doc);
@@ -36,6 +46,9 @@ protected:
 
 private:
     std::vector<std::shared_ptr<AbstractDataBaseItem>> _itemList;
+    QString _title;
+    QString _color;
+    QString _colorText;
 
 };
 

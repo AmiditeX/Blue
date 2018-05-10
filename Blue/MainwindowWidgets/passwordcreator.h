@@ -17,6 +17,7 @@ public:
     explicit PasswordCreator(QWidget *parent = 0);
     ~PasswordCreator();
 
+    void setPassword(const QString &password);
     QString returnPassword();
     void clear();
 

@@ -105,7 +105,7 @@ color: rgb(0, 0, 0);
 border-radius:0px</string>
    </property>
    <property name="text">
-    <string/>
+    <string>/root/Blue/build-Blue-Desktop_Qt_5_10_0_GCC_64bit-Debug/Passwordispassword.blue</string>
    </property>
    <property name="maxLength">
     <number>10000</number>
@@ -129,7 +129,7 @@ color: rgb(0, 0, 0);
 border-radius:0px</string>
    </property>
    <property name="text">
-    <string/>
+    <string>password</string>
    </property>
    <property name="maxLength">
     <number>10000</number>

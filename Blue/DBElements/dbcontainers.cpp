@@ -22,6 +22,11 @@ DBContainers::DBContainers(const QJsonObject &obj)
         const QString ID = currentItem.value("ID").toString();
         _itemList.push_back(std::move(createItem(ID)));
     }
+
+    //Special tags
+    _title = obj.value("Name").toString();
+    _color = obj.value("Color").toString();
+    _colorText = obj.value("ColorText").toString();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,6 +48,9 @@ QJsonObject DBContainers::toJson() const
     //Return the object containing all the elements
     QJsonObject obj;
     obj.insert("DBItems", allElements);
+    obj.insert("Name", _title);
+    obj.insert("Color", _color);
+    obj.insert("ColorText", _colorText);
     return obj;
 }
 
@@ -62,6 +70,36 @@ void DBContainers::removeItem(std::shared_ptr<AbstractDataBaseItem> ptr)
 std::vector<std::shared_ptr<AbstractDataBaseItem>> DBContainers::returnItemList()
 {
     return _itemList;
+}
+
+QString DBContainers::getTitle()
+{
+    return _title;
+}
+
+void DBContainers::setTitle(const QString &title)
+{
+    _title = title;
+}
+
+QString DBContainers::getColor()
+{
+    return _color;
+}
+
+void DBContainers::setColor(const QString &color)
+{
+    _color = color;
+}
+
+QString DBContainers::getTextColor()
+{
+    return _colorText;
+}
+
+void DBContainers::setTextColor(const QString &color)
+{
+    _colorText = color;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

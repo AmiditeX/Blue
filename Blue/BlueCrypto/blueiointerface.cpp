@@ -8,9 +8,16 @@
 #include <filters.h>
 #include "BlueCrypto/aesmodule.h"
 
+#include <QDebug>
+
 BlueIOInterface::BlueIOInterface(QMutex *mutex)
 {
     _fileMutex = mutex;
+}
+
+BlueIOInterface::~BlueIOInterface()
+{
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +63,6 @@ void BlueIOInterface::writeFile(const QString &filePath, const QJsonDocument jso
         file.write(qCompress(finalDoc.toBinaryData(), 9));
         file.close();
 
-        _fileMutex->unlock();
         //Emit completion signal
         emit writeCompleted();
     }
@@ -104,7 +110,6 @@ void BlueIOInterface::readFile(const QString &filePath, const QString &composite
 
         DBParameters returnObject{QJsonDocument::fromBinaryData(decryptedData), DBInitVector, DBKeySalt, DBIterations, DBStretchTime, compositeKey, filePath};
 
-        _fileMutex->unlock();
         emit readCompleted(returnObject); //Return decrypted database + database parameters
     }
     catch(CryptoPP::HashVerificationFilter::HashVerificationFailed &exception) //Decryption failed (bad composite key, tampered file..)

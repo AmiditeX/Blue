@@ -1,5 +1,6 @@
 #include "bluedatabase.h"
 #include <QJsonDocument>
+#include <QDebug>
 
 BlueDatabase::BlueDatabase(const DBParameters &param)
 {
@@ -17,16 +18,6 @@ BlueDatabase::BlueDatabase(const DBParameters &param)
     }
 
     _dbData.DBDecrypted = QJsonDocument(); //Remove useless data to spare memory
-
-
-    ///DEBUG
-    addContainer();
-    addContainer();
-    addContainer();
-
-    _containerList[0]->addItem("DBNameField");
-    _containerList[0]->addItem("DBOtpItem");
-    ///DEBUG
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,6 +27,14 @@ BlueDatabase::BlueDatabase(const DBParameters &param)
 const DBParameters BlueDatabase::getParameters() const
 {
     return _dbData;
+}
+
+void BlueDatabase::setParameters(const DBParameters &param)
+{
+    _dbData.DBIterations = param.DBIterations;
+    _dbData.DBStretchTime = param.DBStretchTime;
+    _dbData.DBPassword = param.DBPassword;
+    _dbData.DBPath = param.DBPath;
 }
 
 const QJsonDocument BlueDatabase::getJsonDocument() const

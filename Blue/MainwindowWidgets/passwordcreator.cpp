@@ -183,6 +183,11 @@ void PasswordCreator::clear()
     ui->genLength->setValue(32);
 }
 
+void PasswordCreator::setPassword(const QString &password)
+{
+    ui->password->setText(password);
+}
+
 QString PasswordCreator::returnPassword()
 {
     return ui->password->text();

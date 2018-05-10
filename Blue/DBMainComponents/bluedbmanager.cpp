@@ -43,7 +43,7 @@ void BlueDBManager::createNewDatabase(const QString &path, const QString &compos
     QFile file(path);
     if(!file.open(QIODevice::WriteOnly))
     {
-        error("Failed to create a new file");
+        error("Failed to create a new file for the database");
     }
 
     _path = path;
@@ -84,12 +84,16 @@ void BlueDBManager::databaseWritten()
 
 void BlueDBManager::failedDecryption(QString errorString)
 {
-    qWarning() << " ERROR " << errorString;
+    spdlog::get("LOGGER")->error("BlueDBManager::failedDecryption - " + errorString.toStdString());
+    spdlog::get("LOGGER")->flush();
+    emit decryptionErrSignal(errorString);
 }
 
 void BlueDBManager::error(QString errorString)
 {
-    qWarning() << "FATAL ERROR" << errorString;
+    spdlog::get("LOGGER")->error("BlueDBManager::error - " + errorString.toStdString());
+    spdlog::get("LOGGER")->flush();
+    emit errorSignal(errorString);
 }
 
 BlueWidget* BlueDBManager::returnWidget()
@@ -127,6 +131,11 @@ bool BlueDBManager::isFinalSave()
     return _finalSave;
 }
 
+void BlueDBManager::changeParameters(const DBParameters &param)
+{
+    _database->setParameters(param);
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                           PUBLIC                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,6 +165,10 @@ void BlueDBManager::writeDatabase(const BlueDatabase &dataBase)
     //When task completed or failed, destroy the device and the thread
     QObject::connect(ioDeviceThread, SIGNAL(finished()), ioDeviceThread, SLOT(deleteLater()));
     QObject::connect(ioDeviceThread, SIGNAL(finished()), ioDevice, SLOT(deleteLater()));
+    QObject::connect(ioDevice, SIGNAL(writeCompleted()), ioDevice, SLOT(deleteLater()));
+    QObject::connect(ioDevice, SIGNAL(errorSignal(QString)), ioDevice, SLOT(deleteLater()));
+    QObject::connect(ioDevice, SIGNAL(writeCompleted()), ioDeviceThread, SLOT(quit()));
+    QObject::connect(ioDevice, SIGNAL(errorSignal(QString)), ioDeviceThread, SLOT(quit()));
 
     //Start the thread and start writing the file
     ioDeviceThread->start();
@@ -188,6 +201,12 @@ void BlueDBManager::readDatabase(const QString &path, const QString &compositeKe
     //When task completed or failed, destroy the device and the thread
     QObject::connect(ioDeviceThread, SIGNAL(finished()), ioDeviceThread, SLOT(deleteLater()));
     QObject::connect(ioDeviceThread, SIGNAL(finished()), ioDevice, SLOT(deleteLater()));
+    QObject::connect(ioDevice, SIGNAL(readCompleted(DBParameters)), ioDevice, SLOT(deleteLater()));
+    QObject::connect(ioDevice, SIGNAL(errorSignal(QString)), ioDevice, SLOT(deleteLater()));
+    QObject::connect(ioDevice, SIGNAL(decryptionFailed(QString)), ioDevice, SLOT(deleteLater()));
+    QObject::connect(ioDevice, SIGNAL(readCompleted(DBParameters)), ioDeviceThread, SLOT(quit()));
+    QObject::connect(ioDevice, SIGNAL(errorSignal(QString)), ioDeviceThread, SLOT(quit()));
+    QObject::connect(ioDevice, SIGNAL(decryptionFailed(QString)), ioDeviceThread, SLOT(quit()));
 
     //Start the thread and start reading the file
     ioDeviceThread->start();

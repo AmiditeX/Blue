@@ -12,6 +12,7 @@
 #include "MainwindowWidgets/customshadoweffect.h"
 #include "MainwindowWidgets/databasecreator.h"
 #include "MainwindowWidgets/databasebutton.h"
+#include "MainwindowWidgets/databasesettings.h"
 
 namespace Ui {
 class MainWindow;
@@ -36,6 +37,8 @@ public slots:
     void createDatabase();
     void creatorReturn();
     void creatorClose();
+    void settingsReturn();
+    void settingsClose();
 
     //Beautifulness UI related SLOTS
     void switchButtonStatus();
@@ -49,8 +52,8 @@ public slots:
 signals:
     void openingRequest(QString masterKey, QString filePath, QString keyPath);
     void createRequest(DatabaseCreator::DatabaseParam parameters);
-
     void closeRequest(BlueWidget *w);
+    void settingsChanged(BlueWidget *w, DatabaseSettings::DatabaseParam param);
 
 protected:
 
@@ -59,6 +62,7 @@ private:
     Ui::MainWindow *ui;
     DatabaseOpener *opener = nullptr;
     DatabaseCreator *creator = nullptr;
+    DatabaseSettings *settings = nullptr;
 };
 
 #endif // MAINWINDOW_H

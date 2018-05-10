@@ -23,6 +23,9 @@ public slots:
     void openDatabase(QString masterKey, QString filePath, QString keyPath);
     void createDatabase(DatabaseCreator::DatabaseParam parameters);
     void closeDatabase(BlueWidget *w);
+    void settingsChanged(BlueWidget *w, DatabaseSettings::DatabaseParam param);
+    void databaseError(const QString &err);
+    void databaseDecryptionError(const QString &err);
     void terminateDatabase();
 
 private:

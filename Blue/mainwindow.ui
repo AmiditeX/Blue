@@ -21,9 +21,9 @@
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>30</y>
+      <y>29</y>
       <width>1080</width>
-      <height>750</height>
+      <height>751</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -213,19 +213,22 @@ QListWidget::item:selected
     <property name="defaultDropAction">
      <enum>Qt::IgnoreAction</enum>
     </property>
+    <property name="verticalScrollMode">
+     <enum>QAbstractItemView::ScrollPerPixel</enum>
+    </property>
     <property name="resizeMode">
      <enum>QListView::Adjust</enum>
     </property>
    </widget>
    <zorder>buttonSettings</zorder>
    <zorder>buttonCreate</zorder>
-   <zorder>databaseTab</zorder>
    <zorder>sideColor</zorder>
    <zorder>buttonOpen</zorder>
    <zorder>buttonColor_1</zorder>
    <zorder>buttonColor_2</zorder>
    <zorder>buttonColor_3</zorder>
    <zorder>listDatabase</zorder>
+   <zorder>databaseTab</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">

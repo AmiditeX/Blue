@@ -14,7 +14,7 @@ DatabaseButton::DatabaseButton(QWidget *parent, BlueWidget *w, QListWidgetItem *
     QObject::connect(ui->settingsButton, SIGNAL(clicked(bool)), this, SIGNAL(settingsButtonClicked()));
 
     //Default geometry doesn't contain the dropdown menu
-    setGeometry(QRect(0, 0, ui->databaseButton->width() + ui->databaseButton->width(), ui->databaseButton->height() + 5));
+    setGeometry(QRect(0, 0, ui->databaseButton->width(), ui->databaseButton->height() + 5));
 }
 
 BlueWidget* DatabaseButton::getWidget() const

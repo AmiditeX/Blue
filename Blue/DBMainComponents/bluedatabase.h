@@ -14,6 +14,8 @@ public:
     BlueDatabase(const DBParameters &param);
 
     const DBParameters getParameters() const;
+    void setParameters(const DBParameters &param);
+
     const QJsonDocument getJsonDocument() const;
 
     std::shared_ptr<DBContainers> addContainer();
