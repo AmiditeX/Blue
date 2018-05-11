@@ -257,7 +257,7 @@ background-color: rgb(92, 53, 102);
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(68, 158, 241);
-color: rgb(238, 238, 236);
+color: rgb(255, 255, 255);
 font: 75 22pt &quot;DejaVu Sans&quot;;
 font-weight: bold</string>
    </property>

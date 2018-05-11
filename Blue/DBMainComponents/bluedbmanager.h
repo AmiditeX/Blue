@@ -29,6 +29,8 @@ public:
     void setFinalSave(bool finalSave);
     bool isFinalSave();
     void changeParameters(const DBParameters &param);
+    bool hasModificationPending();
+    void setModificationPending(bool pending);
     
 protected:
     //IO Functions using multiple threads
@@ -59,6 +61,7 @@ private:
     QString _path;
     bool _isDeletionReady = false;
     bool _finalSave = false;
+    bool _hasModificationPending = false;
 
 };
 

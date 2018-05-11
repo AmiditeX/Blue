@@ -136,6 +136,16 @@ void BlueDBManager::changeParameters(const DBParameters &param)
     _database->setParameters(param);
 }
 
+bool BlueDBManager::hasModificationPending()
+{
+    return _hasModificationPending;
+}
+
+void BlueDBManager::setModificationPending(bool pending)
+{
+    _hasModificationPending = pending;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                           PUBLIC                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -2,6 +2,7 @@
 #define BLUEMANAGER_H
 
 #include <QObject>
+#include <QTimer>
 #include <QCryptographicHash>
 #include <algorithm>
 #include "BlueCrypto/aesmodule.h"
@@ -9,13 +10,15 @@
 #include "BlueCrypto/blueiointerface.h"
 #include "mainwindow.h"
 
-class BlueManager : public QObject
+class BlueManager : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit BlueManager();
     ~BlueManager();
+
+    void closeEvent(QCloseEvent *event);
 
 signals:
 
@@ -27,10 +30,19 @@ public slots:
     void databaseError(const QString &err);
     void databaseDecryptionError(const QString &err);
     void terminateDatabase();
+    void databaseModified(BlueWidget *w);
+    void saveDatabases();
+    void endProgram();
 
 private:
     MainWindow *window = nullptr;
     std::vector<std::shared_ptr<BlueDBManager>> _dbManagerList;
+    int dbNumber = 0;
+    bool programClosing = false;
+
+    QTimer *savingTimer;
+    QTimer *progressTimer;
+    unsigned short progress = 30;
 };
 
 #endif // BLUEMANAGER_H

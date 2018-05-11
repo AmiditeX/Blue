@@ -28,6 +28,9 @@ public:
 
     //BlueManager connects
     void displayGeneralError(const QString &err);
+    void setSavingStatus(const QString &text, int value);
+    void setStatusHidden(bool hidden);
+    void setDatabaseNumber(unsigned int number);
 
 public slots:
     //Database related SLOTS
@@ -40,9 +43,6 @@ public slots:
     void settingsReturn();
     void settingsClose();
 
-    //Beautifulness UI related SLOTS
-    void switchButtonStatus();
-
     //Database related SLOTS
     void displayWidget(BlueWidget *w, const QString &path);
     void error(QString err);
@@ -54,6 +54,8 @@ signals:
     void createRequest(DatabaseCreator::DatabaseParam parameters);
     void closeRequest(BlueWidget *w);
     void settingsChanged(BlueWidget *w, DatabaseSettings::DatabaseParam param);
+    void modified(BlueWidget *W);
+    void closing();
 
 protected:
 
@@ -63,6 +65,9 @@ private:
     DatabaseOpener *opener = nullptr;
     DatabaseCreator *creator = nullptr;
     DatabaseSettings *settings = nullptr;
+    CustomShadowEffect *bodyShadow = nullptr;
+    CustomShadowEffect *bodyShadow2 = nullptr;
+    CustomShadowEffect *bodyShadow3 = nullptr;
 };
 
 #endif // MAINWINDOW_H

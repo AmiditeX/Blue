@@ -70,6 +70,7 @@ void BlueWidget::addContainer(std::shared_ptr<DBContainers> container)
 //Create a new container (UI and underneath structure)
 void BlueWidget::createNewContainer()
 {
+    emit modified();
     creator->setVisible(true);
 }
 
@@ -83,6 +84,7 @@ void BlueWidget::creatorReturned()
 
     creator->clear();
     addContainer(container);
+    emit modified();
 }
 
 //Return the parameters of the link database

@@ -14,15 +14,15 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(44, 44, 52);</string>
+   <string notr="true">background-color: rgb(39, 36, 45);</string>
   </property>
   <widget class="QPushButton" name="databaseButton">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>5</y>
+     <y>3</y>
      <width>231</width>
-     <height>50</height>
+     <height>53</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -129,7 +129,7 @@ border-right: 5px;
      <x>0</x>
      <y>0</y>
      <width>230</width>
-     <height>5</height>
+     <height>3</height>
     </rect>
    </property>
    <property name="styleSheet">

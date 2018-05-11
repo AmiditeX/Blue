@@ -14,17 +14,26 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //Set UI up
-    ui->buttonColor_1->setVisible(false);
-    ui->buttonColor_2->setVisible(false);
-    ui->buttonColor_3->setVisible(false);
+    setAttribute(Qt::WA_QuitOnClose, false); //Doesn't need to be closed for the program to close
     ui->databaseTab->tabBar()->hide();
 
-    //UI connects
-    QObject::connect(ui->buttonOpen, SIGNAL(clicked(bool)), this, SLOT(switchButtonStatus()));
-    QObject::connect(ui->buttonCreate, SIGNAL(clicked(bool)), this, SLOT(switchButtonStatus()));
-    QObject::connect(ui->buttonSettings, SIGNAL(clicked(bool)), this, SLOT(switchButtonStatus()));
+    //Close and minimize
+    connect(ui->close, &QPushButton::pressed, [=](){
+        setDisabled(true);
+        opener->setVisible(false);
+        creator->setVisible(false);
+        settings->setVisible(false);
+        ui->shadow->setVisible(false);
+        ui->databaseTab->setVisible(false);
+        displayGeneralError("The program will close when all the opened databases finish saving");
+        emit closing();
+    });
 
+    connect(ui->minimize, &QPushButton::pressed, [=](){
+        setWindowState(Qt::WindowMinimized); //Minimize window
+    });
+
+    //UI connects
     QObject::connect(ui->buttonOpen, SIGNAL(clicked(bool)), this, SLOT(openDatabase()));
     QObject::connect(ui->buttonCreate, SIGNAL(clicked(bool)), this, SLOT(createDatabase()));
 
@@ -51,16 +60,35 @@ MainWindow::MainWindow(QWidget *parent) :
     settings->setVisible(false);
     settings->move(260, 30);
 
+    //Shadow effect
+    bodyShadow = new CustomShadowEffect(this);
+    bodyShadow->setBlurRadius(60.0);
+    bodyShadow->setDistance(10.0);
+    bodyShadow->setColor(QColor(0, 0, 0, 150));
+    ui->shadow->setGraphicsEffect(bodyShadow);
+
+    bodyShadow2 = new CustomShadowEffect(this);
+    bodyShadow2->setBlurRadius(60.0);
+    bodyShadow2->setDistance(10.0);
+    bodyShadow2->setColor(QColor(0, 0, 0, 150));
+    ui->shadow2->setGraphicsEffect(bodyShadow2);
+
+    bodyShadow3 = new CustomShadowEffect(this);
+    bodyShadow3->setBlurRadius(100.0);
+    bodyShadow3->setDistance(30.0);
+    bodyShadow3->setColor(QColor(0, 0, 0, 150));
+    ui->label->setGraphicsEffect(bodyShadow3);
+
+    ui->shadow->setVisible(false);
+
 }
 
 MainWindow::~MainWindow()
 {
-    qWarning() << "DELETING MAINWINDOW";
     delete ui;
     delete opener;
     delete creator;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                          PUBLIC                                                                  //
@@ -76,6 +104,24 @@ void MainWindow::displayGeneralError(const QString &err)
     dialog->setTitle(tr("Error"));
     dialog->setMessage(err);
     dialog->show();
+}
+
+void MainWindow::setSavingStatus(const QString &text, int value)
+{
+    ui->textStatus->setText(text);
+    ui->progressBar->setValue(value);
+    ui->progressBar->setFormat(QString().setNum(value) + "s");
+}
+
+void MainWindow::setStatusHidden(bool hidden)
+{
+    ui->textStatus->setHidden(hidden);
+    ui->progressBar->setHidden(hidden);
+}
+
+void MainWindow::setDatabaseNumber(unsigned int number)
+{
+    ui->textOpenDatabase->setText(tr("Open database : ") + QString().setNum(number));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,6 +186,7 @@ void MainWindow::openerReturn()
 void MainWindow::createDatabase()
 {
     ui->databaseTab->setHidden(true);
+    ui->shadow->setVisible(false);
     opener->setVisible(false);
     settings->setVisible(false);
     creator->setVisible(true);
@@ -186,6 +233,8 @@ void MainWindow::settingsReturn()
 
     BlueWidget *w = settings->getCurrentDatabase();
     emit settingsChanged(w, settings->returnParams());
+    emit modified(w);
+
     settings->clear();
     settings->setVisible(false);
 }
@@ -206,6 +255,7 @@ void MainWindow::displayWidget(BlueWidget *w, const QString &path)
     openerClose();
     settingsClose();
     ui->databaseTab->setVisible(true);
+    ui->shadow->setVisible(true);
 
     //Sidebar management
     QListWidgetItem *item = new QListWidgetItem();
@@ -219,6 +269,7 @@ void MainWindow::displayWidget(BlueWidget *w, const QString &path)
         delete i; //Remove i completely from the list (see QT doc)
         ui->databaseTab->removeTab(ui->databaseTab->indexOf(button->getWidget()));
         ui->databaseTab->setHidden(true);
+        ui->shadow->setVisible(false);
         emit closeRequest(button->getWidget()); //Tell manager to terminate the database
         w->deleteLater();
     });
@@ -242,6 +293,7 @@ void MainWindow::displayWidget(BlueWidget *w, const QString &path)
     connect(button, &DatabaseButton::databaseButtonClicked, [=](){
         ui->databaseTab->setCurrentIndex(ui->databaseTab->indexOf(button->getWidget()));
         ui->databaseTab->setVisible(true);
+        ui->shadow->setVisible(true);
         creator->setVisible(false);
         opener->setVisible(false);
         settings->setVisible(false);
@@ -250,6 +302,7 @@ void MainWindow::displayWidget(BlueWidget *w, const QString &path)
     //Connect to settings
     connect(button, &DatabaseButton::settingsButtonClicked, [=](){
         ui->databaseTab->setVisible(false);
+        ui->shadow->setVisible(false);
         creator->setVisible(false);
         opener->setVisible(false);
         settings->setVisible(true);
@@ -260,6 +313,10 @@ void MainWindow::displayWidget(BlueWidget *w, const QString &path)
         DatabaseSettings::DatabaseParam param{parameters.DBPath, "", "", parameters.DBIterations, parameters.DBStretchTime};
         settings->setParams(param);
         settings->setCurrentDatabase(button->getWidget());
+    });
+
+    connect(w, &BlueWidget::modified, [=](){
+        emit modified(w);
     });
 
     //Add to sidebar
@@ -290,42 +347,4 @@ void MainWindow::read(DBParameters param)
     qWarning() << param.DBDecrypted;
     qWarning() << param.DBKeySalt;
     qWarning() << param.DBIterations;
-}
-
-//Beautifulness UI related SLOTS
-
-//Uncheck mainbuttons when one of them is checked
-void MainWindow::switchButtonStatus()
-{
-    QPushButton *sender = qobject_cast<QPushButton*>(QObject::sender()); //Retrieve SIGNAL sender
-
-    //Hide all the blue square selectors
-    ui->buttonColor_1->setVisible(false);
-    ui->buttonColor_2->setVisible(false);
-    ui->buttonColor_3->setVisible(false);
-
-    if(ui->buttonOpen == sender)
-    {
-        //buttonOpen checked, uncheck all others
-        ui->buttonCreate->setChecked(false);
-        ui->buttonSettings->setChecked(false);
-
-        ui->buttonColor_1->setVisible(true);
-    }
-    else if(ui->buttonCreate == sender)
-    {
-        //buttonCreate checked, uncheck all others
-        ui->buttonOpen->setChecked(false);
-        ui->buttonSettings->setChecked(false);
-
-        ui->buttonColor_2->setVisible(true);
-    }
-    else if(ui->buttonSettings == sender)
-    {
-        //buttonSettings checked, uncheck all others
-        ui->buttonOpen->setChecked(false);
-        ui->buttonCreate->setChecked(false);
-
-        ui->buttonColor_3->setVisible(true);
-    }
 }
