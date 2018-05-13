@@ -4,14 +4,13 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++14
 TARGET = Blue
 TEMPLATE = app
-
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -53,7 +52,8 @@ SOURCES += main.cpp\
     Tools/zxcppvbn/tools/tinf/tinfzlib.c \
     Tools/diceware/diceware.cpp \
     MainwindowWidgets/databasesettings.cpp \
-    MainwindowWidgets/containercreator.cpp
+    MainwindowWidgets/containercreator.cpp \
+    Tools/HIBPChecker/hibpchecker.cpp
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
@@ -85,7 +85,8 @@ HEADERS  += mainwindow.h \
     Tools/diceware/wordlist.h \
     Tools/diceware/diceware.h \
     MainwindowWidgets/databasesettings.h \
-    MainwindowWidgets/containercreator.h
+    MainwindowWidgets/containercreator.h \
+    Tools/HIBPChecker/hibpchecker.h
 
 FORMS    += mainwindow.ui \
     DBWidgets/dbwcontainers.ui \
@@ -120,6 +121,10 @@ unix:!macx: PRE_TARGETDEPS += $$PWD/../libcrypto/lib/lnx/libcryptopp.a
 #WINDOWS CRYPTOPP LINKAGE
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../libcrypto/lib/w32/ -lcryptopp
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../libcrypto/lib/w32/ -lcryptopp
+
+LIBS += -L/root/Blue/openssl/ -lssl -lcrypto
+INCLUDEPATH += /usr/local/ssl/include/openssl
+unix:QMAKE_RPATHDIR +=  $$PWD/../openssl
 
 DISTFILES += \
     Tools/diceware/LICENSE.md

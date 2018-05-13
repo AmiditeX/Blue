@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QCryptographicHash>
 #include <algorithm>
+#include <QCoreApplication>
 #include "BlueCrypto/aesmodule.h"
 #include "DBMainComponents/bluedbmanager.h"
 #include "BlueCrypto/blueiointerface.h"
@@ -17,8 +18,6 @@ class BlueManager : public QWidget
 public:
     explicit BlueManager();
     ~BlueManager();
-
-    void closeEvent(QCloseEvent *event);
 
 signals:
 

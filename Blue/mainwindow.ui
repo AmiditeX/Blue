@@ -21,9 +21,9 @@
     <property name="geometry">
      <rect>
       <x>280</x>
-      <y>40</y>
-      <width>1070</width>
-      <height>710</height>
+      <y>50</y>
+      <width>1040</width>
+      <height>700</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -91,9 +91,9 @@ font-weight: bold
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>144</y>
+      <y>150</y>
       <width>230</width>
-      <height>631</height>
+      <height>625</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -104,7 +104,7 @@ font-weight: bold
 
 QListWidget::item
 {
-    background-color: rgb(44, 44, 52); 
+    background-color: rgb(39, 36, 45);
 }
 QListWidget::item:selected
 {
@@ -260,9 +260,9 @@ background-color: rgb(34, 35, 40);</string>
     <property name="geometry">
      <rect>
       <x>280</x>
-      <y>40</y>
-      <width>1070</width>
-      <height>710</height>
+      <y>50</y>
+      <width>1040</width>
+      <height>701</height>
      </rect>
     </property>
     <property name="styleSheet">

@@ -43,26 +43,19 @@ BlueManager::BlueManager()
     window->setStatusHidden(true);
 }
 
-void BlueManager::closeEvent(QCloseEvent *event)
+void BlueManager::endProgram()
 {
-            qWarning() << "boi";
+    programClosing = true;
     if(dbNumber > 0)
     {
         for(unsigned int i  = 0; i < _dbManagerList.size(); i++) //Start closing every single database
         {
             closeDatabase(_dbManagerList[i]->returnWidget());
         }
-        event->ignore();
         return;
     }
-            qWarning() << "boi2";
-    event->accept();
-}
 
-void BlueManager::endProgram()
-{
-    programClosing = true;
-    close();
+    QCoreApplication::instance()->quit();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,6 +92,7 @@ void BlueManager::openDatabase(QString masterKey, QString filePath, QString keyP
 
     QObject::connect(dbManager.get(), SIGNAL(createSignal(BlueWidget*, QString)), window, SLOT(displayWidget(BlueWidget*, QString)));
     QObject::connect(dbManager.get(), SIGNAL(writtenSignal()), this, SLOT(terminateDatabase()));
+    QObject::connect(dbManager.get(), SIGNAL(readSignal()), this, SLOT(terminateDatabase()));
     QObject::connect(dbManager.get(), SIGNAL(errorSignal(QString)), this, SLOT(databaseError(QString)));
     QObject::connect(dbManager.get(), SIGNAL(decryptionErrSignal(QString)), this, SLOT(databaseDecryptionError(QString)));
 
@@ -126,6 +120,7 @@ void BlueManager::createDatabase(DatabaseCreator::DatabaseParam parameters)
     _dbManagerList.push_back(dbManager);
     QObject::connect(dbManager.get(), SIGNAL(createSignal(BlueWidget*, QString)), window, SLOT(displayWidget(BlueWidget*, QString)));
     QObject::connect(dbManager.get(), SIGNAL(writtenSignal()), this, SLOT(terminateDatabase()));
+    QObject::connect(dbManager.get(), SIGNAL(readSignal()), this, SLOT(terminateDatabase()));
     QObject::connect(dbManager.get(), SIGNAL(errorSignal(QString)), this, SLOT(databaseError(QString)));
     QObject::connect(dbManager.get(), SIGNAL(decryptionErrSignal(QString)), this, SLOT(databaseDecryptionError(QString)));
 
@@ -170,7 +165,7 @@ void BlueManager::closeDatabase(BlueWidget *w)
 
                     dbNumber--;
                     if(programClosing) //App told to close
-                        close(); //Try closing
+                        endProgram(); //Try closing
                     window->setDatabaseNumber(dbNumber);
                 }
             }
@@ -241,7 +236,7 @@ void BlueManager::databaseError(const QString &err)
 
     dbNumber--;
     if(programClosing) //App told to close
-        close(); //Try closing
+        endProgram(); //Try closing
     window->setDatabaseNumber(dbNumber);
 }
 
@@ -268,7 +263,7 @@ void BlueManager::databaseDecryptionError(const QString &err)
 
     dbNumber--;
     if(programClosing) //App told to close
-        close(); //Try closing
+        endProgram(); //Try closing
     window->setDatabaseNumber(dbNumber);
 }
 
@@ -294,7 +289,7 @@ void BlueManager::terminateDatabase()
         _dbManagerList.erase(std::remove(_dbManagerList.begin(), _dbManagerList.end(), dbManager), _dbManagerList.end()); //Remove DBManager, ending its life, farewell
         dbNumber--;
         if(programClosing) //App told to close
-            close(); //Try closing
+            endProgram(); //Try closing
 
         window->setDatabaseNumber(dbNumber);
         return;

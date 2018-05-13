@@ -50,6 +50,7 @@ signals:
 
     void createSignal(BlueWidget *newDatabase, const QString &path);
     void writtenSignal();
+    void readSignal();
     void errorSignal(QString errorString);
     void decryptionErrSignal(QString errorString);
 

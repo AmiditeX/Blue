@@ -71,8 +71,7 @@ void BlueDBManager::databaseRead(DBParameters dbParam)
     //Return IO to normal state
     _canIoOperate = true;
 
-    //Debug TODO REMOVE
-    qWarning() << "READ";
+    emit readSignal();
 }
 
 void BlueDBManager::databaseWritten()
