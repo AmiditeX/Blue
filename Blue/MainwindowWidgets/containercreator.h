@@ -33,6 +33,9 @@ public:
 public slots:
     void processEdit();
 
+    void slotColorBackground(QColor color);
+    void slotColorText(QColor color);
+
 signals:
     void okPressed();
 
@@ -42,6 +45,9 @@ private:
     QString _selectedColorText = "color: rgb(255, 255, 255);";
 
     bool modify = false;
+
+    QColorDialog *backDiag = nullptr;
+    QColorDialog *textDiag = nullptr;
 };
 
 #endif // CONTAINERCREATOR_H

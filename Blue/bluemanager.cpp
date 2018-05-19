@@ -208,6 +208,7 @@ void BlueManager::settingsChanged(BlueWidget *w, DatabaseSettings::DatabaseParam
 
             DBParameters parameters{QJsonDocument(), "", "", param.iterations, param.stretchTime, compositeKey, param.dbPath};
             _dbManagerList[i]->changeParameters(parameters); //Change parameters of the database linked to this widget
+            databaseModified(w);
             return;
         }
     }

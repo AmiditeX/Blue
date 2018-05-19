@@ -18,6 +18,7 @@ public:
     void resizeEvent(QResizeEvent *event);
     BlueWidget* getWidget() const;
     QListWidgetItem* returnItem() const;
+    void setName(const QString &str);
     ~DatabaseButton();
 
 public slots:

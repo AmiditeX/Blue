@@ -131,7 +131,7 @@ void DBWContainers::editContainer()
                                        _dbContainer->getTextColor() + " font-weight: bold }");
 
     creator->clear();
-
+    qWarning() << "EDIT";
     emit modified();
 }
 

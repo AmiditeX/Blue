@@ -126,6 +126,7 @@ void PasswordCreator::uncheckAll(bool checked)
     ui->brackets->setChecked(checked);
     ui->special->setChecked(checked);
     ui->union_->setChecked(checked);
+    ui->space->setChecked(checked);
 }
 
 //Generate a random password

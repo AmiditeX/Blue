@@ -7,6 +7,7 @@
 #include <iostream>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setWindowFlag(Qt::FramelessWindowHint);
+    //setWindowFlag(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_QuitOnClose, false); //Doesn't need to be closed for the program to close
     ui->databaseTab->tabBar()->hide();
 
@@ -78,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent) :
     bodyShadow3->setBlurRadius(100.0);
     bodyShadow3->setDistance(30.0);
     bodyShadow3->setColor(QColor(0, 0, 0, 150));
-    ui->label->setGraphicsEffect(bodyShadow3);
+    ui->downColor->setGraphicsEffect(bodyShadow3);
 
     ui->shadow->setVisible(false);
 
@@ -142,6 +143,7 @@ void MainWindow::openDatabase()
 {
     ui->databaseTab->setHidden(true);
     creator->setVisible(false);
+    ui->shadow->setVisible(false);
     opener->setVisible(true);
     settings->setVisible(false);
 }
@@ -261,6 +263,7 @@ void MainWindow::displayWidget(BlueWidget *w, const QString &path)
     //Sidebar management
     QListWidgetItem *item = new QListWidgetItem();
     DatabaseButton *button = new DatabaseButton(this, w, item); //Button has a pointer on item for deletion
+    button->setName(QUrl(path).fileName().remove(".blue"));
     item->setSizeHint(QSize(button->width(), 50));
 
     //Connect to remove from QListWidget and emit signal to close the database
@@ -323,6 +326,16 @@ void MainWindow::displayWidget(BlueWidget *w, const QString &path)
     //Add to sidebar
     ui->listDatabase->addItem(item);
     ui->listDatabase->setItemWidget(item, button);
+}
+
+//Resize event to fit screen
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+   QMainWindow::resizeEvent(event);
+   ui->downColor->setGeometry(0, this->height() - 25, this->width(), 3);
+   ui->downBar->setGeometry(0, this->height() - 25, this->width(), 25);
+   ui->textOpenDatabase->setGeometry(10, this->height() - 19, ui->textOpenDatabase->width(), ui->textOpenDatabase->height());
+   ui->blueVersion->setGeometry(this->width() - 60, this->height() - 19, ui->blueVersion->width(), ui->blueVersion->height());
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

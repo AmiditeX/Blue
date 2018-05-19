@@ -42,6 +42,7 @@ public slots:
     void creatorClose();
     void settingsReturn();
     void settingsClose();
+    void resizeEvent(QResizeEvent* event);
 
     //Database related SLOTS
     void displayWidget(BlueWidget *w, const QString &path);

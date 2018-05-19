@@ -70,7 +70,6 @@ void BlueWidget::addContainer(std::shared_ptr<DBContainers> container)
 //Create a new container (UI and underneath structure)
 void BlueWidget::createNewContainer()
 {
-    emit modified();
     creator->setVisible(true);
 }
 

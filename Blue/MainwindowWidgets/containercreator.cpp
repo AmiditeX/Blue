@@ -14,20 +14,14 @@ ContainerCreator::ContainerCreator(QWidget *parent) :
     QObject::connect(ui->close, SIGNAL(clicked(bool)), this, SLOT(hide()));
     QObject::connect(ui->ok, SIGNAL(clicked(bool)), this, SLOT(processEdit()));
 
+    backDiag = new QColorDialog(this);
     connect(ui->colorSelector, &QPushButton::clicked, [=](){
-        QColor myColor = QColorDialog::getColor();
-        QString style = "background-color: rgb(%1, %2, %3);";
-        QString colors = style.arg(myColor.red()).arg(myColor.green()).arg(myColor.blue());
-        ui->colorLabel->setStyleSheet(colors);
-        _selectedColor = colors;
+        backDiag->open(this, SLOT(slotColorBackground(QColor)));
     });
 
+    textDiag = new QColorDialog(this);
     connect(ui->colorSelectorText, &QPushButton::clicked, [=](){
-        QColor myColor = QColorDialog::getColor();
-        QString style = "color: rgb(%1, %2, %3);";
-        QString colors = style.arg(myColor.red()).arg(myColor.green()).arg(myColor.blue());
-        _selectedColorText = colors;
-        ui->colorLabel2->setStyleSheet(colors.replace("color", "background-color"));
+        textDiag->open(this, SLOT(slotColorText(QColor)));
     });
 }
 
@@ -73,6 +67,22 @@ void ContainerCreator::setTitleColor(const QString &color)
 {
     ui->colorLabel2->setStyleSheet(QString(color).replace("color", "background-color"));
     _selectedColorText = QString(color).remove(0, 1) + ";";
+}
+
+void ContainerCreator::slotColorBackground(QColor color)
+{
+    QString style = "background-color: rgb(%1, %2, %3);";
+    QString colors = style.arg(color.red()).arg(color.green()).arg(color.blue());
+    ui->colorLabel->setStyleSheet(colors);
+    _selectedColor = colors;
+}
+
+void ContainerCreator::slotColorText(QColor color)
+{
+    QString style = "color: rgb(%1, %2, %3);";
+    QString colors = style.arg(color.red()).arg(color.green()).arg(color.blue());
+    _selectedColorText = colors;
+    ui->colorLabel2->setStyleSheet(colors.replace("color", "background-color"));
 }
 
 ContainerCreator::~ContainerCreator()
