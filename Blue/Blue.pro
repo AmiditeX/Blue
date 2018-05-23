@@ -53,7 +53,8 @@ SOURCES += main.cpp\
     Tools/diceware/diceware.cpp \
     MainwindowWidgets/databasesettings.cpp \
     MainwindowWidgets/containercreator.cpp \
-    Tools/HIBPChecker/hibpchecker.cpp
+    Tools/HIBPChecker/hibpchecker.cpp \
+    MainwindowWidgets/widgetcreator.cpp
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
@@ -86,7 +87,8 @@ HEADERS  += mainwindow.h \
     Tools/diceware/diceware.h \
     MainwindowWidgets/databasesettings.h \
     MainwindowWidgets/containercreator.h \
-    Tools/HIBPChecker/hibpchecker.h
+    Tools/HIBPChecker/hibpchecker.h \
+    MainwindowWidgets/widgetcreator.h
 
 FORMS    += mainwindow.ui \
     DBWidgets/dbwcontainers.ui \
@@ -101,7 +103,8 @@ FORMS    += mainwindow.ui \
     MainwindowWidgets/databasecreator.ui \
     MainwindowWidgets/passwordcreator.ui \
     MainwindowWidgets/databasesettings.ui \
-    MainwindowWidgets/containercreator.ui
+    MainwindowWidgets/containercreator.ui \
+    MainwindowWidgets/widgetcreator.ui
 
 TRANSLATIONS += blue_fr.ts
 

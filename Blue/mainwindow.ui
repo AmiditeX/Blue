@@ -10,6 +10,12 @@
     <height>800</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>560</width>
+    <height>0</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Blue</string>
   </property>
@@ -120,6 +126,9 @@ QListWidget::item:selected
     <property name="sizeAdjustPolicy">
      <enum>QAbstractScrollArea::AdjustToContents</enum>
     </property>
+    <property name="autoScrollMargin">
+     <number>16</number>
+    </property>
     <property name="editTriggers">
      <set>QAbstractItemView::NoEditTriggers</set>
     </property>
@@ -131,6 +140,9 @@ QListWidget::item:selected
     </property>
     <property name="verticalScrollMode">
      <enum>QAbstractItemView::ScrollPerPixel</enum>
+    </property>
+    <property name="movement">
+     <enum>QListView::Free</enum>
     </property>
     <property name="resizeMode">
      <enum>QListView::Adjust</enum>
@@ -243,7 +255,7 @@ background-color: rgb(34, 35, 40);</string>
      <rect>
       <x>1290</x>
       <y>781</y>
-      <width>61</width>
+      <width>60</width>
       <height>17</height>
      </rect>
     </property>
@@ -262,7 +274,7 @@ background-color: rgb(34, 35, 40);</string>
       <x>280</x>
       <y>50</y>
       <width>1040</width>
-      <height>701</height>
+      <height>700</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -304,7 +316,7 @@ font-weight: bold</string>
      <string notr="true"/>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="close">
@@ -359,6 +371,26 @@ background-color: rgb(93, 127, 247);
      <string>━</string>
     </property>
    </widget>
+   <widget class="QFrame" name="moveWindow">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1231</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+   </widget>
+   <zorder>moveWindow</zorder>
    <zorder>shadow2</zorder>
    <zorder>listDatabase</zorder>
    <zorder>shadow</zorder>
@@ -366,7 +398,6 @@ background-color: rgb(93, 127, 247);
    <zorder>buttonOpen</zorder>
    <zorder>databaseTab</zorder>
    <zorder>downBar</zorder>
-   <zorder>blueLabel</zorder>
    <zorder>close</zorder>
    <zorder>minimize</zorder>
    <zorder>downColor</zorder>
@@ -374,6 +405,7 @@ background-color: rgb(93, 127, 247);
    <zorder>progressBar</zorder>
    <zorder>textStatus</zorder>
    <zorder>blueVersion</zorder>
+   <zorder>blueLabel</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

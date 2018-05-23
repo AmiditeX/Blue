@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <memory>
 #include <QListWidgetItem>
+#include <QPropertyAnimation>
 #include "abstractdbwidget.h"
 #include "MainwindowWidgets/bluedialog.h"
 #include "DBElements/dbcontainers.h"
@@ -12,12 +13,13 @@
 #include "DBWidgets/dbwotpitem.h"
 #include "DBWidgets/dbwpasswordfield.h"
 #include "MainwindowWidgets/containercreator.h"
+#include "MainwindowWidgets/widgetcreator.h"
 
 namespace Ui {
 class DBWContainers;
 }
 
-class DBWContainers : public QWidget, public AbstractDBWidget
+class DBWContainers : public AbstractDBWidget
 {
     Q_OBJECT
 
@@ -38,21 +40,24 @@ public slots:
     void removeContainer();
     void editContainer();
 
+    void addWidget(const QString &widgetName);
+
 signals:
     void widgetClicked(bool drop);
-    void sizedChanged();
     void pendingDelete(std::shared_ptr<DBContainers> container);
     void modified();
+    void sizedChanged();
 
 private:
     Ui::DBWContainers *ui;
     ContainerCreator *creator = nullptr;
+    WidgetCreator *widgetCreator = nullptr;
 
     std::shared_ptr<DBContainers> _dbContainer;
     std::vector<QWidget*> _widgetList;
 
     QListWidgetItem *_item = nullptr;
-    int _maxValue = 200;
+    int _maxValue = 300;
 
 };
 

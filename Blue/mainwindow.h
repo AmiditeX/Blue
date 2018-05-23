@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QMouseEvent>
 #include <QListWidget>
+#include <QSizeGrip>
 #include <QPropertyAnimation>
 #include "DBMainComponents/bluedbmanager.h"
 #include "MainwindowWidgets/bluedialog.h"
@@ -13,6 +14,8 @@
 #include "MainwindowWidgets/databasecreator.h"
 #include "MainwindowWidgets/databasebutton.h"
 #include "MainwindowWidgets/databasesettings.h"
+
+#include <QDebug>
 
 namespace Ui {
 class MainWindow;
@@ -46,9 +49,6 @@ public slots:
 
     //Database related SLOTS
     void displayWidget(BlueWidget *w, const QString &path);
-    void error(QString err);
-    void write();
-    void read(DBParameters param);
 
 signals:
     void openingRequest(QString masterKey, QString filePath, QString keyPath);
@@ -64,12 +64,7 @@ protected:
            oldPos = evt->globalPos();
        }
 
-       void mouseMoveEvent(QMouseEvent *evt)
-       {
-           const QPoint delta = evt->globalPos() - oldPos;
-           move(x()+delta.x(), y()+delta.y());
-           oldPos = evt->globalPos();
-       }
+       void mouseMoveEvent(QMouseEvent *evt);
 
 private:
     Ui::MainWindow *ui;

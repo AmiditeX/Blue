@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <QJsonObject>
 #include <QJsonDocument>
-#include <QDebug>
 #include <iostream>
 #include <QPushButton>
 #include <QMessageBox>
@@ -15,7 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //setWindowFlag(Qt::FramelessWindowHint);
+    setWindowFlag(Qt::FramelessWindowHint); //Set window top hidden
+
     setAttribute(Qt::WA_QuitOnClose, false); //Doesn't need to be closed for the program to close
     ui->databaseTab->tabBar()->hide();
 
@@ -77,12 +77,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     bodyShadow3 = new CustomShadowEffect(this);
     bodyShadow3->setBlurRadius(100.0);
-    bodyShadow3->setDistance(30.0);
+    bodyShadow3->setDistance(10.0);
     bodyShadow3->setColor(QColor(0, 0, 0, 150));
     ui->downColor->setGraphicsEffect(bodyShadow3);
 
     ui->shadow->setVisible(false);
-
 }
 
 MainWindow::~MainWindow()
@@ -331,34 +330,28 @@ void MainWindow::displayWidget(BlueWidget *w, const QString &path)
 //Resize event to fit screen
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
-   QMainWindow::resizeEvent(event);
-   ui->downColor->setGeometry(0, this->height() - 25, this->width(), 3);
-   ui->downBar->setGeometry(0, this->height() - 25, this->width(), 25);
-   ui->textOpenDatabase->setGeometry(10, this->height() - 19, ui->textOpenDatabase->width(), ui->textOpenDatabase->height());
-   ui->blueVersion->setGeometry(this->width() - 60, this->height() - 19, ui->blueVersion->width(), ui->blueVersion->height());
+    QMainWindow::resizeEvent(event);
+    ui->downColor->setGeometry(0, this->height() - 25, this->width(), 3);
+    ui->downBar->setGeometry(0, this->height() - 25, this->width(), 25);
+    ui->textOpenDatabase->setGeometry(10, this->height() - 19, ui->textOpenDatabase->width(), ui->textOpenDatabase->height());
+    ui->blueVersion->setGeometry(this->width() - 60, this->height() - 19, ui->blueVersion->width(), ui->blueVersion->height());
+    ui->progressBar->setGeometry(this->width() - 310, this->height() - 15, ui->progressBar->width(), ui->progressBar->height());
+    ui->textStatus->setGeometry(this->width() - 420, this->height() - 18, ui->textStatus->width(), ui->textStatus->height());
+    ui->listDatabase->setGeometry(0, 150, ui->listDatabase->width(), this->height() - 175);
+}
+
+//Move window across screen
+void MainWindow::mouseMoveEvent(QMouseEvent *evt)
+{
+    if(!ui->moveWindow->rect().contains(evt->pos()))
+        return;
+
+    const QPoint delta = evt->globalPos() - oldPos;
+    move(x()+delta.x(), y()+delta.y());
+    oldPos = evt->globalPos();
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                                       PUBLIC SLOTS                                                               //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-void MainWindow::error(QString err)
-{
-    qWarning() << " Error " << err;
-}
-
-void MainWindow::write()
-{
-    qWarning() << "Write successful";
-    BlueDBManager manager;
-    //manager.readDatabase("encryptedmessage.txt", "Password");
-}
-
-void MainWindow::read(DBParameters param)
-{
-    qWarning() << "Reading";
-    qWarning() << param.DBDecrypted;
-    qWarning() << param.DBKeySalt;
-    qWarning() << param.DBIterations;
-}

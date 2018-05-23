@@ -9,7 +9,7 @@ namespace Ui {
 class DBWOtpItem;
 }
 
-class DBWOtpItem : public QWidget, public AbstractDBWidget
+class DBWOtpItem : public AbstractDBWidget
 {
     Q_OBJECT
 

@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> containerPointer, QListWidgetItem *item) : QWidget(parent),
+DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> containerPointer, QListWidgetItem *item) : AbstractDBWidget(parent),
     ui(new Ui::DBWContainers), _dbContainer(containerPointer), _item(item)
 {
     ui->setupUi(this);
@@ -13,22 +13,54 @@ DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> cont
     //Create all the items and store them in an array
     for(unsigned int i = 0; i < itemList.size(); i++)
     {
-        QWidget* w = createItem(itemList.at(i)->getID(), itemList.at(i));
-        _widgetList.push_back(w);
-        w->hide();
+        try
+        {
+            QWidget* widget;
+
+            widget = createItem(itemList.at(i)->getID(), itemList.at(i));
+            _widgetList.push_back(widget);
+
+            //Display the widget
+            QListWidgetItem *listItem = new QListWidgetItem();
+            listItem->setSizeHint(widget->size());
+            ui->widgetList->addItem(listItem);
+            ui->widgetList->setItemWidget(listItem, widget);
+
+            //Retrieve abstract to connect signals
+            AbstractDBWidget *abstract = dynamic_cast<AbstractDBWidget*>(widget);
+
+            //Expand the widget
+            connect(abstract, &AbstractDBWidget::expand, [=](bool drop){
+                QPropertyAnimation *animation = new QPropertyAnimation(widget, "geometry");
+                animation->setDuration(100);
+                animation->setStartValue(widget->geometry());
+                if(drop) {animation->setEndValue(QRect(0, 0, widget->width(), abstract->getMin()));}
+                else {animation->setEndValue(QRect(0, 0, widget->width(), abstract->getMax()));}
+                animation->start(QAbstractAnimation::DeleteWhenStopped);
+            });
+
+            //Connect for the drop animation
+            connect(abstract, &AbstractDBWidget::sizeChanged, [=](){
+                listItem->setSizeHint(QSize(widget->width(), widget->height()));
+            });
+        }
+        catch (std::exception &e)
+        {
+            spdlog::get("LOGGER")->error(e.what());
+        }
     }
 
     QObject::connect(ui->containerButton, SIGNAL(toggled(bool)), this, SIGNAL(widgetClicked(bool)));
-    setGeometry(0, 0, width(), 50);
+    QObject::connect(ui->close, SIGNAL(clicked(bool)), this, SLOT(removeContainer()));
+
 
     ui->containerButton->setText(containerPointer->getTitle());
     ui->containerButton->setStyleSheet("QPushButton { border:0px; " + containerPointer->getColor() + " " +
                                        containerPointer->getTextColor() + " font-weight: bold }");
 
-    QObject::connect(ui->close, SIGNAL(clicked(bool)), this, SLOT(removeContainer()));
-
     ui->close->setVisible(false);
     ui->edit->setVisible(false);
+    ui->add->setVisible(false);
 
     creator = new ContainerCreator(this);
     creator->setVisible(false);
@@ -41,6 +73,16 @@ DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> cont
         creator->setColor(exp.at(1));
         creator->setTitleColor(exp.at(2));
     });
+
+    widgetCreator = new WidgetCreator(this);
+    widgetCreator->setVisible(false);
+    QObject::connect(widgetCreator, SIGNAL(okClicked(QString)), this, SLOT(addWidget(QString)));
+    connect(ui->add, &QPushButton::clicked, [=](){
+        widgetCreator->setVisible(true);
+    });
+
+
+    setGeometry(0, 0, width(), 50);
 }
 
 //Factory
@@ -92,6 +134,7 @@ void DBWContainers::enterEvent(QEvent *e)
     (void)e;
     ui->close->setVisible(true);
     ui->edit->setVisible(true);
+    ui->add->setVisible(true);
 }
 
 void DBWContainers::leaveEvent(QEvent *e)
@@ -99,6 +142,7 @@ void DBWContainers::leaveEvent(QEvent *e)
     (void)e;
     ui->close->setVisible(false);
     ui->edit->setVisible(false);
+    ui->add->setVisible(false);
 }
 
 //Remove a container from UI and structure
@@ -131,11 +175,53 @@ void DBWContainers::editContainer()
                                        _dbContainer->getTextColor() + " font-weight: bold }");
 
     creator->clear();
-    qWarning() << "EDIT";
+    emit modified();
+}
+
+//Add a new widget to the displayer
+void DBWContainers::addWidget(const QString &widgetName)
+{
+    std::shared_ptr<AbstractDataBaseItem> item = _dbContainer->addItem(widgetName);
+    QWidget *widget;
+
+    try
+    {
+        widget = createItem(widgetName, item);
+        _widgetList.push_back(widget);
+    }
+    catch (std::exception &e)
+    {
+        spdlog::get("LOGGER")->error(e.what());
+        return;
+    }
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+    listItem->setSizeHint(widget->size());
+    ui->widgetList->addItem(listItem);
+    ui->widgetList->setItemWidget(listItem, widget);
+
+    AbstractDBWidget *abstract = dynamic_cast<AbstractDBWidget*>(widget);
+
+    //Expand the widget
+    connect(abstract, &AbstractDBWidget::expand, [=](bool drop){
+        QPropertyAnimation *animation = new QPropertyAnimation(widget, "geometry");
+        animation->setDuration(100);
+        animation->setStartValue(widget->geometry());
+        if(drop) {animation->setEndValue(QRect(0, 0, widget->width(), abstract->getMin()));}
+        else {animation->setEndValue(QRect(0, 0, widget->width(), abstract->getMax()));}
+        animation->start(QAbstractAnimation::DeleteWhenStopped);
+    });
+
+    //Connect for the drop animation
+    connect(abstract, &AbstractDBWidget::sizeChanged, [=](){
+        listItem->setSizeHint(QSize(widget->width(), widget->height()));
+    });
+
     emit modified();
 }
 
 DBWContainers::~DBWContainers()
 {
+    ui->widgetList->clear();
     delete ui;
 }

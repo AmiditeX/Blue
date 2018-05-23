@@ -11,6 +11,7 @@
 #include "dbnamefield.h"
 #include "dbotpitem.h"
 #include "dbpasswordfield.h"
+#include "spdlog/spdlog.h"
 
 class DBContainers
 {

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>830</width>
-    <height>447</height>
+    <height>190</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,16 +46,6 @@ background-color: rgb(93, 127, 247);
    </property>
    <property name="checked">
     <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QListView" name="listView">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>50</y>
-     <width>830</width>
-     <height>391</height>
-    </rect>
    </property>
   </widget>
   <widget class="QPushButton" name="close">
@@ -110,10 +100,82 @@ background-color: rgb(46, 52, 54);
     <string>Edit</string>
    </property>
   </widget>
-  <zorder>listView</zorder>
-  <zorder>containerButton</zorder>
-  <zorder>close</zorder>
-  <zorder>edit</zorder>
+  <widget class="QPushButton" name="add">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+border:0px;
+background-color: rgb(85, 87, 83);
+color: rgb(255, 255, 255);
+font-weight: bold
+}
+
+QPushButton::pressed {
+background-color: rgb(46, 52, 54);
+}</string>
+   </property>
+   <property name="text">
+    <string>Add widget</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="widgetList">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>50</y>
+     <width>830</width>
+     <height>190</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QListWidget::item
+{
+    background-color: rgb(44, 44, 52); 
+}
+QListWidget::item:selected
+{
+    background-color: rgb(44, 44, 52);
+}</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="sizeAdjustPolicy">
+    <enum>QAbstractScrollArea::AdjustIgnored</enum>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="showDropIndicator" stdset="0">
+    <bool>false</bool>
+   </property>
+   <property name="defaultDropAction">
+    <enum>Qt::IgnoreAction</enum>
+   </property>
+   <property name="verticalScrollMode">
+    <enum>QAbstractItemView::ScrollPerItem</enum>
+   </property>
+   <property name="horizontalScrollMode">
+    <enum>QAbstractItemView::ScrollPerPixel</enum>
+   </property>
+   <property name="movement">
+    <enum>QListView::Free</enum>
+   </property>
+   <property name="resizeMode">
+    <enum>QListView::Adjust</enum>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

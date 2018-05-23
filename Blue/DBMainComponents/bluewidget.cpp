@@ -94,5 +94,6 @@ DBParameters BlueWidget::returnParam()
 
 BlueWidget::~BlueWidget()
 {
+    ui->containerList->clear();
     delete ui;
 }

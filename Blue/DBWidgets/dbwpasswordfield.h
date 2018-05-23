@@ -9,7 +9,7 @@ namespace Ui {
 class DBWPasswordField;
 }
 
-class DBWPasswordField : public QWidget, public AbstractDBWidget
+class DBWPasswordField : public AbstractDBWidget
 {
     Q_OBJECT
 

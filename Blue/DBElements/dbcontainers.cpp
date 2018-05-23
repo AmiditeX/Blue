@@ -1,6 +1,7 @@
 #include "dbcontainers.h"
 
 #include <algorithm>
+#include <QDebug>
 
 DBContainers::DBContainers()
 {
@@ -20,7 +21,15 @@ DBContainers::DBContainers(const QJsonObject &obj)
 
         //Fetch ID of the item to construct the matching object
         const QString ID = currentItem.value("ID").toString();
-        _itemList.push_back(std::move(createItem(ID)));
+
+        try
+        {
+            _itemList.push_back(std::move(createItem(ID)));
+        }
+        catch (std::exception &e)
+        {
+            spdlog::get("LOGGER")->error(e.what());
+        }
     }
 
     //Special tags
@@ -51,15 +60,25 @@ QJsonObject DBContainers::toJson() const
     obj.insert("Name", _title);
     obj.insert("Color", _color);
     obj.insert("ColorText", _colorText);
+    qWarning() << obj;
     return obj;
 }
 
 std::shared_ptr<AbstractDataBaseItem> DBContainers::addItem(const QString &ID)
 {
-    std::shared_ptr<AbstractDataBaseItem> newObject = createItem(ID);
-    _itemList.push_back(std::move(newObject));
+    try
+    {
+        std::shared_ptr<AbstractDataBaseItem> newObject = createItem(ID);
+        _itemList.push_back(std::move(newObject));
 
-    return newObject;
+        return newObject;
+    }
+    catch (std::exception &e)
+    {
+        spdlog::get("LOGGER")->error(e.what());
+    }
+
+    return nullptr;
 }
 
 void DBContainers::removeItem(std::shared_ptr<AbstractDataBaseItem> ptr)

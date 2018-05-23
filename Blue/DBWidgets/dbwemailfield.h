@@ -9,7 +9,7 @@ namespace Ui {
 class DBWEmailField;
 }
 
-class DBWEmailField : public QWidget, public AbstractDBWidget
+class DBWEmailField : public AbstractDBWidget
 {
     Q_OBJECT
 

@@ -1,7 +1,7 @@
 #include "dbwpasswordfield.h"
 #include "ui_dbwpasswordfield.h"
 
-DBWPasswordField::DBWPasswordField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item) : QWidget(parent),
+DBWPasswordField::DBWPasswordField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item) : AbstractDBWidget(parent),
     ui(new Ui::DBWPasswordField), _item(item)
 {
     ui->setupUi(this);

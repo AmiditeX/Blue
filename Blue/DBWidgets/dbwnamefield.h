@@ -9,13 +9,16 @@ namespace Ui {
 class DBWNameField;
 }
 
-class DBWNameField : public QWidget, public AbstractDBWidget
+class DBWNameField : public AbstractDBWidget
 {
     Q_OBJECT
 
 public:
     explicit DBWNameField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item);
     ~DBWNameField();
+
+protected:
+    void resizeEvent(QResizeEvent *event);
 
 private:
     Ui::DBWNameField *ui;
