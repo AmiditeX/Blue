@@ -1,0 +1,11 @@
+This project contains parts or totatily of the following libraries :
+CryptoPP : https://www.cryptopp.com/ - Licence at https://www.cryptopp.com/License.txt
+OpenSSL : https://www.openssl.org/ - Licence at https://www.openssl.org/source/license.html
+spdlog : https://github.com/gabime/spdlog - Licence at /spdlog-master/include/spdlog/LICENCE
+Diceware : https://github.com/hmtinc/Diceware - Licence at /Blue/Tools/diceware/LICENCE.md
+zxcppvbn : https://github.com/tresorit/zxcppvbn - Licence at /Blue/Tools/zxcppvbn/Licence.txt
+CryptoQQ : https://github.com/Skycoder42/CryptoQQ - Licence as a header on the files included
+
+This project uses Qt as a framework without a commercial licence being bought, the code therefore has to be 
+available to anyone (open-source).
+
