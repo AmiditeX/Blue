@@ -2,6 +2,8 @@
 #define ABSTRACTDBWIDGET_H
 
 #include <QWidget>
+#include <memory>
+#include "DBElements/abstractdatabaseitem.h"
 
 class AbstractDBWidget : public QWidget
 {
@@ -18,6 +20,8 @@ public:
 signals:
     void sizeChanged();
     void expand(bool expand);
+    void remove(std::shared_ptr<AbstractDataBaseItem> item);
+    void modified();
 
 private:
     int minHeight;

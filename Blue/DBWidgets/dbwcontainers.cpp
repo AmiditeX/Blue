@@ -29,6 +29,11 @@ DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> cont
             //Retrieve abstract to connect signals
             AbstractDBWidget *abstract = dynamic_cast<AbstractDBWidget*>(widget);
 
+            //New widget added, expand both widget display and container
+            unsigned int currentSize = getTotalItemSize();
+            ui->widgetList->setGeometry(ui->widgetList->x(), ui->widgetList->y(), width(), currentSize);
+            setGeometry(0, 0, width(), 50 + currentSize);
+
             //Expand the widget
             connect(abstract, &AbstractDBWidget::expand, [=](bool drop){
                 QPropertyAnimation *animation = new QPropertyAnimation(widget, "geometry");
@@ -42,6 +47,30 @@ DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> cont
             //Connect for the drop animation
             connect(abstract, &AbstractDBWidget::sizeChanged, [=](){
                 listItem->setSizeHint(QSize(widget->width(), widget->height()));
+
+                unsigned int currentSize = getTotalItemSize();
+                ui->widgetList->setGeometry(ui->widgetList->x(), ui->widgetList->y(), width(), currentSize);
+                setGeometry(0, 0, width(), 50 + currentSize);
+            });
+
+            //Connect to remove the widget from the display and delete it
+            connect(abstract, &AbstractDBWidget::remove, [=](std::shared_ptr<AbstractDataBaseItem> item){
+                ui->widgetList->removeItemWidget(listItem);
+                delete listItem;
+
+                _dbContainer->removeItem(item);
+                _widgetList.erase(std::remove(_widgetList.begin(), _widgetList.end(), widget), _widgetList.end()); //Remove UI from list
+                widget->deleteLater(); //Delete container UI
+
+                unsigned int currentSize = getTotalItemSize();
+                ui->widgetList->setGeometry(ui->widgetList->x(), ui->widgetList->y(), width(), currentSize);
+                setGeometry(0, 0, width(), 50 + currentSize);
+
+                emit modified();
+            });
+
+            connect(abstract, &AbstractDBWidget::modified, [=](){
+                emit modified();
             });
         }
         catch (std::exception &e)
@@ -81,7 +110,6 @@ DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> cont
         widgetCreator->setVisible(true);
     });
 
-
     setGeometry(0, 0, width(), 50);
 }
 
@@ -108,12 +136,6 @@ QWidget* DBWContainers::createItem(const QString &ID, std::shared_ptr<AbstractDa
     {
         throw std::runtime_error("Invalid type was provided in DBWContainers item factory");
     }
-}
-
-//Max heighth of the widget
-int DBWContainers::getMaxValue()
-{
-    return _maxValue;
 }
 
 //Resize event, emit signal
@@ -195,12 +217,19 @@ void DBWContainers::addWidget(const QString &widgetName)
         return;
     }
 
+    //Display the widget
     QListWidgetItem *listItem = new QListWidgetItem();
     listItem->setSizeHint(widget->size());
     ui->widgetList->addItem(listItem);
     ui->widgetList->setItemWidget(listItem, widget);
 
+    //Retrieve abstract to connect signals
     AbstractDBWidget *abstract = dynamic_cast<AbstractDBWidget*>(widget);
+
+    //New widget added, expand both widget display and container
+    unsigned int currentSize = getTotalItemSize();
+    ui->widgetList->setGeometry(ui->widgetList->x(), ui->widgetList->y(), width(), currentSize);
+    setGeometry(0, 0, width(), 50 + currentSize);
 
     //Expand the widget
     connect(abstract, &AbstractDBWidget::expand, [=](bool drop){
@@ -215,9 +244,46 @@ void DBWContainers::addWidget(const QString &widgetName)
     //Connect for the drop animation
     connect(abstract, &AbstractDBWidget::sizeChanged, [=](){
         listItem->setSizeHint(QSize(widget->width(), widget->height()));
+
+        unsigned int currentSize = getTotalItemSize();
+        ui->widgetList->setGeometry(ui->widgetList->x(), ui->widgetList->y(), width(), currentSize);
+        setGeometry(0, 0, width(), 50 + currentSize);
+    });
+
+    //Connect to remove the widget from the display and delete it
+    connect(abstract, &AbstractDBWidget::remove, [=](std::shared_ptr<AbstractDataBaseItem> item){
+        ui->widgetList->removeItemWidget(listItem);
+        delete listItem;
+
+        _dbContainer->removeItem(item);
+        _widgetList.erase(std::remove(_widgetList.begin(), _widgetList.end(), widget), _widgetList.end()); //Remove UI from list
+        widget->deleteLater(); //Delete container UI
+
+        unsigned int currentSize = getTotalItemSize();
+        ui->widgetList->setGeometry(ui->widgetList->x(), ui->widgetList->y(), width(), currentSize);
+        setGeometry(0, 0, width(), 50 + currentSize);
+
+        emit modified();
+    });
+
+    connect(abstract, &AbstractDBWidget::modified, [=](){
+        emit modified();
     });
 
     emit modified();
+}
+
+unsigned int DBWContainers::getTotalItemSize()
+{
+    unsigned int currentSize = 0;
+
+    for(unsigned int i = 0; i < _widgetList.size(); i++)
+    {
+        //Sum all the widgets height
+        currentSize += _widgetList.at(i)->height();
+    }
+
+    return currentSize;
 }
 
 DBWContainers::~DBWContainers()

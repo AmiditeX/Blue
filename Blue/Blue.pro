@@ -54,7 +54,8 @@ SOURCES += main.cpp\
     MainwindowWidgets/databasesettings.cpp \
     MainwindowWidgets/containercreator.cpp \
     Tools/HIBPChecker/hibpchecker.cpp \
-    MainwindowWidgets/widgetcreator.cpp
+    MainwindowWidgets/widgetcreator.cpp \
+    MainwindowWidgets/expirationwidget.cpp
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
@@ -88,7 +89,8 @@ HEADERS  += mainwindow.h \
     MainwindowWidgets/databasesettings.h \
     MainwindowWidgets/containercreator.h \
     Tools/HIBPChecker/hibpchecker.h \
-    MainwindowWidgets/widgetcreator.h
+    MainwindowWidgets/widgetcreator.h \
+    MainwindowWidgets/expirationwidget.h
 
 FORMS    += mainwindow.ui \
     DBWidgets/dbwcontainers.ui \
@@ -104,7 +106,8 @@ FORMS    += mainwindow.ui \
     MainwindowWidgets/passwordcreator.ui \
     MainwindowWidgets/databasesettings.ui \
     MainwindowWidgets/containercreator.ui \
-    MainwindowWidgets/widgetcreator.ui
+    MainwindowWidgets/widgetcreator.ui \
+    MainwindowWidgets/expirationwidget.ui
 
 TRANSLATIONS += blue_fr.ts
 

@@ -3,7 +3,10 @@
 
 #include <QWidget>
 #include "abstractdbwidget.h"
+#include "MainwindowWidgets/expirationwidget.h"
+#include "MainwindowWidgets/bluedialog.h"
 #include "DBElements/abstractdatabaseitem.h"
+#include "DBElements/dbnamefield.h"
 
 namespace Ui {
 class DBWNameField;
@@ -20,9 +23,15 @@ public:
 protected:
     void resizeEvent(QResizeEvent *event);
 
+public slots:
+    void removeWidget();
+    void expiredDate();
+    void changeExpirationState();
+
 private:
     Ui::DBWNameField *ui;
     std::shared_ptr<AbstractDataBaseItem> _item;
+    ExpirationWidget *expiration = nullptr;
 };
 
 #endif // DBWNAMEFIELD_H

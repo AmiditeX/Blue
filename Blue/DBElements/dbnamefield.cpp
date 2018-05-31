@@ -1,4 +1,5 @@
 #include "dbnamefield.h"
+#include <QDebug>
 
 DBNameField::DBNameField()
 {
@@ -13,7 +14,6 @@ DBNameField::DBNameField(const QJsonObject &obj)
     _expires = QDateTime::fromString(obj.value("DateTime").toString());
     setID(obj.value("ID").toString());
     setRow(obj.value("Row").toInt());
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

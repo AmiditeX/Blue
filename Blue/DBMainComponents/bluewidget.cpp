@@ -37,8 +37,9 @@ void BlueWidget::addContainer(std::shared_ptr<DBContainers> container)
         QPropertyAnimation *animation = new QPropertyAnimation(widget, "geometry");
         animation->setDuration(100);
         animation->setStartValue(widget->geometry());
-        if(drop) {animation->setEndValue(QRect(0, 0, widget->width(), 50));}
-        else {animation->setEndValue(QRect(0, 0, widget->width(), widget->getMaxValue()));}
+        if(widget->getTotalItemSize() == 0) {return;}
+        if(drop) {animation->setEndValue(QRect(widget->x(), widget->y(), widget->width(), 50));}
+        else {animation->setEndValue(QRect(widget->x(), widget->y(), widget->width(), 50 + widget->getTotalItemSize()));}
         animation->start(QAbstractAnimation::DeleteWhenStopped);
     });
 

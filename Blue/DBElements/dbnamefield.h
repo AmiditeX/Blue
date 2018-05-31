@@ -24,7 +24,7 @@ public:
 
 private:
     QString _name;
-    QDateTime _expires = QDateTime(QDate(2000,1,1));
+    QDateTime _expires = QDateTime(QDate(2000,1,1), QTime(0,0,0));
     bool _isExpirable = false;
 
 };

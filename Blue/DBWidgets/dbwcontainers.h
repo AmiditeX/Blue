@@ -27,8 +27,9 @@ public:
     explicit DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> containerPointer, QListWidgetItem *item);
     ~DBWContainers();
 
-    int getMaxValue();
+    int getCurrentSize();
     QListWidgetItem* returnItem();
+    unsigned int getTotalItemSize();
 
 protected:
     QWidget* createItem(const QString &ID, std::shared_ptr<AbstractDataBaseItem> item);
@@ -57,7 +58,6 @@ private:
     std::vector<QWidget*> _widgetList;
 
     QListWidgetItem *_item = nullptr;
-    int _maxValue = 300;
 
 };
 

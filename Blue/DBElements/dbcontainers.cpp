@@ -24,7 +24,7 @@ DBContainers::DBContainers(const QJsonObject &obj)
 
         try
         {
-            _itemList.push_back(std::move(createItem(ID)));
+            _itemList.push_back(std::move(createItem(ID, currentItem)));
         }
         catch (std::exception &e)
         {
@@ -60,7 +60,6 @@ QJsonObject DBContainers::toJson() const
     obj.insert("Name", _title);
     obj.insert("Color", _color);
     obj.insert("ColorText", _colorText);
-    qWarning() << obj;
     return obj;
 }
 

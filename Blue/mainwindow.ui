@@ -135,6 +135,9 @@ QListWidget::item:selected
     <property name="showDropIndicator" stdset="0">
      <bool>false</bool>
     </property>
+    <property name="dragDropMode">
+     <enum>QAbstractItemView::NoDragDrop</enum>
+    </property>
     <property name="defaultDropAction">
      <enum>Qt::IgnoreAction</enum>
     </property>
@@ -142,7 +145,7 @@ QListWidget::item:selected
      <enum>QAbstractItemView::ScrollPerPixel</enum>
     </property>
     <property name="movement">
-     <enum>QListView::Free</enum>
+     <enum>QListView::Static</enum>
     </property>
     <property name="resizeMode">
      <enum>QListView::Adjust</enum>
