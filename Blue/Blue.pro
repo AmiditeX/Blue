@@ -97,8 +97,7 @@ HEADERS  += mainwindow.h \
     MainwindowWidgets/expirationwidget.h \
     Tools/libcppotp/bytes.h \
     Tools/libcppotp/otp.h \
-    Tools/libcppotp/sha1.h \
-    Tools/oath.h
+    Tools/libcppotp/sha1.h
 
 FORMS    += mainwindow.ui \
     DBWidgets/dbwcontainers.ui \
@@ -136,6 +135,12 @@ unix:!macx: PRE_TARGETDEPS += $$PWD/../libcrypto/lib/lnx/libcryptopp.a
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../libcrypto/lib/w32/ -lcryptopp
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../libcrypto/lib/w32/ -lcryptopp
 
-LIBS += -L/root/Blue/openssl/ -lssl -lcrypto
-INCLUDEPATH += /usr/local/ssl/include/openssl
+#OPENSSL LINKAGE
+unix:LIBS += -L/root/Blue/openssl/ -lssl -lcrypto
+unix:INCLUDEPATH += /usr/local/ssl/include/openssl
 unix:QMAKE_RPATHDIR +=  $$PWD/../openssl
+
+win32: LIBS += -L$$PWD/../openssl/w32/lib/ -llibcrypto -llibssl
+win32:QMAKE_RPATHDIR +=  $$PWD/../openssl/w32/lib
+win32:INCLUDEPATH += $$PWD/../openssl/w32/include
+win32:DEPENDPATH += $$PWD/../openssl/w32/include

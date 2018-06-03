@@ -33,13 +33,20 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border:0px;</string>
+     <string notr="true">border:0px;
+QTabWidget::pane { border: 0px; }</string>
     </property>
     <property name="tabPosition">
      <enum>QTabWidget::West</enum>
     </property>
+    <property name="tabShape">
+     <enum>QTabWidget::Triangular</enum>
+    </property>
+    <property name="documentMode">
+     <bool>true</bool>
+    </property>
     <property name="tabBarAutoHide">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="buttonOpen">

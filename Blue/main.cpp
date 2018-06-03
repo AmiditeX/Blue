@@ -10,12 +10,8 @@
 #include <QLibrary>
 #include <opensslv.h>
 
-#include "Tools/libcppotp/otp.h"
-#include "Tools/oath.h"
-
 using namespace std;
 using namespace CryptoPP;
-using namespace CppTotp;
 
 int main(int argc, char *argv[])
 {
@@ -33,9 +29,16 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    QLibrary libcrypto, libssl; //Load OpenSSL
-    libcrypto.setFileNameAndVersion(QLatin1String("crypto"), QLatin1String(SHLIB_VERSION_NUMBER));
-    libssl.setFileNameAndVersion(QLatin1String("ssl"), QLatin1String(SHLIB_VERSION_NUMBER));
+    QLibrary libcrypto, libssl; //Load OpenSSL for Linux or Windows
+#ifdef __linux__
+    libcrypto.setFileNameAndVersion(QLatin1String("libcrypto"), QLatin1String(SHLIB_VERSION_NUMBER));
+    libssl.setFileNameAndVersion(QLatin1String("libssl"), QLatin1String(SHLIB_VERSION_NUMBER));
+#endif
+#ifdef __MINGW32__
+    libcrypto.setFileNameAndVersion(QLatin1String("ssleay32"), QLatin1String(SHLIB_VERSION_NUMBER));
+    libssl.setFileNameAndVersion(QLatin1String("libeay32"), QLatin1String(SHLIB_VERSION_NUMBER));
+#endif
+    libcrypto.load(); libssl.load();
 
     if(!QSslSocket::supportsSsl()) //Test SSL Support
     {
@@ -48,6 +51,7 @@ int main(int argc, char *argv[])
             spdlog::get("LOGGER")->error(str.toStdString());
         }
         std::cerr << "SSL Error written to logs" << std::endl;
+        std::cerr << OPENSSL_VERSION_NUMBER << " " << OPENSSL_VERSION_TEXT;
     }
 
     QApplication a(argc, argv);
@@ -55,12 +59,7 @@ int main(int argc, char *argv[])
     qsrand(time(NULL));
     qRegisterMetaType<DBParameters>("DBParameters");
 
-    //HIBPChecker::getInstance().makeRequest("arthur.vache@live.fr", HIBPChecker::Account);
-
-    const CppTotp::Bytes::ByteString key = reinterpret_cast<const uint8_t *>("JBSWY3DPEHPK3PXP");
-    qWarning() << CppTotp::totp(key, time(NULL), 0, 30, 6);
-    std::int32_t v = truncate(binary(totp("JBSWY3DPEHPK3PXP", std::time( nullptr ), 30, 31, 160)), 6);
-    qWarning() << v;
+    HIBPChecker::getInstance().makeRequest("arthur.vache@live.fr", HIBPChecker::Account);
 
     //Manager handles connection between UI and rest of the code
     BlueManager manager;

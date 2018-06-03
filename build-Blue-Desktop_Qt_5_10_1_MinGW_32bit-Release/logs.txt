@@ -1,0 +1,17 @@
+[03/06/2018 21:16:40.424] [T:8616 P:6852] [info] -- Started
+[03/06/2018 21:16:40.434] [error] OpenSSL not supported on this system !
+[03/06/2018 21:16:40.434] [error] Library needed : OpenSSL 1.0.2j  26 Sep 2016
+[03/06/2018 21:16:40.434] [error] Got : 
+[03/06/2018 21:16:40.434] [error] Currently used library paths : 
+[03/06/2018 21:16:40.435] [error] B:/Programs/64-bits/Qt/5.10.1/mingw53_32/plugins
+[03/06/2018 21:17:00.121] [T:6876 P:2308] [info] -- Started
+[03/06/2018 21:17:00.129] [error] OpenSSL not supported on this system !
+[03/06/2018 21:17:00.129] [error] Library needed : OpenSSL 1.0.2j  26 Sep 2016
+[03/06/2018 21:17:00.129] [error] Got : 
+[03/06/2018 21:17:00.129] [error] Currently used library paths : 
+[03/06/2018 21:17:00.130] [error] B:/Programs/64-bits/Qt/5.10.1/mingw53_32/plugins
+[03/06/2018 21:18:51.758] [T:6684 P:9652] [info] -- Started
+[03/06/2018 21:23:29.297] [T:4540 P:4696] [info] -- Started
+[03/06/2018 21:23:54.320] [T:8408 P:6788] [info] -- Started
+[03/06/2018 21:27:40.519] [T:4700 P:3228] [info] -- Started
+[03/06/2018 21:28:52.149] [T:1816 P:4368] [info] -- Started
