@@ -68,7 +68,7 @@ std::shared_ptr<AbstractDataBaseItem> DBContainers::addItem(const QString &ID)
     try
     {
         std::shared_ptr<AbstractDataBaseItem> newObject = createItem(ID);
-        _itemList.push_back(std::move(newObject));
+        _itemList.push_back(newObject);
 
         return newObject;
     }

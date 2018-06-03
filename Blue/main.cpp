@@ -10,8 +10,12 @@
 #include <QLibrary>
 #include <opensslv.h>
 
+#include "Tools/libcppotp/otp.h"
+#include "Tools/oath.h"
+
 using namespace std;
 using namespace CryptoPP;
+using namespace CppTotp;
 
 int main(int argc, char *argv[])
 {
@@ -51,7 +55,12 @@ int main(int argc, char *argv[])
     qsrand(time(NULL));
     qRegisterMetaType<DBParameters>("DBParameters");
 
-    HIBPChecker::getInstance().makeRequest("arthur.vache@live.fr", HIBPChecker::Account);
+    //HIBPChecker::getInstance().makeRequest("arthur.vache@live.fr", HIBPChecker::Account);
+
+    const CppTotp::Bytes::ByteString key = reinterpret_cast<const uint8_t *>("JBSWY3DPEHPK3PXP");
+    qWarning() << CppTotp::totp(key, time(NULL), 0, 30, 6);
+    std::int32_t v = truncate(binary(totp("JBSWY3DPEHPK3PXP", std::time( nullptr ), 30, 31, 160)), 6);
+    qWarning() << v;
 
     //Manager handles connection between UI and rest of the code
     BlueManager manager;

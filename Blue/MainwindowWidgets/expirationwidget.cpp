@@ -56,7 +56,6 @@ void ExpirationWidget::checkExpiration()
 
     QDateTime current = QDateTime::currentDateTime();
     qint64 timestampDifference = current.msecsTo(_expiration);
-    qWarning() << current << " " << timestampDifference <<_expiration;
     if(timestampDifference <= 0 ) //The date has passed
     {
         _isExpired = true;

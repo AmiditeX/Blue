@@ -12,6 +12,7 @@ CONFIG += c++14
 TARGET = Blue
 TEMPLATE = app
 
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     bluemanager.cpp \
@@ -55,7 +56,10 @@ SOURCES += main.cpp\
     MainwindowWidgets/containercreator.cpp \
     Tools/HIBPChecker/hibpchecker.cpp \
     MainwindowWidgets/widgetcreator.cpp \
-    MainwindowWidgets/expirationwidget.cpp
+    MainwindowWidgets/expirationwidget.cpp \
+    Tools/libcppotp/bytes.cpp \
+    Tools/libcppotp/otp.cpp \
+    Tools/libcppotp/sha1.cpp
 
 HEADERS  += mainwindow.h \
     BlueCrypto/aesmodule.h \
@@ -90,7 +94,11 @@ HEADERS  += mainwindow.h \
     MainwindowWidgets/containercreator.h \
     Tools/HIBPChecker/hibpchecker.h \
     MainwindowWidgets/widgetcreator.h \
-    MainwindowWidgets/expirationwidget.h
+    MainwindowWidgets/expirationwidget.h \
+    Tools/libcppotp/bytes.h \
+    Tools/libcppotp/otp.h \
+    Tools/libcppotp/sha1.h \
+    Tools/oath.h
 
 FORMS    += mainwindow.ui \
     DBWidgets/dbwcontainers.ui \
@@ -131,6 +139,3 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../libcrypto/lib/w32/ -
 LIBS += -L/root/Blue/openssl/ -lssl -lcrypto
 INCLUDEPATH += /usr/local/ssl/include/openssl
 unix:QMAKE_RPATHDIR +=  $$PWD/../openssl
-
-DISTFILES += \
-    Tools/diceware/LICENSE.md

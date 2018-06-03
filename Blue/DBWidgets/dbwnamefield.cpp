@@ -25,7 +25,10 @@ DBWNameField::DBWNameField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem
     if(field)
     {
         expiration->setEnabled(field->isExpirable());
-        expiration->setExpiration(field->getExpireDate());
+        if(field->isExpirable())
+        {
+            expiration->setExpiration(field->getExpireDate());
+        }
         ui->expireLabel->setVisible(false);
         ui->nameField->setText(field->getValue());
         ui->nameModify->setText(field->getValue());
