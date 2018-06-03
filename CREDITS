@@ -5,6 +5,7 @@ spdlog : https://github.com/gabime/spdlog - Licence at /spdlog-master/include/s
 Diceware : https://github.com/hmtinc/Diceware - Licence at /Blue/Tools/diceware/LICENCE.md
 zxcppvbn : https://github.com/tresorit/zxcppvbn - Licence at /Blue/Tools/zxcppvbn/Licence.txt
 CryptoQQ : https://github.com/Skycoder42/CryptoQQ - Licence as a header on the files included
+cppotp : https://github.com/RavuAlHemio/cpptotp - Licence at https://github.com/RavuAlHemio/cpptotp/blob/master/COPYING
 
 This project uses Qt as a framework without a commercial licence being bought, the code therefore has to be 
 available to anyone (open-source).
