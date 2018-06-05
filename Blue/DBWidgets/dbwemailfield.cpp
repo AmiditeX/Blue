@@ -48,9 +48,9 @@ DBWEmailField::DBWEmailField(QWidget *parent, std::shared_ptr<AbstractDataBaseIt
     connect(ui->compromiseButton, &QPushButton::clicked, [=](){
         BlueDialog *dialog = new BlueDialog(this);
         dialog->setTitle(tr("Compromised email"));
-        dialog->setMessage(tr("Your email has been found on a stolen database, the password associated with it may have been cracked. "
-                              "Your email, and accounts using this email may be at risk of being stolen. Change this email or your passwords !"
-                                 "To learn more about your leak : https://haveibeenpwned.com and enter your email"));
+        dialog->setMessage(tr("Your email has been found on a stolen database, the password associated with it may have been cracked.\n"
+                              "Your email, and accounts using this email may be at risk of being stolen. Change this email or your passwords.\n"
+                                 "To learn more about your leak : https://haveibeenpwned.com and enter your email."));
         dialog->show();
 
         connect(dialog, &BlueDialog::closeClicked, [=](){
