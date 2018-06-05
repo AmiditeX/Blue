@@ -21,18 +21,21 @@ public:
     ~DBWOtpItem();
 
 protected:
-    //void resizeEvent(QResizeEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 public slots:
-    /*void removeWidget();
+    void removeWidget();
     void expiredDate();
-    void changeExpirationState();*/
+    void changeExpirationState();
     void calculateTotp();
+    void setProgressStatus();
 
 private:
     Ui::DBWOtpItem *ui;
     std::shared_ptr<AbstractDataBaseItem> _item;
+    ExpirationWidget *expiration = nullptr;
     QString _totpKey;
+    QTimer* _progressTimer = nullptr;
 };
 
 #endif // DBWOTPITEM_H

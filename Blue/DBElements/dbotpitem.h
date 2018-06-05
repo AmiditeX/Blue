@@ -25,7 +25,6 @@ public:
 
 private:
     QString _seed;
-    QString _otpValue;
     QDateTime _expires = QDateTime(QDate(2000,1,1));
     bool _isExpirable = false;
     

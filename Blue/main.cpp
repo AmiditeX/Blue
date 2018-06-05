@@ -60,6 +60,8 @@ int main(int argc, char *argv[])
     qRegisterMetaType<DBParameters>("DBParameters");
 
     HIBPChecker::getInstance().makeRequest("arthur.vache@live.fr", HIBPChecker::Account);
+    HIBPChecker::getInstance().makeRequest("arthur.vache@live.fr", HIBPChecker::Account);
+    HIBPChecker::getInstance().makeRequest("arthur.vache@live.fr", HIBPChecker::Account);
 
     //Manager handles connection between UI and rest of the code
     BlueManager manager;

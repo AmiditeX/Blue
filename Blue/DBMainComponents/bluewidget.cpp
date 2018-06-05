@@ -46,6 +46,7 @@ void BlueWidget::addContainer(std::shared_ptr<DBContainers> container)
     //Connect for the drop animation
     connect(widget, &DBWContainers::sizedChanged, [=](){
         item->setSizeHint(QSize(widget->width(), widget->height()));
+        qWarning() << "CC";
     });
 
     //Connect delete signal
@@ -66,6 +67,7 @@ void BlueWidget::addContainer(std::shared_ptr<DBContainers> container)
     ui->containerList->addItem(item);
     ui->containerList->setItemWidget(item, widget);
     _containers.push_back(widget);
+    widget->retract();
 }
 
 //Create a new container (UI and underneath structure)

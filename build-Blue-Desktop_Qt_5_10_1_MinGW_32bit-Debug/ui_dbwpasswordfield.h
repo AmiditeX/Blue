@@ -32,16 +32,18 @@ public:
     QPushButton *save;
     QLabel *expireLabel;
     QPushButton *see;
+    QLabel *downColor;
+    QLabel *downColor_3;
 
     void setupUi(QWidget *DBWPasswordField)
     {
         if (DBWPasswordField->objectName().isEmpty())
             DBWPasswordField->setObjectName(QStringLiteral("DBWPasswordField"));
-        DBWPasswordField->resize(830, 223);
+        DBWPasswordField->resize(830, 184);
         DBWPasswordField->setStyleSheet(QStringLiteral("background-color: rgb(44, 44, 52);"));
         remove = new QPushButton(DBWPasswordField);
         remove->setObjectName(QStringLiteral("remove"));
-        remove->setGeometry(QRect(7, 180, 431, 25));
+        remove->setGeometry(QRect(10, 150, 411, 25));
         remove->setStyleSheet(QLatin1String("QPushButton\n"
 "{\n"
 "border:0px;\n"
@@ -55,7 +57,7 @@ public:
 "}"));
         passwordField = new QLineEdit(DBWPasswordField);
         passwordField->setObjectName(QStringLiteral("passwordField"));
-        passwordField->setGeometry(QRect(7, 10, 645, 25));
+        passwordField->setGeometry(QRect(10, 10, 645, 25));
         passwordField->setStyleSheet(QLatin1String("background-color: rgb(238, 238, 236);\n"
 "color: rgb(0, 0, 0);\n"
 "border-radius:0px"));
@@ -64,10 +66,10 @@ public:
         passwordField->setReadOnly(true);
         expiration = new QWidget(DBWPasswordField);
         expiration->setObjectName(QStringLiteral("expiration"));
-        expiration->setGeometry(QRect(-3, 100, 830, 46));
+        expiration->setGeometry(QRect(250, 90, 380, 46));
         passwordModify = new QLineEdit(DBWPasswordField);
         passwordModify->setObjectName(QStringLiteral("passwordModify"));
-        passwordModify->setGeometry(QRect(7, 60, 811, 25));
+        passwordModify->setGeometry(QRect(10, 50, 811, 25));
         passwordModify->setStyleSheet(QLatin1String("background-color: rgb(238, 238, 236);\n"
 "color: rgb(0, 0, 0);\n"
 "border-radius:0px"));
@@ -91,7 +93,7 @@ public:
         modify->setChecked(true);
         save = new QPushButton(DBWPasswordField);
         save->setObjectName(QStringLiteral("save"));
-        save->setGeometry(QRect(447, 180, 371, 25));
+        save->setGeometry(QRect(430, 150, 391, 25));
         save->setStyleSheet(QLatin1String("QPushButton\n"
 "{\n"
 "border:0px;\n"
@@ -124,6 +126,14 @@ public:
 "background-color: rgb(92, 53, 102);\n"
 "}"));
         see->setCheckable(true);
+        downColor = new QLabel(DBWPasswordField);
+        downColor->setObjectName(QStringLiteral("downColor"));
+        downColor->setGeometry(QRect(0, 40, 830, 3));
+        downColor->setStyleSheet(QStringLiteral("background-color: rgb(68, 158, 241);"));
+        downColor_3 = new QLabel(DBWPasswordField);
+        downColor_3->setObjectName(QStringLiteral("downColor_3"));
+        downColor_3->setGeometry(QRect(0, 180, 830, 3));
+        downColor_3->setStyleSheet(QStringLiteral("background-color: rgb(68, 158, 241);"));
 
         retranslateUi(DBWPasswordField);
 
@@ -140,8 +150,10 @@ public:
         passwordModify->setPlaceholderText(QApplication::translate("DBWPasswordField", "Modify password..", nullptr));
         modify->setText(QApplication::translate("DBWPasswordField", "Modify", nullptr));
         save->setText(QApplication::translate("DBWPasswordField", "Save", nullptr));
-        expireLabel->setText(QApplication::translate("DBWPasswordField", " EXPIRED", nullptr));
+        expireLabel->setText(QApplication::translate("DBWPasswordField", "    EXPIRED", nullptr));
         see->setText(QApplication::translate("DBWPasswordField", "See", nullptr));
+        downColor->setText(QString());
+        downColor_3->setText(QString());
     } // retranslateUi
 
 };

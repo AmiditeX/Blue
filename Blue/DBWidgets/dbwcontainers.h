@@ -42,6 +42,7 @@ public slots:
     void editContainer();
 
     void addWidget(const QString &widgetName);
+    void retract();
 
 signals:
     void widgetClicked(bool drop);

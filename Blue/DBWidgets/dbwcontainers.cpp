@@ -111,6 +111,7 @@ DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> cont
     });
 
     setGeometry(0, 0, width(), 50);
+    emit widgetClicked(true);
 }
 
 //Factory
@@ -284,6 +285,11 @@ unsigned int DBWContainers::getTotalItemSize()
     }
 
     return currentSize;
+}
+
+void DBWContainers::retract()
+{
+    emit widgetClicked(false);
 }
 
 DBWContainers::~DBWContainers()

@@ -31,16 +31,17 @@ public:
     QPushButton *modify;
     QPushButton *save;
     QLabel *expireLabel;
+    QLabel *downColor;
 
     void setupUi(QWidget *DBWEmailField)
     {
         if (DBWEmailField->objectName().isEmpty())
             DBWEmailField->setObjectName(QStringLiteral("DBWEmailField"));
-        DBWEmailField->resize(830, 223);
+        DBWEmailField->resize(830, 190);
         DBWEmailField->setStyleSheet(QStringLiteral("background-color: rgb(44, 44, 52);"));
         remove = new QPushButton(DBWEmailField);
         remove->setObjectName(QStringLiteral("remove"));
-        remove->setGeometry(QRect(10, 180, 431, 25));
+        remove->setGeometry(QRect(10, 150, 411, 25));
         remove->setStyleSheet(QLatin1String("QPushButton\n"
 "{\n"
 "border:0px;\n"
@@ -63,10 +64,10 @@ public:
         emailField->setReadOnly(true);
         expiration = new QWidget(DBWEmailField);
         expiration->setObjectName(QStringLiteral("expiration"));
-        expiration->setGeometry(QRect(0, 100, 830, 46));
+        expiration->setGeometry(QRect(240, 90, 380, 46));
         emailModify = new QLineEdit(DBWEmailField);
         emailModify->setObjectName(QStringLiteral("emailModify"));
-        emailModify->setGeometry(QRect(10, 60, 811, 25));
+        emailModify->setGeometry(QRect(10, 50, 811, 25));
         emailModify->setStyleSheet(QLatin1String("background-color: rgb(238, 238, 236);\n"
 "color: rgb(0, 0, 0);\n"
 "border-radius:0px"));
@@ -90,7 +91,7 @@ public:
         modify->setChecked(true);
         save = new QPushButton(DBWEmailField);
         save->setObjectName(QStringLiteral("save"));
-        save->setGeometry(QRect(450, 180, 371, 25));
+        save->setGeometry(QRect(430, 150, 391, 25));
         save->setStyleSheet(QLatin1String("QPushButton\n"
 "{\n"
 "border:0px;\n"
@@ -108,6 +109,10 @@ public:
         expireLabel->setStyleSheet(QLatin1String("color: rgb(255, 255, 255);\n"
 "background-color: rgb(239, 41, 41);\n"
 "font-weight: bold"));
+        downColor = new QLabel(DBWEmailField);
+        downColor->setObjectName(QStringLiteral("downColor"));
+        downColor->setGeometry(QRect(0, 40, 830, 3));
+        downColor->setStyleSheet(QStringLiteral("background-color: rgb(68, 158, 241);"));
 
         retranslateUi(DBWEmailField);
 
@@ -124,7 +129,8 @@ public:
         emailModify->setPlaceholderText(QApplication::translate("DBWEmailField", "Modify email..", nullptr));
         modify->setText(QApplication::translate("DBWEmailField", "Modify", nullptr));
         save->setText(QApplication::translate("DBWEmailField", "Save", nullptr));
-        expireLabel->setText(QApplication::translate("DBWEmailField", " EXPIRED", nullptr));
+        expireLabel->setText(QApplication::translate("DBWEmailField", "    EXPIRED", nullptr));
+        downColor->setText(QString());
     } // retranslateUi
 
 };

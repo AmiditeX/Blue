@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>830</width>
+    <width>380</width>
     <height>46</height>
    </rect>
   </property>
@@ -30,13 +30,7 @@
 background-color: rgb(255, 255, 255);
 border-radius:0px
 }
-QDateTimeEdit::up-button {
-background-color: rgb(115, 210, 22);
-}
-
-QDateTimeEdit::down-button {
-background-color: rgb(239, 41, 41);
-}</string>
+</string>
    </property>
    <property name="dateTime">
     <datetime>
@@ -104,25 +98,6 @@ background-color: rgb(68, 158, 241);
    </property>
    <property name="text">
     <string>Enable expiration</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>420</x>
-     <y>10</y>
-     <width>391</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(44, 44, 52); 
-color: rgb(255, 255, 255);
-font: 8pt &quot;DejaVu Sans&quot;;</string>
-   </property>
-   <property name="text">
-    <string>Set an expiration date to be reminded to change a password or any
- expirable information</string>
    </property>
   </widget>
  </widget>

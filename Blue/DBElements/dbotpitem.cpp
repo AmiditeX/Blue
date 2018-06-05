@@ -22,7 +22,7 @@ DBOtpItem::DBOtpItem(const QJsonObject &obj)
 
 QString DBOtpItem::getValue() const
 {
-    return _otpValue;
+    return _seed;
 }
 
 QJsonObject DBOtpItem::toJson() const

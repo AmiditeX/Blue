@@ -3197,6 +3197,9 @@ debug/moc_hibpchecker.cpp: B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtCo
 		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtNetwork/qnetworkreply.h \
 		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtCore/QIODevice \
 		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtNetwork/QNetworkRequest \
+		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtCore/QTimer \
+		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtCore/qtimer.h \
+		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtCore/qbasictimer.h \
 		../spdlog-master/include/spdlog/spdlog.h \
 		../spdlog-master/include/spdlog/tweakme.h \
 		../spdlog-master/include/spdlog/common.h \
@@ -8082,6 +8085,9 @@ debug/hibpchecker.o: ../Blue/Tools/HIBPChecker/hibpchecker.cpp ../Blue/Tools/HIB
 		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtNetwork/qnetworkreply.h \
 		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtCore/QIODevice \
 		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtNetwork/QNetworkRequest \
+		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtCore/QTimer \
+		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtCore/qtimer.h \
+		B:/Programs/64-bits/Qt/5.10.1/mingw53_32/include/QtCore/qbasictimer.h \
 		../spdlog-master/include/spdlog/spdlog.h \
 		../spdlog-master/include/spdlog/tweakme.h \
 		../spdlog-master/include/spdlog/common.h \

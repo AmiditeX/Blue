@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>830</width>
-    <height>223</height>
+    <height>123</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,9 +19,9 @@
   <widget class="QPushButton" name="save">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>180</y>
-     <width>371</width>
+     <x>430</x>
+     <y>90</y>
+     <width>391</width>
      <height>25</height>
     </rect>
    </property>
@@ -42,39 +42,10 @@ background-color: rgb(93, 127, 247);
     <string>Save</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="see">
-   <property name="geometry">
-    <rect>
-     <x>662</x>
-     <y>10</y>
-     <width>73</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton
-{
-border:0px;
-background-color: rgb(173, 127, 168);
-color: rgb(255, 255, 255);
-font-weight: bold
-}
-
-QPushButton::checked {
-background-color: rgb(92, 53, 102);
-}</string>
-   </property>
-   <property name="text">
-    <string>See</string>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QLabel" name="expireLabel">
    <property name="geometry">
     <rect>
-     <x>584</x>
+     <x>660</x>
      <y>10</y>
      <width>71</width>
      <height>25</height>
@@ -86,15 +57,15 @@ background-color: rgb(239, 41, 41);
 font-weight: bold</string>
    </property>
    <property name="text">
-    <string> EXPIRED</string>
+    <string>    EXPIRED</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="passwordField">
+  <widget class="QLineEdit" name="otpField">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>645</width>
+     <width>261</width>
      <height>25</height>
     </rect>
    </property>
@@ -110,21 +81,24 @@ border-radius:0px</string>
     <number>10000</number>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::Password</enum>
+    <enum>QLineEdit::Normal</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
    <property name="readOnly">
     <bool>true</bool>
    </property>
    <property name="placeholderText">
-    <string>Password..</string>
+    <string>OTP Value..</string>
    </property>
   </widget>
   <widget class="QPushButton" name="remove">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>180</y>
-     <width>431</width>
+     <y>90</y>
+     <width>411</width>
      <height>25</height>
     </rect>
    </property>
@@ -145,12 +119,12 @@ background-color: rgb(164, 0, 0);
     <string>Remove</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="passwordModify">
+  <widget class="QLineEdit" name="otpSeed">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>60</y>
-     <width>811</width>
+     <y>50</y>
+     <width>261</width>
      <height>25</height>
     </rect>
    </property>
@@ -169,7 +143,7 @@ border-radius:0px</string>
     <enum>QLineEdit::Normal</enum>
    </property>
    <property name="placeholderText">
-    <string>Modify password..</string>
+    <string>Modify seed..</string>
    </property>
   </widget>
   <widget class="QPushButton" name="modify">
@@ -207,13 +181,92 @@ background-color: rgb(68, 158, 241);
   <widget class="QWidget" name="expiration" native="true">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>100</y>
-     <width>830</width>
+     <x>440</x>
+     <y>40</y>
+     <width>380</width>
      <height>46</height>
     </rect>
    </property>
   </widget>
+  <widget class="QProgressBar" name="progressBar">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>10</y>
+     <width>451</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QProgressBar
+{
+	background-color: rgb(255, 255, 255);
+	border-radius:0px;
+	font-weight: bold;
+}
+
+QProgressBar::chunk 
+{
+	 
+	background-color: rgb(170, 0, 255);
+     width: 20px;
+}</string>
+   </property>
+   <property name="maximum">
+    <number>30</number>
+   </property>
+   <property name="value">
+    <number>30</number>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="format">
+    <string>Time left..</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="downColor">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>40</y>
+     <width>830</width>
+     <height>3</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(68, 158, 241);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="downColor_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>120</y>
+     <width>830</width>
+     <height>3</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(68, 158, 241);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>progressBar</zorder>
+  <zorder>save</zorder>
+  <zorder>expireLabel</zorder>
+  <zorder>otpField</zorder>
+  <zorder>remove</zorder>
+  <zorder>otpSeed</zorder>
+  <zorder>modify</zorder>
+  <zorder>expiration</zorder>
+  <zorder>downColor</zorder>
+  <zorder>downColor_2</zorder>
  </widget>
  <resources/>
  <connections/>
