@@ -289,7 +289,8 @@ unsigned int DBWContainers::getTotalItemSize()
 
 void DBWContainers::retract()
 {
-    emit widgetClicked(false);
+    emit widgetClicked(true);
+    ui->containerButton->setChecked(true);
 }
 
 DBWContainers::~DBWContainers()

@@ -21,7 +21,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>721</width>
+     <width>811</width>
      <height>25</height>
     </rect>
    </property>
@@ -38,6 +38,9 @@ border-radius:0px</string>
    </property>
    <property name="echoMode">
     <enum>QLineEdit::Normal</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
    <property name="readOnly">
     <bool>true</bool>
@@ -100,6 +103,9 @@ border-radius:0px</string>
    </property>
    <property name="echoMode">
     <enum>QLineEdit::Normal</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
    <property name="placeholderText">
     <string>Modify name..</string>
@@ -170,7 +176,7 @@ background-color: rgb(164, 0, 0);
   <widget class="QLabel" name="expireLabel">
    <property name="geometry">
     <rect>
-     <x>663</x>
+     <x>10</x>
      <y>10</y>
      <width>71</width>
      <height>25</height>
@@ -183,22 +189,6 @@ font-weight: bold</string>
    </property>
    <property name="text">
     <string>    EXPIRED</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="downColor">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>40</y>
-     <width>830</width>
-     <height>3</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(68, 158, 241);</string>
-   </property>
-   <property name="text">
-    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="downColor_2">

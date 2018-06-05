@@ -24,7 +24,7 @@ public:
 
     HIBPChecker(){}
 
-    static HIBPChecker& getInstance()
+    static HIBPChecker* getInstance()
     {
         static HIBPChecker instance;
 
@@ -37,7 +37,7 @@ public:
             _fetchTimer->start(1900); // 1.7s between each request to avoid rate limiting
         }
 
-        return instance;
+        return &instance;
     }
 
     HIBPChecker(HIBPChecker const&) = delete;
@@ -46,7 +46,7 @@ public:
     void makeRequest(QString value, CheckType type);
 
 signals:
-    void requestProcessed(std::pair<QString, CheckType> metadata, QString returnedData);
+    void requestProcessed(std::pair<QString, HIBPChecker::CheckType> metadata, QString returnedData);
 
 public slots:
     void replyFinished(QNetworkReply* reply);

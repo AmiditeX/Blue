@@ -22,7 +22,6 @@ void HIBPChecker::processBuffer()
 {
     if(_buffer.size() <= 0 || !_lastResponded)
         return;
-    qWarning() << "pROCESSING" << _buffer.size();
     _lastResponded = false;
 
     std::pair<QString, CheckType> currentPair = _buffer.back(); //Last element
@@ -44,13 +43,14 @@ void HIBPChecker::processBuffer()
 //Process the reply after a request
 void HIBPChecker::replyFinished(QNetworkReply *reply)
 {
-    if(reply->readAll() == "Rate limit exceeded, refer to acceptable use of API: https://haveibeenpwned.com/API/v2#AcceptableUse")
+    QString replyStr = reply->readAll();
+    if(replyStr == "Rate limit exceeded, refer to acceptable use of API: https://haveibeenpwned.com/API/v2#AcceptableUse")
     {
         spdlog::get("LOGGER")->error("API THRESHOLD COMPLIANCE FAILURE : ");
     }
 
     _lastResponded = true;
-    emit requestProcessed(_currentPair, reply->readAll());
+    emit requestProcessed(_currentPair, replyStr);
     reply->deleteLater();
 }
 

@@ -29,6 +29,7 @@ public slots:
 
     void generatePassword();
     void generatePassphrase();
+    void setNonExpdandable();
 
 signals:
     void sizeChanged(bool expanded);

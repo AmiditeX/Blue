@@ -41,6 +41,7 @@ DBWNameField::DBWNameField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem
     });
 
     expiration->checkExpiration();
+    ui->modify->setVisible(false);
 }
 
 //Resize event, emit signal
@@ -92,6 +93,18 @@ void DBWNameField::changeExpirationState()
     field->setExpirable(expiration->isExpirable());
 
     emit modified();
+}
+
+void DBWNameField::enterEvent(QEvent *e)
+{
+    (void)e;
+    ui->modify->setVisible(true);
+}
+
+void DBWNameField::leaveEvent(QEvent *e)
+{
+    (void)e;
+    ui->modify->setVisible(false);
 }
 
 DBWNameField::~DBWNameField()

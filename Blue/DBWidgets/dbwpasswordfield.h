@@ -7,6 +7,7 @@
 #include "DBElements/dbpasswordfield.h"
 #include "MainwindowWidgets/expirationwidget.h"
 #include "MainwindowWidgets/bluedialog.h"
+#include "MainwindowWidgets/passwordcreator.h"
 
 namespace Ui {
 class DBWPasswordField;
@@ -22,6 +23,8 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *event);
+    void enterEvent(QEvent *e);
+    void leaveEvent(QEvent *e);
 
 public slots:
     void removeWidget();
@@ -32,6 +35,7 @@ private:
     Ui::DBWPasswordField *ui;
     std::shared_ptr<AbstractDataBaseItem> _item;
     ExpirationWidget *expiration = nullptr;
+    PasswordCreator *creator = nullptr;
 };
 
 #endif // DBWPASSWORDFIELD_H

@@ -22,6 +22,8 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *event);
+    void enterEvent(QEvent *e);
+    void leaveEvent(QEvent *e);
 
 public slots:
     void removeWidget();

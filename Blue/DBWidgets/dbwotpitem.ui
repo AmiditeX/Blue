@@ -42,31 +42,13 @@ background-color: rgb(93, 127, 247);
     <string>Save</string>
    </property>
   </widget>
-  <widget class="QLabel" name="expireLabel">
-   <property name="geometry">
-    <rect>
-     <x>660</x>
-     <y>10</y>
-     <width>71</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(239, 41, 41);
-font-weight: bold</string>
-   </property>
-   <property name="text">
-    <string>    EXPIRED</string>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="otpField">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>261</width>
-     <height>25</height>
+     <width>811</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -124,7 +106,7 @@ background-color: rgb(164, 0, 0);
     <rect>
      <x>10</x>
      <y>50</y>
-     <width>261</width>
+     <width>411</width>
      <height>25</height>
     </rect>
    </property>
@@ -142,6 +124,9 @@ border-radius:0px</string>
    <property name="echoMode">
     <enum>QLineEdit::Normal</enum>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
    <property name="placeholderText">
     <string>Modify seed..</string>
    </property>
@@ -149,7 +134,7 @@ border-radius:0px</string>
   <widget class="QPushButton" name="modify">
    <property name="geometry">
     <rect>
-     <x>743</x>
+     <x>740</x>
      <y>10</y>
      <width>81</width>
      <height>25</height>
@@ -191,9 +176,9 @@ background-color: rgb(68, 158, 241);
   <widget class="QProgressBar" name="progressBar">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>10</x>
      <y>10</y>
-     <width>451</width>
+     <width>811</width>
      <height>25</height>
     </rect>
    </property>
@@ -208,7 +193,8 @@ background-color: rgb(68, 158, 241);
 QProgressBar::chunk 
 {
 	 
-	background-color: rgb(170, 0, 255);
+	
+	background-color: rgb(0, 170, 255);
      width: 20px;
 }</string>
    </property>
@@ -223,22 +209,6 @@ QProgressBar::chunk
    </property>
    <property name="format">
     <string>Time left..</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="downColor">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>40</y>
-     <width>830</width>
-     <height>3</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(68, 158, 241);</string>
-   </property>
-   <property name="text">
-    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="downColor_2">
@@ -257,16 +227,33 @@ QProgressBar::chunk
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="expireLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>71</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(239, 41, 41);
+font-weight: bold</string>
+   </property>
+   <property name="text">
+    <string>    EXPIRED</string>
+   </property>
+  </widget>
   <zorder>progressBar</zorder>
-  <zorder>save</zorder>
-  <zorder>expireLabel</zorder>
   <zorder>otpField</zorder>
+  <zorder>save</zorder>
   <zorder>remove</zorder>
   <zorder>otpSeed</zorder>
   <zorder>modify</zorder>
   <zorder>expiration</zorder>
-  <zorder>downColor</zorder>
   <zorder>downColor_2</zorder>
+  <zorder>expireLabel</zorder>
  </widget>
  <resources/>
  <connections/>

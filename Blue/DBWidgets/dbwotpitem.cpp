@@ -48,6 +48,8 @@ DBWOtpItem::DBWOtpItem(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> it
     _progressTimer = new QTimer(this);
     connect(_progressTimer, &QTimer::timeout, this, &DBWOtpItem::setProgressStatus);
     _progressTimer->start(1000);
+
+    ui->modify->setVisible(false);
 }
 
 //Calculate the otp value from the key
@@ -58,9 +60,8 @@ void DBWOtpItem::calculateTotp()
     std::uint32_t result = CppTotp::totp(key, QDateTime::currentSecsSinceEpoch(), 0, 30, 6);
     QString otpValue;
     otpValue.setNum(result);
-    while(otpValue.count() < 5)
+    while(otpValue.size() < 6)
     {
-        qWarning() << otpValue.count();
         otpValue.prepend("0");
     }
     ui->otpField->setText(otpValue);
@@ -130,6 +131,17 @@ void DBWOtpItem::setProgressStatus()
     ui->progressBar->setFormat(tr("%1 seconds left").arg(ui->progressBar->value()));
 }
 
+void DBWOtpItem::enterEvent(QEvent *e)
+{
+    (void)e;
+    ui->modify->setVisible(true);
+}
+
+void DBWOtpItem::leaveEvent(QEvent *e)
+{
+    (void)e;
+    ui->modify->setVisible(false);
+}
 
 DBWOtpItem::~DBWOtpItem()
 {

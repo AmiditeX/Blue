@@ -32,6 +32,9 @@
       <height>700</height>
      </rect>
     </property>
+    <property name="focusPolicy">
+     <enum>Qt::TabFocus</enum>
+    </property>
     <property name="styleSheet">
      <string notr="true">border:0px;
 QTabWidget::pane { border: 0px; }</string>

@@ -7,6 +7,8 @@ DBWPasswordField::DBWPasswordField(QWidget *parent, std::shared_ptr<AbstractData
     ui->setupUi(this);
 
     setHeightParam(45, height());
+    creator = new PasswordCreator(ui->passwordCreator);
+    creator->setNonExpdandable();
 
     connect(ui->modify, &QPushButton::toggled, [=](bool toggled){
         emit expand(toggled);
@@ -37,16 +39,18 @@ DBWPasswordField::DBWPasswordField(QWidget *parent, std::shared_ptr<AbstractData
         }
         ui->expireLabel->setVisible(false);
         ui->passwordField->setText(field->getValue());
-        ui->passwordModify->setText(field->getValue());
+        creator->setPassword(field->getValue());
     }
 
     connect(ui->save, &QPushButton::clicked, [=](){
-        ui->passwordField->setText(ui->passwordModify->text());
-        field->setValue(ui->passwordModify->text());
+        ui->passwordField->setText(creator->returnPassword());
+        field->setValue(creator->returnPassword());
         emit modified();
     });
 
     expiration->checkExpiration();
+    ui->modify->setVisible(false);
+    ui->see->setVisible(false);
 }
 
 //Resize event, emit signal
@@ -98,6 +102,20 @@ void DBWPasswordField::changeExpirationState()
     field->setExpirable(expiration->isExpirable());
 
     emit modified();
+}
+
+void DBWPasswordField::enterEvent(QEvent *e)
+{
+    (void)e;
+    ui->modify->setVisible(true);
+    ui->see->setVisible(true);
+}
+
+void DBWPasswordField::leaveEvent(QEvent *e)
+{
+    (void)e;
+    ui->modify->setVisible(false);
+    ui->see->setVisible(false);
 }
 
 DBWPasswordField::~DBWPasswordField()

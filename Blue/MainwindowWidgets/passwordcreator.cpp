@@ -158,7 +158,7 @@ void PasswordCreator::generatePassword()
 void PasswordCreator::generatePassphrase()
 {
      diceWarePassword diceString =  GenPass(ui->wordCount->value(), false);
-     ui->password->setText(QString::fromStdString(diceString));
+     ui->password->setText(QString::fromStdString(diceString).remove(0, 1));
 }
 
 //Return a random string of random and maximum length of 32
@@ -192,4 +192,10 @@ void PasswordCreator::setPassword(const QString &password)
 QString PasswordCreator::returnPassword()
 {
     return ui->password->text();
+}
+
+void PasswordCreator::setNonExpdandable()
+{
+    ui->generate->setHidden(true);
+    switchGeneratorVisibility(true);
 }

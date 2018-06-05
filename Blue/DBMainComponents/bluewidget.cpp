@@ -21,6 +21,11 @@ BlueWidget::BlueWidget(std::shared_ptr<BlueDatabase> databasePointer) : ui(new U
     creator->setVisible(false);
     QObject::connect(ui->addContainer, SIGNAL(clicked(bool)), this, SLOT(createNewContainer()));
     QObject::connect(creator, SIGNAL(okPressed()), this, SLOT(creatorReturned()));
+
+    connect(ui->fold, &QPushButton::clicked, [=](){
+        for(unsigned int i = 0; i < _containers.size(); i++)
+            _containers[i]->retract();
+    });
 }
 
 //Add a container as an UI
@@ -46,7 +51,6 @@ void BlueWidget::addContainer(std::shared_ptr<DBContainers> container)
     //Connect for the drop animation
     connect(widget, &DBWContainers::sizedChanged, [=](){
         item->setSizeHint(QSize(widget->width(), widget->height()));
-        qWarning() << "CC";
     });
 
     //Connect delete signal
@@ -67,7 +71,6 @@ void BlueWidget::addContainer(std::shared_ptr<DBContainers> container)
     ui->containerList->addItem(item);
     ui->containerList->setItemWidget(item, widget);
     _containers.push_back(widget);
-    widget->retract();
 }
 
 //Create a new container (UI and underneath structure)
