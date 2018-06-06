@@ -31,6 +31,8 @@ DBWEmailField::DBWEmailField(QWidget *parent, std::shared_ptr<AbstractDataBaseIt
         ui->expireLabel->setVisible(false);
         ui->emailField->setText(field->getValue());
         ui->emailModify->setText(field->getValue());
+        _checkEmail = field->isCheckEmail();
+        ui->enableCompromission->setChecked(_checkEmail);
         checkEmail();
     }
 
@@ -50,7 +52,7 @@ DBWEmailField::DBWEmailField(QWidget *parent, std::shared_ptr<AbstractDataBaseIt
         dialog->setTitle(tr("Compromised email"));
         dialog->setMessage(tr("Your email has been found on a stolen database, the password associated with it may have been cracked.\n"
                               "Your email, and accounts using this email may be at risk of being stolen. Change this email or your passwords.\n"
-                                 "To learn more about your leak : https://haveibeenpwned.com and enter your email."));
+                              "To learn more about your leak : https://haveibeenpwned.com and enter your email."));
         dialog->show();
 
         connect(dialog, &BlueDialog::closeClicked, [=](){
@@ -65,6 +67,11 @@ DBWEmailField::DBWEmailField(QWidget *parent, std::shared_ptr<AbstractDataBaseIt
     });
 
     connect(HIBPChecker::getInstance(), SIGNAL(requestProcessed(std::pair<QString, HIBPChecker::CheckType>, QString)), this, SLOT(checkerReturned(std::pair<QString,HIBPChecker::CheckType>,QString)));
+
+    connect(ui->enableCompromission, &QCheckBox::clicked, [=](){
+        field->setCheckEmail(ui->enableCompromission->isChecked());
+        _checkEmail = ui->enableCompromission->isChecked();
+    });
 }
 
 //Resize event, emit signal
@@ -121,6 +128,9 @@ void DBWEmailField::changeExpirationState()
 //Check the email on HIBP
 void DBWEmailField::checkEmail()
 {
+    if(!_checkEmail)
+        return;
+
     QString email = ui->emailField->text();
     currentRequest = std::make_pair(email, HIBPChecker::Account);
     HIBPChecker::getInstance()->makeRequest(email, HIBPChecker::Account);

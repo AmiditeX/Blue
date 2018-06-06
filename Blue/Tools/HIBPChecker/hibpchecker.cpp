@@ -1,5 +1,4 @@
 #include "hibpchecker.h"
-#include <QDebug>
 
 QNetworkAccessManager* HIBPChecker::manager = nullptr;
 QTimer* HIBPChecker::_fetchTimer = nullptr;

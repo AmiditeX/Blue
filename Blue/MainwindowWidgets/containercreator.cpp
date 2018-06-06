@@ -1,6 +1,5 @@
 #include "containercreator.h"
 #include "ui_containercreator.h"
-#include <QDebug>
 
 ContainerCreator::ContainerCreator(QWidget *parent) :
     QDialog(parent),

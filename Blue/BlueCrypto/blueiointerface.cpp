@@ -8,8 +8,6 @@
 #include <filters.h>
 #include "BlueCrypto/aesmodule.h"
 
-#include <QDebug>
-
 BlueIOInterface::BlueIOInterface(QMutex *mutex)
 {
     _fileMutex = mutex;

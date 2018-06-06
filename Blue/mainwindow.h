@@ -15,8 +15,6 @@
 #include "MainwindowWidgets/databasebutton.h"
 #include "MainwindowWidgets/databasesettings.h"
 
-#include <QDebug>
-
 namespace Ui {
 class MainWindow;
 }

@@ -38,6 +38,7 @@ private:
     std::shared_ptr<AbstractDataBaseItem> _item;
     ExpirationWidget *expiration = nullptr;
     std::pair<QString, HIBPChecker::CheckType> currentRequest;
+    bool _checkEmail = false;
 };
 
 #endif // DBWEMAILFIELD_H

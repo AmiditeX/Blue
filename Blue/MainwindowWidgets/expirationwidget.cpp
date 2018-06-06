@@ -1,6 +1,5 @@
 #include "expirationwidget.h"
 #include "ui_expirationwidget.h"
-#include <QDebug>
 
 ExpirationWidget::ExpirationWidget(QWidget *parent) :
     QWidget(parent),

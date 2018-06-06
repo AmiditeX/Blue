@@ -1,5 +1,4 @@
 #include "dbnamefield.h"
-#include <QDebug>
 
 DBNameField::DBNameField()
 {

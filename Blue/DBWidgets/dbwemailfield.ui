@@ -257,6 +257,34 @@ font-weight: bold
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QCheckBox" name="enableCompromission">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>100</y>
+     <width>231</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox {
+color: rgb(255, 255, 255);
+font-weight: bold;
+}
+
+QCheckBox::indicator {
+border-color: rgb(255,255,255);
+background-color: rgb(255, 255, 255);
+}
+
+QCheckBox::indicator::checked {
+background-color: rgb(68, 158, 241);
+}</string>
+   </property>
+   <property name="text">
+    <string>Enable compromission check</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

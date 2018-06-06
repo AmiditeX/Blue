@@ -1,5 +1,4 @@
 #include "abstractdbwidget.h"
-#include <QDebug>
 
 AbstractDBWidget::AbstractDBWidget(QWidget *parent) : QWidget(parent)
 {

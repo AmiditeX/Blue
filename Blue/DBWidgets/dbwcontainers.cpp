@@ -1,8 +1,6 @@
 #include "dbwcontainers.h"
 #include "ui_dbwcontainers.h"
 
-#include <QDebug>
-
 DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> containerPointer, QListWidgetItem *item) : AbstractDBWidget(parent),
     ui(new Ui::DBWContainers), _dbContainer(containerPointer), _item(item)
 {

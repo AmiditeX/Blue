@@ -7,8 +7,6 @@
 #include "BlueCrypto/blueiointerface.h"
 #include "bluedatabase.h"
 
-#include <QDebug>
-
 BlueDBManager::BlueDBManager()
 {
 
@@ -16,7 +14,7 @@ BlueDBManager::BlueDBManager()
 
 BlueDBManager::~BlueDBManager()
 {
-    qWarning() << "BlueDBManager destructor called";
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +76,6 @@ void BlueDBManager::databaseWritten()
 {
     _canIoOperate = true;
     emit writtenSignal();
-    qWarning() << "database has been written";
 }
 
 void BlueDBManager::failedDecryption(QString errorString)

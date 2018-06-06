@@ -11,9 +11,9 @@ DBEmailField::DBEmailField(const QJsonObject &obj)
     _email = obj.value("Email").toString();
     _isExpirable = obj.value("IsExpirable").toBool();
     _expires = QDateTime::fromString(obj.value("DateTime").toString());
+    _checkEmail = obj.value("CheckEmail").toBool();
     setID(obj.value("ID").toString());
     setRow(obj.value("Row").toInt());
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,6 +36,7 @@ QJsonObject DBEmailField::toJson() const
     obj.insert("Email", _email);
     obj.insert("IsExpirable", _isExpirable);
     obj.insert("DateTime", _expires.toString());
+    obj.insert("CheckEmail", _checkEmail);
     obj.insert("ID", getID());
     obj.insert("Row", getRow());
     return obj;
@@ -59,6 +60,16 @@ void DBEmailField::setExpirable(bool isExperiable)
 bool DBEmailField::isExpirable() const
 {
     return _isExpirable;
+}
+
+void DBEmailField::setCheckEmail(bool check)
+{
+    _checkEmail = check;
+}
+
+bool DBEmailField::isCheckEmail() const
+{
+    return _checkEmail;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

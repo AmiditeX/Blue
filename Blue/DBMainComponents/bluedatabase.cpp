@@ -1,6 +1,5 @@
 #include "bluedatabase.h"
 #include <QJsonDocument>
-#include <QDebug>
 
 BlueDatabase::BlueDatabase(const DBParameters &param)
 {

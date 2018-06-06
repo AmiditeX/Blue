@@ -1,6 +1,5 @@
 #include "dbwnamefield.h"
 #include "ui_dbwnamefield.h"
-#include <QDebug>
 
 DBWNameField::DBWNameField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item) : AbstractDBWidget(parent),
     ui(new Ui::DBWNameField), _item(item)

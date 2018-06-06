@@ -1,7 +1,6 @@
 #include "dbwotpitem.h"
 #include "ui_dbwotpitem.h"
 
-#include <qdebug.h>
 #include <QDateTime>
 #include "Tools/libcppotp/otp.h"
 
@@ -56,6 +55,7 @@ DBWOtpItem::DBWOtpItem(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> it
 void DBWOtpItem::calculateTotp()
 {
     std::shared_ptr<DBOtpItem> field = std::dynamic_pointer_cast<DBOtpItem>(_item);
+
     CppTotp::Bytes::ByteString key = CppTotp::Bytes::fromUnpaddedBase32(field->getValue().toStdString());
     std::uint32_t result = CppTotp::totp(key, QDateTime::currentSecsSinceEpoch(), 0, 30, 6);
     QString otpValue;

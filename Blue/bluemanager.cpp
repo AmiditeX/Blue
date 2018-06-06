@@ -1,7 +1,5 @@
 #include "bluemanager.h"
 
-#include <QDebug>
-
 BlueManager::BlueManager()
 {
     //Create UI

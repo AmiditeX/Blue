@@ -12,8 +12,6 @@
 #include "BlueCrypto/qiodevicesink.h"
 #include "BlueCrypto/qiodevicesource.h"
 
-#include <QDebug>
-
 using namespace CryptoPP;
 
 AESModule::AESModule()

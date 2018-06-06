@@ -1,7 +1,6 @@
 #include "dbcontainers.h"
 
 #include <algorithm>
-#include <QDebug>
 
 DBContainers::DBContainers()
 {

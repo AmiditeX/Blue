@@ -6,7 +6,6 @@
 
 #include "Tools/HIBPChecker/hibpchecker.h"
 #include <QSslSocket>
-#include <QDebug>
 #include <QLibrary>
 #include <opensslv.h>
 
@@ -15,9 +14,9 @@ using namespace CryptoPP;
 
 int main(int argc, char *argv[])
 {
-    try //Create basic file logger (not rotated)
+    try //Create rotated logger (1 mb max)
     {
-        spdlog::basic_logger_mt("LOGGER", "logs.txt");
+        spdlog::rotating_logger_mt("LOGGER", "logs.txt", 1048576, 1);
         spdlog::set_pattern("[%d/%m/%Y %H:%M:%S.%e] [T:%t P:%P] [%l] %v");
         spdlog::get("LOGGER")->info("-- Started");
         spdlog::set_pattern("[%d/%m/%Y %H:%M:%S.%e] [%l] %v");
@@ -55,6 +54,10 @@ int main(int argc, char *argv[])
     }
 
     QApplication a(argc, argv);
+
+    QCoreApplication::setApplicationName("Blue");
+    QCoreApplication::setApplicationVersion("1.0");
+    QCoreApplication::setOrganizationDomain("https://github.com/AmiditeX/Blue");
 
     qsrand(time(NULL));
     qRegisterMetaType<DBParameters>("DBParameters");

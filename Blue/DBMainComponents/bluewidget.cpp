@@ -1,8 +1,6 @@
 ﻿#include "bluewidget.h"
 #include "ui_bluewidget.h"
 
-#include <QDebug>
-
 BlueWidget::BlueWidget(std::shared_ptr<BlueDatabase> databasePointer) : ui(new Ui::BlueWidget), _dataBase(databasePointer)
 {
     ui->setupUi(this);

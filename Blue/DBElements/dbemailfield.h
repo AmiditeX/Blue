@@ -22,10 +22,14 @@ public:
     void setExpirable(bool isExperiable);
     bool isExpirable() const;
 
+    void setCheckEmail(bool check);
+    bool isCheckEmail() const;
+
 private:
     QString _email;
     QDateTime _expires = QDateTime(QDate(2000,1,1));
     bool _isExpirable = false;
+    bool _checkEmail = false;
 
 };
 
