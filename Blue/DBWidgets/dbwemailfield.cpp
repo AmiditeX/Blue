@@ -71,6 +71,12 @@ DBWEmailField::DBWEmailField(QWidget *parent, std::shared_ptr<AbstractDataBaseIt
     connect(ui->enableCompromission, &QCheckBox::clicked, [=](){
         field->setCheckEmail(ui->enableCompromission->isChecked());
         _checkEmail = ui->enableCompromission->isChecked();
+
+        if(!ui->enableCompromission->isChecked())
+        {
+            ui->compromised->setHidden(true);
+            ui->compromiseButton->setHidden(true);
+        }
     });
 }
 

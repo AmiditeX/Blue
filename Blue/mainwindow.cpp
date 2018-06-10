@@ -177,6 +177,12 @@ void MainWindow::openerReturn()
         return;
     }
 
+    QSettings settings;
+    settings.beginGroup("LatestDatabase");
+    settings.setValue("DBPath", opener->getFilePath());
+    settings.setValue("KeyPath", opener->getKey());
+    settings.endGroup();
+
     emit openingRequest(opener->getMaster(), opener->getFilePath(), opener->getKey());
     opener->clear();
     openerClose();

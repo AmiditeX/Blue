@@ -21,6 +21,12 @@ DatabaseOpener::DatabaseOpener(QWidget *parent) :
     bodyShadow->setDistance(10.0);
     bodyShadow->setColor(QColor(0, 0, 0, 150));
     setGraphicsEffect(bodyShadow);
+
+    QSettings settings;
+    settings.beginGroup("LatestDatabase");
+    ui->database->setText(settings.value("DBPath", "").toString());
+    ui->key->setText(settings.value("KeyPath", "").toString());
+    settings.endGroup();
 }
 
 //Switch the echo mode of the password field

@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QListWidget>
 #include <QSizeGrip>
+#include <QSettings>
 #include <QPropertyAnimation>
 #include "DBMainComponents/bluedbmanager.h"
 #include "MainwindowWidgets/bluedialog.h"

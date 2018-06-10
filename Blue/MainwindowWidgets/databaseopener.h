@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QFileDialog>
+#include <QSettings>
 #include "MainwindowWidgets/customshadoweffect.h"
 
 namespace Ui {
