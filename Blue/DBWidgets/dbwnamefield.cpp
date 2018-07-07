@@ -7,8 +7,16 @@ DBWNameField::DBWNameField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem
     ui->setupUi(this);
 
     setHeightParam(45, height());
+    ui->upColor->setVisible(false);
+    ui->sideColor->setVisible(false);
+    ui->sideColor_2->setVisible(false);
+    ui->downColor->setVisible(false);
 
     connect(ui->modify, &QPushButton::toggled, [=](bool toggled){
+        ui->upColor->setVisible(!toggled);
+        ui->sideColor->setVisible(!toggled);
+        ui->sideColor_2->setVisible(!toggled);
+        ui->downColor->setVisible(!toggled);
         emit expand(toggled);
     });
 
@@ -104,6 +112,11 @@ void DBWNameField::leaveEvent(QEvent *e)
 {
     (void)e;
     ui->modify->setVisible(false);
+}
+
+std::shared_ptr<AbstractDataBaseItem> DBWNameField::getAbstractItem()
+{
+    return _item;
 }
 
 DBWNameField::~DBWNameField()

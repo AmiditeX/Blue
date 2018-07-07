@@ -21,6 +21,8 @@ public:
     explicit DBWEmailField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item);
     ~DBWEmailField();
 
+    std::shared_ptr<AbstractDataBaseItem> getAbstractItem() override;
+
 protected:
     void resizeEvent(QResizeEvent *event);
     void enterEvent(QEvent *e);

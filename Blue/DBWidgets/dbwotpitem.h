@@ -20,6 +20,8 @@ public:
     explicit DBWOtpItem(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item);
     ~DBWOtpItem();
 
+    std::shared_ptr<AbstractDataBaseItem> getAbstractItem() override;
+
 protected:
     void resizeEvent(QResizeEvent *event);
     void enterEvent(QEvent *e);

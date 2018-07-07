@@ -31,6 +31,7 @@ public slots:
     void addContainer(std::shared_ptr<DBContainers> container = nullptr);
     void createNewContainer();
     void creatorReturned();
+    void handleRow(bool up, QListWidgetItem* listItem);
 
 signals:
     void modified();

@@ -78,6 +78,9 @@ border-radius:0px</string>
    <property name="maxLength">
     <number>200</number>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
    <property name="placeholderText">
     <string>Title..</string>
    </property>

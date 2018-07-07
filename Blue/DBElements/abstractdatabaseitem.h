@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QJsonObject>
 #include <memory>
+#include "abstractdatabaseitem.h"
 
 class AbstractDataBaseItem
 {

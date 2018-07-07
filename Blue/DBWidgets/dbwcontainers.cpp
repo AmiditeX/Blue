@@ -43,7 +43,7 @@ DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> cont
             });
 
             //Connect for the drop animation
-            connect(abstract, &AbstractDBWidget::sizeChanged, [=](){
+            connect(abstract, &AbstractDBWidget::sizeChanged, [this , listItem, widget](){
                 listItem->setSizeHint(QSize(widget->width(), widget->height()));
 
                 unsigned int currentSize = getTotalItemSize();
@@ -70,6 +70,10 @@ DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> cont
             connect(abstract, &AbstractDBWidget::modified, [=](){
                 emit modified();
             });
+
+            connect(abstract, &AbstractDBWidget::changePos, [=](bool up){
+                handleRow(up, listItem);
+            });
         }
         catch (std::exception &e)
         {
@@ -88,6 +92,16 @@ DBWContainers::DBWContainers(QWidget *parent, std::shared_ptr<DBContainers> cont
     ui->close->setVisible(false);
     ui->edit->setVisible(false);
     ui->add->setVisible(false);
+    ui->up->setVisible(false);
+    ui->down->setVisible(false);
+
+    connect(ui->up, &QPushButton::clicked, [=](){
+        emit up();
+    });
+
+    connect(ui->down, &QPushButton::clicked, [=](){
+        emit down();
+    });
 
     creator = new ContainerCreator(this);
     creator->setVisible(false);
@@ -156,6 +170,8 @@ void DBWContainers::enterEvent(QEvent *e)
     ui->close->setVisible(true);
     ui->edit->setVisible(true);
     ui->add->setVisible(true);
+    ui->up->setVisible(true);
+    ui->down->setVisible(true);
 }
 
 void DBWContainers::leaveEvent(QEvent *e)
@@ -164,6 +180,8 @@ void DBWContainers::leaveEvent(QEvent *e)
     ui->close->setVisible(false);
     ui->edit->setVisible(false);
     ui->add->setVisible(false);
+    ui->up->setVisible(false);
+    ui->down->setVisible(false);
 }
 
 //Remove a container from UI and structure
@@ -269,6 +287,10 @@ void DBWContainers::addWidget(const QString &widgetName)
         emit modified();
     });
 
+    connect(abstract, &AbstractDBWidget::changePos, [=](bool up){
+        handleRow(up, listItem);
+    });
+
     emit modified();
 }
 
@@ -289,6 +311,62 @@ void DBWContainers::retract()
 {
     emit widgetClicked(true);
     ui->containerButton->setChecked(true);
+}
+
+std::shared_ptr<DBContainers> DBWContainers::getContainer()
+{
+    return _dbContainer;
+}
+
+//Handle row position of the items
+void DBWContainers::handleRow(bool up, QListWidgetItem *listItemReceived)
+{
+    for(int i = 0; i < ui->widgetList->count(); i++)
+    {
+        QListWidgetItem *listitem = ui->widgetList->item(i);
+        AbstractDBWidget *dbWidget = qobject_cast<AbstractDBWidget*>(ui->widgetList->itemWidget(listitem));
+        std::shared_ptr<AbstractDataBaseItem> item = dbWidget->getAbstractItem();
+
+        if(listitem == listItemReceived)
+        {
+            if(up)
+            {
+                if(item->getRow() > 1)
+                {
+                    item->setRow(item->getRow() - 1);
+
+                    QListWidgetItem *previousItem = ui->widgetList->item(i - 1);
+                    AbstractDBWidget *previouswItem = qobject_cast<AbstractDBWidget*>(ui->widgetList->itemWidget(previousItem));
+                    std::shared_ptr<AbstractDataBaseItem> previousDBItem = previouswItem->getAbstractItem();
+
+                    previousDBItem->setRow(previousDBItem->getRow() + 1);
+                    previousItem->setData(0, previousDBItem->getRow());
+                }
+            }
+            else
+            {
+                if(item->getRow() != ui->widgetList->count() - 1)
+                {
+                    item->setRow(item->getRow() + 1);
+
+                    QListWidgetItem *previousItem = ui->widgetList->item(i - 1);
+                    AbstractDBWidget *previouswItem = qobject_cast<AbstractDBWidget*>(ui->widgetList->itemWidget(previousItem));
+                    std::shared_ptr<AbstractDataBaseItem> previousDBItem = previouswItem->getAbstractItem();
+
+                    previousDBItem->setRow(previousDBItem->getRow() - 1);
+                    previousItem->setData(0, previousDBItem->getRow());
+                }
+            }
+            listitem->setData(0, item->getRow());
+            emit modified();
+            break;
+        }
+    }
+}
+
+std::shared_ptr<AbstractDataBaseItem> DBWContainers::getAbstractItem()
+{
+    return nullptr;
 }
 
 DBWContainers::~DBWContainers()

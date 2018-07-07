@@ -1,6 +1,7 @@
 #include "dbcontainers.h"
 
 #include <algorithm>
+#include <QDebug>
 
 DBContainers::DBContainers()
 {
@@ -35,6 +36,7 @@ DBContainers::DBContainers(const QJsonObject &obj)
     _title = obj.value("Name").toString();
     _color = obj.value("Color").toString();
     _colorText = obj.value("ColorText").toString();
+    setRow(obj.value("ContainerRow").toInt());
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,7 +61,13 @@ QJsonObject DBContainers::toJson() const
     obj.insert("Name", _title);
     obj.insert("Color", _color);
     obj.insert("ColorText", _colorText);
+    obj.insert("ContainerRow", getRow());
     return obj;
+}
+
+QString DBContainers::getValue() const
+{
+    return "Undefined, object is of type DBContainers";
 }
 
 std::shared_ptr<AbstractDataBaseItem> DBContainers::addItem(const QString &ID)

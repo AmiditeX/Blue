@@ -7,8 +7,16 @@ DBWEmailField::DBWEmailField(QWidget *parent, std::shared_ptr<AbstractDataBaseIt
     ui->setupUi(this);
 
     setHeightParam(45, height());
+    ui->upColor->setVisible(false);
+    ui->sideColor->setVisible(false);
+    ui->sideColor_2->setVisible(false);
+    ui->downColor->setVisible(false);
 
     connect(ui->modify, &QPushButton::toggled, [=](bool toggled){
+        ui->upColor->setVisible(!toggled);
+        ui->sideColor->setVisible(!toggled);
+        ui->sideColor_2->setVisible(!toggled);
+        ui->downColor->setVisible(!toggled);
         emit expand(toggled);
     });
 
@@ -166,6 +174,11 @@ void DBWEmailField::leaveEvent(QEvent *e)
 {
     (void)e;
     ui->modify->setVisible(false);
+}
+
+std::shared_ptr<AbstractDataBaseItem> DBWEmailField::getAbstractItem()
+{
+    return _item;
 }
 
 DBWEmailField::~DBWEmailField()

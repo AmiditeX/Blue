@@ -343,6 +343,7 @@ double zxcppvbn::extra_l33t_entropy(const match& match) const
 double zxcppvbn::spatial_entropy(const match& match) const
 {
 	double s, d;
+    s = 0; d = 0;
 
 	// Find matching stats
 	for (const auto& stat : graph_stats) {

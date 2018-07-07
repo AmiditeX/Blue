@@ -26,18 +26,25 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QDateTimeEdit {
+    <string notr="true">QDateTimeEdit 
+{
 background-color: rgb(255, 255, 255);
-border-radius:0px
+border-color: rgb(100,100,100);
 }
-</string>
+
+QDateTimeEdit::drop-down 
+{
+image: url(:/icons/down-squared.png);
+    width: 19px;
+    height:26px;
+}</string>
    </property>
    <property name="dateTime">
     <datetime>
      <hour>0</hour>
      <minute>0</minute>
      <second>0</second>
-     <year>2000</year>
+     <year>2050</year>
      <month>1</month>
      <day>1</day>
     </datetime>
@@ -98,6 +105,70 @@ background-color: rgb(68, 158, 241);
    </property>
    <property name="text">
     <string>Enable expiration</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="downColor_2">
+   <property name="geometry">
+    <rect>
+     <x>377</x>
+     <y>0</y>
+     <width>3</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(68, 158, 241);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="downColor_3">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>3</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(68, 158, 241);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="downColor_4">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>381</width>
+     <height>3</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(68, 158, 241);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="downColor_5">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>43</y>
+     <width>381</width>
+     <height>3</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(68, 158, 241);</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

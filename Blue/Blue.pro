@@ -116,6 +116,9 @@ FORMS    += mainwindow.ui \
     MainwindowWidgets/widgetcreator.ui \
     MainwindowWidgets/expirationwidget.ui
 
+RESOURCES += \
+    resources/resources.qrc
+
 TRANSLATIONS += blue_fr.ts
 
 #SPDLOG LINKAGE

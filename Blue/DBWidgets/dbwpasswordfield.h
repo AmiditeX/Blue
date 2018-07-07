@@ -21,6 +21,8 @@ public:
     explicit DBWPasswordField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item);
     ~DBWPasswordField();
 
+    std::shared_ptr<AbstractDataBaseItem> getAbstractItem() override;
+
 protected:
     void resizeEvent(QResizeEvent *event);
     void enterEvent(QEvent *e);

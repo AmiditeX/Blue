@@ -28,7 +28,7 @@ BlueManager::BlueManager()
 
     progressTimer = new QTimer(this);
     connect(progressTimer, &QTimer::timeout, [=](){
-        progress = progress - 1;
+        progress -= 1;
         if(progress == 0)
         {
             progress = 30;

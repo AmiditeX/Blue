@@ -11,17 +11,21 @@ class AbstractDBWidget : public QWidget
 
 public:
     explicit AbstractDBWidget(QWidget *parent);
-    ~AbstractDBWidget();
+    virtual ~AbstractDBWidget();
 
     void setHeightParam(int min, int max);
     int getMin();
     int getMax();
+
+    virtual std::shared_ptr<AbstractDataBaseItem> getAbstractItem() = 0;
 
 signals:
     void sizeChanged();
     void expand(bool expand);
     void remove(std::shared_ptr<AbstractDataBaseItem> item);
     void modified();
+
+    void changePos(bool up);
 
 private:
     int minHeight;

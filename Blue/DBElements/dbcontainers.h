@@ -13,7 +13,7 @@
 #include "dbpasswordfield.h"
 #include "spdlog/spdlog.h"
 
-class DBContainers
+class DBContainers : public AbstractDataBaseItem
 {
 
 public:
@@ -21,7 +21,8 @@ public:
     DBContainers(const QJsonObject &obj);
 
     //Convert whole containers to a JSON Object
-    QJsonObject toJson() const;
+    QJsonObject toJson() const override;
+    QString getValue() const override;
 
     //Add and remove items to the containers
     std::shared_ptr<AbstractDataBaseItem> addItem(const QString &ID);

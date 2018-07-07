@@ -20,6 +20,8 @@ public:
     explicit DBWNameField(QWidget *parent, std::shared_ptr<AbstractDataBaseItem> item);
     ~DBWNameField();
 
+    std::shared_ptr<AbstractDataBaseItem> getAbstractItem() override;
+
 protected:
     void resizeEvent(QResizeEvent *event);
     void enterEvent(QEvent *e);
