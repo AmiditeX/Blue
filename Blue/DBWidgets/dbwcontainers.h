@@ -31,8 +31,6 @@ public:
     QListWidgetItem* returnItem();
     unsigned int getTotalItemSize();
 
-    std::shared_ptr<AbstractDataBaseItem> getAbstractItem() override;
-
 protected:
     QWidget* createItem(const QString &ID, std::shared_ptr<AbstractDataBaseItem> item);
     void resizeEvent(QResizeEvent *event);
@@ -45,16 +43,12 @@ public slots:
 
     void addWidget(const QString &widgetName);
     void retract();
-    std::shared_ptr<DBContainers> getContainer();
-
-    void handleRow(bool up, QListWidgetItem* listItem);
 
 signals:
     void widgetClicked(bool drop);
     void pendingDelete(std::shared_ptr<DBContainers> container);
+    void modified();
     void sizedChanged();
-    void up();
-    void down();
 
 private:
     Ui::DBWContainers *ui;

@@ -22,9 +22,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>870</x>
+     <x>840</x>
      <y>10</y>
-     <width>161</width>
+     <width>191</width>
      <height>25</height>
     </rect>
    </property>
@@ -67,9 +67,6 @@ QListWidget::item:selected
    <property name="frameShape">
     <enum>QFrame::NoFrame</enum>
    </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
    <property name="horizontalScrollBarPolicy">
     <enum>Qt::ScrollBarAlwaysOff</enum>
    </property>
@@ -100,9 +97,6 @@ QListWidget::item:selected
    <property name="resizeMode">
     <enum>QListView::Adjust</enum>
    </property>
-   <property name="sortingEnabled">
-    <bool>true</bool>
-   </property>
   </widget>
   <widget class="QPushButton" name="fold">
    <property name="enabled">
@@ -110,9 +104,9 @@ QListWidget::item:selected
    </property>
    <property name="geometry">
     <rect>
-     <x>870</x>
+     <x>840</x>
      <y>50</y>
-     <width>161</width>
+     <width>191</width>
      <height>25</height>
     </rect>
    </property>
@@ -131,53 +125,6 @@ background-color: rgb(93, 127, 247);
    </property>
    <property name="text">
     <string>Fold all containers</string>
-   </property>
-  </widget>
-  <widget class="QScrollBar" name="scrollBar">
-   <property name="geometry">
-    <rect>
-     <x>840</x>
-     <y>0</y>
-     <width>16</width>
-     <height>701</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QScrollBar:vertical {	
-background-color: rgb(36, 36, 36);
-     width: 15px;
-     margin: 10px 0 10px 0;
-     border: 2px;
-	border-color: rgb(255, 255, 255);
- }
- QScrollBar::handle:vertical {
-     
-	background-color: rgb(53, 53, 53);
-     min-height: 20px;
- }
- QScrollBar::add-line:vertical {
-     background-color: rgb(68, 158, 241);
-     height: 10px;
-     subcontrol-position: bottom;
-     subcontrol-origin: margin;
- }
-
- QScrollBar::sub-line:vertical {
-     background-color: rgb(68, 158, 241);
-     height: 10px;
-     subcontrol-position: top;
-     subcontrol-origin: margin;
- }
- QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
-
- }
-
- QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-     background: none;
- }</string>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
    </property>
   </widget>
  </widget>

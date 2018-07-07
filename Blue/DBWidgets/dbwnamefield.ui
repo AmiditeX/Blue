@@ -166,7 +166,7 @@ background-color: rgb(164, 0, 0);
   <widget class="QWidget" name="expiration" native="true">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>250</x>
      <y>90</y>
      <width>380</width>
      <height>46</height>
@@ -191,11 +191,11 @@ font-weight: bold</string>
     <string>    EXPIRED</string>
    </property>
   </widget>
-  <widget class="QLabel" name="downColor">
+  <widget class="QLabel" name="downColor_2">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>181</y>
+     <y>180</y>
      <width>830</width>
      <height>3</height>
     </rect>
@@ -205,108 +205,6 @@ font-weight: bold</string>
    </property>
    <property name="text">
     <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="upColor">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>830</width>
-     <height>3</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(68, 158, 241);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="sideColor_2">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>3</width>
-     <height>181</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(68, 158, 241);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="sideColor">
-   <property name="geometry">
-    <rect>
-     <x>827</x>
-     <y>0</y>
-     <width>3</width>
-     <height>181</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(68, 158, 241);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="down">
-   <property name="geometry">
-    <rect>
-     <x>800</x>
-     <y>120</y>
-     <width>21</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton
-{
-border:0px;
-background-color: rgb(85, 87, 83);
-color: rgb(255, 255, 255);
-font-weight: bold;
-font: 75 11pt &quot;MS Shell Dlg 2&quot;;
-}
-
-QPushButton::pressed {
-background-color: rgb(46, 52, 54);
-}</string>
-   </property>
-   <property name="text">
-    <string>▼</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="up">
-   <property name="geometry">
-    <rect>
-     <x>800</x>
-     <y>90</y>
-     <width>21</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton
-{
-border:0px;
-background-color: rgb(85, 87, 83);
-color: rgb(255, 255, 255);
-font-weight: bold;
-font: 75 11pt &quot;MS Shell Dlg 2&quot;;
-}
-
-QPushButton::pressed {
-background-color: rgb(46, 52, 54);
-}</string>
-   </property>
-   <property name="text">
-    <string>▲</string>
    </property>
   </widget>
  </widget>

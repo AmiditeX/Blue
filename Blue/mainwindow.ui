@@ -49,7 +49,7 @@ QTabWidget::pane { border: 0px; }</string>
      <bool>true</bool>
     </property>
     <property name="tabBarAutoHide">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="buttonOpen">

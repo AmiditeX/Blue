@@ -24,14 +24,6 @@ BlueWidget::BlueWidget(std::shared_ptr<BlueDatabase> databasePointer) : ui(new U
         for(unsigned int i = 0; i < _containers.size(); i++)
             _containers[i]->retract();
     });
-
-    connect(ui->scrollBar, &QScrollBar::valueChanged, [=](int value){
-        ui->containerList->verticalScrollBar()->setValue(value);
-    });
-
-    connect(ui->scrollBar, &QScrollBar::rangeChanged, [=](int min, int max){
-        ui->containerList->verticalScrollBar()->setRange(min, max);
-    });
 }
 
 //Add a container as an UI
@@ -55,7 +47,7 @@ void BlueWidget::addContainer(std::shared_ptr<DBContainers> container)
     });
 
     //Connect for the drop animation
-    connect(widget, &DBWContainers::sizedChanged, [item, widget](){
+    connect(widget, &DBWContainers::sizedChanged, [=](){
         item->setSizeHint(QSize(widget->width(), widget->height()));
     });
 
@@ -73,22 +65,10 @@ void BlueWidget::addContainer(std::shared_ptr<DBContainers> container)
     });
 
     QObject::connect(widget, SIGNAL(modified()), this, SIGNAL(modified()));
-    connect(widget, &DBWContainers::up, [=](){
-        handleRow(true, item);
-    });
-    connect(widget, &DBWContainers::down, [=](){
-        handleRow(false, item);
-    });
 
     ui->containerList->addItem(item);
     ui->containerList->setItemWidget(item, widget);
     _containers.push_back(widget);
-
-    if(container->getRow() == 0)
-    {
-        container->setRow(_containers.size());
-    }
-    item->setData(0, container->getRow());
 }
 
 //Create a new container (UI and underneath structure)
@@ -114,53 +94,6 @@ void BlueWidget::creatorReturned()
 DBParameters BlueWidget::returnParam()
 {
     return _dataBase->getParameters();
-}
-
-//Handle row position of the containers
-void BlueWidget::handleRow(bool up, QListWidgetItem *listItem)
-{
-    for(int i = 0; i < ui->containerList->count(); i++)
-    {
-        QListWidgetItem *item = ui->containerList->item(i);
-        DBWContainers *dbwcontainer = qobject_cast<DBWContainers*>(ui->containerList->itemWidget(item));
-        std::shared_ptr<DBContainers> container = dbwcontainer->getContainer();
-
-        if(listItem == item)
-        {
-            if(up)
-            {
-                if(container->getRow() > 1)
-                {
-                    container->setRow(container->getRow() - 1);
-
-                    QListWidgetItem *previousItem = ui->containerList->item(i - 1);
-                    DBWContainers *previouswContainer = qobject_cast<DBWContainers*>(ui->containerList->itemWidget(previousItem));
-                    std::shared_ptr<DBContainers> previousContainer = previouswContainer->getContainer();
-
-                    previousContainer->setRow(previousContainer->getRow() + 1);
-                    previousItem->setData(0, previousContainer->getRow());
-                }
-            }
-            else
-            {
-                if(container->getRow() != ui->containerList->count() - 1)
-                {
-                    container->setRow(container->getRow() + 1);
-
-                    QListWidgetItem *previousItem = ui->containerList->item(i + 1);
-                    DBWContainers *previouswContainer = qobject_cast<DBWContainers*>(ui->containerList->itemWidget(previousItem));
-                    std::shared_ptr<DBContainers> previousContainer = previouswContainer->getContainer();
-
-                    previousContainer->setRow(previousContainer->getRow() - 1);
-                    previousItem->setData(0, previousContainer->getRow());
-                }
-            }
-            item->setData(0, container->getRow());
-            emit modified();
-            break;
-        }
-    }
-
 }
 
 BlueWidget::~BlueWidget()
