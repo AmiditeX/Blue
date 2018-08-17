@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''qmake
-make'''
+        sh 'ls'
       }
     }
   }
