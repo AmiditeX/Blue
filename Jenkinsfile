@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'ls'
+        sh '''qmake Blue/Blue.pro
+make'''
       }
     }
   }
