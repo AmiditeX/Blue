@@ -12,6 +12,7 @@ CONFIG += c++14
 TARGET = Blue
 TEMPLATE = app
 
+QMAKE_CXXFLAGS += -std=c++17
 
 SOURCES += main.cpp\
         mainwindow.cpp \
