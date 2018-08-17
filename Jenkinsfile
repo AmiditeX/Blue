@@ -1,10 +1,11 @@
 pipeline {
   agent none
   stages {
-    stage('derrr') {
-      agent any
+    stage('Qt Installation') {
       steps {
-        git(url: 'https://github.com/AmiditeX/Blue.git', branch: 'master')
+        sh ' sudo add-apt-repository ppa:beineri/opt-qt542-trusty -y'
+        sh 'sudo apt-get update -y; true'
+        sh 'sudo apt-get install -y qt54webkit libwebkit-dev libgstreamer0.10-dev'
       }
     }
   }
