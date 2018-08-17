@@ -137,7 +137,8 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../libcrypto/lib/w32/ -
 
 #OPENSSL LINKAGE
 unix:LIBS += -L/root/Blue/openssl/ -lssl -lcrypto
-unix:INCLUDEPATH += /usr/local/ssl/include/openssl
+unix:INCLUDEPATH +=  /usr/local/ssl/include/openssl
+unix:INCLUDEPATH += /usr/include/openssl/
 unix:QMAKE_RPATHDIR +=  $$PWD/../openssl
 
 win32: LIBS += -L$$PWD/../openssl/w32/lib/ -llibcrypto -llibssl
