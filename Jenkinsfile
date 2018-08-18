@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
           steps {
             sh '''qmake Blue/Blue.pro
-make'''
+make -j 4'''
           }
         }
         stage('error') {
