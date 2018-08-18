@@ -9,9 +9,10 @@ pipeline {
 make'''
           }
         }
-        stage('') {
+        stage('error') {
           steps {
-            sh 'whoami env '
+            sh '''whoami
+env'''
           }
         }
       }
