@@ -2,9 +2,18 @@ pipeline {
   agent any
   stages {
     stage('Build') {
-      steps {
-        sh '''qmake Blue/Blue.pro
+      parallel {
+        stage('Build') {
+          steps {
+            sh '''qmake Blue/Blue.pro
 make'''
+          }
+        }
+        stage('') {
+          steps {
+            sh 'whoami env '
+          }
+        }
       }
     }
   }
