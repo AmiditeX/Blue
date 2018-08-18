@@ -14,6 +14,12 @@ TEMPLATE = app
 
 QMAKE_CXXFLAGS += -std=c++14
 
+CONFIG(debug, debug|release) {
+    DESTDIR = debug
+} else {
+    DESTDIR = release
+}
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     bluemanager.cpp \
