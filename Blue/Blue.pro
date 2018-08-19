@@ -12,12 +12,9 @@ CONFIG += c++14
 TARGET = Blue
 TEMPLATE = app
 
-CONFIG(debug, debug|release)
-{
+CONFIG(debug, debug|release) {
     DESTDIR = debug
-}
-else
-{
+} else {
     DESTDIR = release
 }
 
