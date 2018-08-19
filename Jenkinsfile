@@ -14,5 +14,10 @@ make -j 4'''
         publishCppcheck(severityError: true, severityInformation: true, severityNoCategory: true, severityPerformance: true, severityPortability: true, severityStyle: true, severityWarning: true, XSize: 500, YSize: 500, displayAllErrors: true, displayErrorSeverity: true, displayNoCategorySeverity: true, displayPerformanceSeverity: true, displayPortabilitySeverity: true, displayStyleSeverity: true, displayWarningSeverity: true, pattern: 'cppcheck.xml')
       }
     }
+    stage('Artefacts') {
+      steps {
+        archiveArtifacts(artifacts: 'release/Blue', caseSensitive: true)
+      }
+    }
   }
 }
