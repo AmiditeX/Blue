@@ -12,8 +12,6 @@ CONFIG += c++14
 TARGET = Blue
 TEMPLATE = app
 
-QMAKE_CXXFLAGS += -std=c++14
-
 CONFIG(debug, debug|release) {
     DESTDIR = debug
 } else {
