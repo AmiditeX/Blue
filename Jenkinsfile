@@ -2,9 +2,18 @@ pipeline {
   agent any
   stages {
     stage('Build') {
-      steps {
-        sh '''qmake Blue/Blue.pro
+      parallel {
+        stage('Build') {
+          steps {
+            sh '''qmake Blue/Blue.pro
 make -j 4'''
+          }
+        }
+        stage('allocate') {
+          steps {
+            ws(dir: 'here')
+          }
+        }
       }
     }
     stage('Cpp') {
@@ -17,11 +26,6 @@ make -j 4'''
     stage('Artefacts') {
       steps {
         archiveArtifacts(artifacts: 'release/Blue', caseSensitive: true)
-      }
-    }
-    stage('error') {
-      steps {
-        junit 'cppcheck.xml'
       }
     }
   }
