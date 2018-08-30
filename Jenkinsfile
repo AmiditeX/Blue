@@ -2,21 +2,12 @@ pipeline {
   agent any
   stages {
     stage('Build') {
-      parallel {
-        stage('Build') {
-          steps {
-            sh '''qmake Blue/Blue.pro
+      steps {
+        sh '''qmake Blue/Blue.pro
 make -j 4'''
-          }
-        }
-        stage('allocate') {
-          steps {
-            ws(dir: 'here')
-          }
-        }
       }
     }
-    stage('Cpp') {
+    stage('Cpp test') {
       steps {
         sh '''cppcheck --enable=all --inconclusive --xml --xml-version=2 Blue 2> cppcheck.xml
 '''
