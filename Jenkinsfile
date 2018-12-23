@@ -2,6 +2,12 @@ pipeline {
   agent any
   stages {
     stage('Build') {
+      agent {
+        dockerfile {
+          filename 'amiditex/jenkins-dev'
+        }
+
+      }
       steps {
         sh '''qmake Blue/Blue.pro
 make -j 4'''
